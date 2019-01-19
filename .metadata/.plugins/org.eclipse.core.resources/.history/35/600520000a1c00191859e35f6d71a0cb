@@ -1,0 +1,19 @@
+package eGarage;
+import javax.swing.JPanel;
+
+public interface State {
+	
+	// The 6 different states of KinderGarten application
+	public void goToCityMode();
+	public void goToNeighborMode();
+	public void goToKinderGartenMode();
+	public void goToNotAsignedMode();
+	public void goToReportMode();
+	public void goToLoginMode();
+	
+	public void setVisible(); // Sets the state frame to be visible
+	public HeaderPanel getHeaderPanel();
+	public TablePanel getTablePanel();
+	public void setNeighborID(int id);
+	
+}

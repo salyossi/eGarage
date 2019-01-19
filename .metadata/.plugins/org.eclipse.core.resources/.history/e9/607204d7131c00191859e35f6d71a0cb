@@ -1,0 +1,19 @@
+package eGarage;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class SignPostPanel {
+
+	private JPanel p;
+	private JLabel l1;
+	
+	SignPostPanel(String l1Text) {
+		
+		l1 = new JLabel(l1Text);
+		l1.setFont(new Font("Ariel", Font.PLAIN, 22));
+		p = new JPanel();
+		p.add(l1);
+	}
+	
+}
