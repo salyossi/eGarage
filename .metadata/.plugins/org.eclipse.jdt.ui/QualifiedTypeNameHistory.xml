@@ -7,4 +7,8 @@
 <fullyQualifiedTypeName name="eGarage.PaymentMachinePanel"/>
 <fullyQualifiedTypeName name="eGarage.VirtualButtonsPanel"/>
 <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
+<fullyQualifiedTypeName name="javax.swing.JSeparator"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 </qualifiedTypeNameHistroy>
