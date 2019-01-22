@@ -11,4 +11,9 @@
 <fullyQualifiedTypeName name="javax.swing.JSeparator"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="javax.swing.table.TableModel"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
+<fullyQualifiedTypeName name="javax.swing.JTable"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
 </qualifiedTypeNameHistroy>
