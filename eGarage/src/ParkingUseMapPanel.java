@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -25,12 +27,6 @@ public class ParkingUseMapPanel {
 		setSep(new JSeparator());
 		getSep().setMaximumSize(new Dimension((int) sep.getMaximumSize().getWidth(), 25));
 
-		String column[] = { "קומה", "חניה 1", "חניה 2", "חניה 3", "חניה 4", "חניה 5", "חניה 6", "חניה 7", "חניה 8",
-				"חניה 9", "חניה 10" };
-		String data[][] = { { "1", "", "", "", "", "", "", "", "", "", "" },
-				{ "2", "", "", "", "", "", "", "", "", "", "" }, { "3", "", "", "", "", "", "", "", "", "", "" },
-				{ "4", "", "", "", "", "", "", "", "", "", "" } };
-
 		// Create a default table model consisting of the headers columns
 		// and 4 rows representing the eGarage Levels.
 		String[] headers = { "קומה", "חניה 1", "חניה 2", "חניה 3", "חניה 4", "חניה 5", "חניה 6", "חניה 7", "חניה 8",
@@ -44,7 +40,7 @@ public class ParkingUseMapPanel {
 		String[] parking2 = { "", "", "", "" };
 		String[] parking3 = { "", "", "", "" };
 		String[] parking4 = { "", "", "", "" };
-		String[] parking5 = { "0", "", "", "" };
+		String[] parking5 = { "", "", "", "" };
 		String[] parking6 = { "", "", "", "" };
 		String[] parking7 = { "", "", "", "" };
 		String[] parking8 = { "", "", "", "" };
@@ -70,31 +66,16 @@ public class ParkingUseMapPanel {
 
 		// Create a table using the previously created default table
 		// model
-
-		// setTable(new JTable(data, column));
-		setTable(new JTable(dtm));
-
+		table = new JTable(dtm);
+		
 		// Create a renderer for displaying cells in certain colors.
-		TableRenderer tr = new TableRenderer();
-
-		// Get the column model so we can extract individual columns.
-		TableColumnModel tcm = getTable().getColumnModel();
-
-		// For each table column, sets its renderer to the previously
-		// created table renderer.
-		for (int c = 1; c < ncols; c++) {
-			TableColumn tc = tcm.getColumn(c);
-			tc.setCellRenderer(tr);
-		}
-		
-		
+		// this represents LEDS in the Garage
+		TableColorCellRenderer renderer = new TableColorCellRenderer();
+		table.setDefaultRenderer(Object.class, renderer);
 
 		getTable().setCellSelectionEnabled(true);
 		getTable().enableInputMethods(false);
 		getTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-
-		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) getTable().getDefaultRenderer(Object.class);
-		renderer.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		ListSelectionModel select = getTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

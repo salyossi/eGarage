@@ -13,7 +13,13 @@
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 <fullyQualifiedTypeName name="javax.swing.table.TableModel"/>
 <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
-<fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
 <fullyQualifiedTypeName name="javax.swing.JTable"/>
+<fullyQualifiedTypeName name="com.sun.prism.paint.Color"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.swing.table.TableCellRenderer"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+<fullyQualifiedTypeName name="java.awt.ComponentOrientation"/>
 </qualifiedTypeNameHistroy>

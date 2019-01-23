@@ -80,6 +80,7 @@ public abstract class MainFrame extends JFrame {
 		p2.add(entranceMachine);
 		p2.add(exitMachine);
 		p2.add(paymentMachine);
+		f.pack();
 		
 	}
 
