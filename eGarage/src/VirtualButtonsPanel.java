@@ -6,12 +6,12 @@ import javax.swing.*;
 
 public class VirtualButtonsPanel implements ActionListener {
 
-	private JPanel p, pp1, pp2, pp3, pp4;
-	private JLabel l1, l5, l8;
-	private JButton b3, b4, b7, b10, b12, b13, b14;
-	private JTextField t2, t11;
-	private JComboBox c6, c9;
-	private JSeparator sep1, sep2;
+	private JPanel p, pp1, pp11, pp2, pp3, pp4;
+	private JLabel l1, l11, l5, l8;
+	private JButton b3, b33, b4, b44, b7, b10, b12, b13, b14;
+	private JTextField t2, t22, t222, t11;
+	private JComboBox c6, c66, c9;
+	private JSeparator sep1, sep11, sep2;
 
 	private ButtonEventListener myListener;
 
@@ -21,7 +21,7 @@ public class VirtualButtonsPanel implements ActionListener {
 		getP().setLayout(new BoxLayout(getP(), BoxLayout.PAGE_AXIS));
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
 
-		setL1(new JLabel("אזור ווירטואלי למצב כניסת רכב"));
+		setL1(new JLabel("אזור ווירטואלי למצב כניסת רכב מהחניון"));
 		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 
 		setPP1(new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2)));		
@@ -35,11 +35,37 @@ public class VirtualButtonsPanel implements ActionListener {
 		setB4(new JButton("הרכב עבר"));
 		getB4().addActionListener(this);
 		getB4().setMaximumSize(new Dimension(200, 40));
-
+		
 		setSep1(new JSeparator());
 		getSep1().setMaximumSize(new Dimension((int) getSep1().getMaximumSize().getWidth(), 25));
 
-		setL5(new JLabel("אזור ווירטואלי למצב יציאת רכב"));
+		setL11(new JLabel("אזור ווירטואלי לכניסת ויציאת רכבים מחנייה"));
+		getL11().setFont(new Font("Ariel", Font.BOLD, 16));
+
+		setPP11(new JPanel(new FlowLayout()));
+		String[] Vehicles3 = { "123456", "456789", "369258" };
+		setC66(new JComboBox(Vehicles3));
+		getC66().addActionListener(this);
+		getC66().setName("VehiclesGoingOut");
+		getC66().setMaximumSize(new Dimension(200, 40));
+		setT22(new JTextField(10));
+		setT222(new JTextField(10));
+		getPP11().add(getT22());
+		getPP11().add(getT222());
+		getPP11().add(getC66());
+
+		setB33(new JButton("רכב נכנס לחניה"));
+		getB33().addActionListener(this);
+		getB33().setMaximumSize(new Dimension(200, 40));
+
+		setB44(new JButton("רכב יצא מחניה"));
+		getB44().addActionListener(this);
+		getB44().setMaximumSize(new Dimension(200, 40));
+
+		setSep11(new JSeparator());
+		getSep11().setMaximumSize(new Dimension((int) getSep11().getMaximumSize().getWidth(), 25));
+
+		setL5(new JLabel("אזור ווירטואלי למצב יציאת רכב מהחניון"));
 		getL5().setFont(new Font("Ariel", Font.BOLD, 16));
 
 		setPP2(new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)));
@@ -89,37 +115,46 @@ public class VirtualButtonsPanel implements ActionListener {
 		getB14().setMaximumSize(new Dimension(200, 40));
                    
 		getP().add(getL1());
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getPP1());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB3());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB4());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
-		getP().add(getSep1());                       
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
+		getP().add(getSep1());
+		getP().add(getL11());
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
+		getP().add(getPP11());                         
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
+		getP().add(getB33());                         
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
+		getP().add(getB44());                         
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
+		getP().add(getSep11());
 		getP().add(Box.createRigidArea(new Dimension(40, 1)));
 		getP().add(getL5());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getPP2());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB7());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 18)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getSep2());                       
 		getP().add(Box.createRigidArea(new Dimension(40, 1)));
 		getP().add(getL8());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getPP3());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB10());                       
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 1)));
 		getP().add(getPP4());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 1)));
 		getP().add(getB12());                         
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 1)));
 		getP().add(getB13());                       
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB14());                       
-		getP().add(Box.createRigidArea(new Dimension(40, 10)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 	}
 
 	public JPanel getP() {
@@ -130,8 +165,20 @@ public class VirtualButtonsPanel implements ActionListener {
 		this.p = p;
 	}
 	
+	public void setPP1(JPanel P) {
+		this.pp1 = P;
+	}
+	
 	public JPanel getPP1() {
 		return pp1;
+	}
+
+	public void setPP11(JPanel P) {
+		this.pp11 = P;
+	}
+	
+	public JPanel getPP11() {
+		return pp11;
 	}
 
 	public void setPP2(JPanel P) {
@@ -158,16 +205,21 @@ public class VirtualButtonsPanel implements ActionListener {
 		return pp4;
 	}
 
-	public void setPP1(JPanel P) {
-		this.pp1 = P;
-	}
-
 	public JLabel getL1() {
 		return l1;
 	}
 
 	public void setL1(JLabel L) {
 		this.l1 = L;
+	}
+
+
+	public JLabel getL11() {
+		return l11;
+	}
+
+	public void setL11(JLabel L) {
+		this.l11 = L;
 	}
 
 	public JTextField getT2() {
@@ -178,6 +230,22 @@ public class VirtualButtonsPanel implements ActionListener {
 		this.t2 = T;
 	}
 
+	public JTextField getT22() {
+		return t22;
+	}
+
+	public void setT22(JTextField T) {
+		this.t22 = T;
+	}
+
+	public JTextField getT222() {
+		return t222;
+	}
+
+	public void setT222(JTextField T) {
+		this.t222 = T;
+	}
+
 	public JButton getB3() {
 		return b3;
 	}
@@ -186,12 +254,30 @@ public class VirtualButtonsPanel implements ActionListener {
 		this.b3 = B;
 	}
 
+
+	public JButton getB33() {
+		return b33;
+	}
+
+	public void setB33(JButton B) {
+		this.b33 = B;
+	}
+	
 	public JButton getB4() {
 		return b4;
 	}
 
 	public void setB4(JButton B) {
 		this.b4 = B;
+	}
+
+
+	public JButton getB44() {
+		return b44;
+	}
+
+	public void setB44(JButton B) {
+		this.b44 = B;
 	}
 
 	public JLabel getL5() {
@@ -210,6 +296,14 @@ public class VirtualButtonsPanel implements ActionListener {
 		this.c6 = C;
 	}
 
+	public JComboBox getC66() {
+		return c66;
+	}
+
+	public void setC66(JComboBox C) {
+		this.c66 = C;
+	}
+	
 	public JButton getB7() {
 		return b7;
 	}
@@ -280,6 +374,15 @@ public class VirtualButtonsPanel implements ActionListener {
 
 	public void setSep1(JSeparator Seperator) {
 		this.sep1 = Seperator;
+	}
+
+
+	public JSeparator getSep11() {
+		return sep11;
+	}
+
+	public void setSep11(JSeparator Seperator) {
+		this.sep11 = Seperator;
 	}
 
 	public JSeparator getSep2() {

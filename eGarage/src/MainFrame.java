@@ -58,19 +58,19 @@ public abstract class MainFrame extends JFrame {
 		f.setLayout(new FlowLayout());
 		p1.setLayout(new FlowLayout());
 		p2.setLayout(new FlowLayout());
-		p1.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.26, 0.987));
-		p2.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.987));
+		p1.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 1));
+		p2.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 1));
 		f.add(p1);
 		f.add(p2);
 		
 
 		// set panels preferred sizes to get the correct layout
-		virtualButtons.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.26, 0.94));
-		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.183));
-		parkingUseMap.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.183));
-		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.181));
-		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.181));
-		paymentMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.72, 0.181));
+		virtualButtons.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 0.99));
+		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.183));
+		parkingUseMap.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.183));
+		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
+		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
+		paymentMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
 		
 
 		// add panels to frame

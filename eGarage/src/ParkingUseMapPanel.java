@@ -35,7 +35,7 @@ public class ParkingUseMapPanel {
 
 		// Populate all cells in the default table model.
 
-		String[] levels = { "קומה 1", "קומה 2", "קומה 3", "קומה 4" };
+		String[] levels = { "קומה 0", "קומה 1", "קומה 2", "קומה 3" };
 		String[] parking1 = { "", "", "", "" };
 		String[] parking2 = { "", "", "", "" };
 		String[] parking3 = { "", "", "", "" };
