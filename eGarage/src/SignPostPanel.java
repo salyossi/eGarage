@@ -12,7 +12,7 @@ public class SignPostPanel {
 	public SignPostPanel(String l1Text) {
 		
 		l1 = new JLabel(l1Text);
-		l1.setFont(new Font("Ariel", Font.PLAIN, 22));
+		l1.setFont(new Font("Ariel", Font.PLAIN, 16));
 		setP(new JPanel());
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
 		getP().add(l1);

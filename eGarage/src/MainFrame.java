@@ -18,6 +18,7 @@ public abstract class MainFrame extends JFrame {
 	private int width; // window width
 	private int height; // window height
 
+	protected JPanel stateHeader; // state header JPanel always on top
 	protected JPanel signPost; // sign post JPanel always on top
 	protected JPanel parkingUseMap; // Parking Use Map JPanel always under sign post
 	protected JPanel entranceMachine; // Entrance Machine JPanel
@@ -25,6 +26,8 @@ public abstract class MainFrame extends JFrame {
 	protected JPanel paymentMachine; // Payment Machine JPanel
 	protected JPanel virtualButtons; // JPanel of buttons for the interaction between the system and drivers
 
+	public abstract JPanel setStateHeader(String l1Text); // will be implemented by each state class
+	
 	public abstract JPanel setSignPost(String l1Text); // will be implemented by each state class
 
 	public abstract JPanel setParkingUseMap(String l1Text); // will be implemented by each state class
@@ -35,14 +38,14 @@ public abstract class MainFrame extends JFrame {
 
 	public abstract JPanel setPaymentMachine(String l1Text); // will be implemented by each state class
 
-	public abstract JPanel setVirtualButtons(String l1Text); // will be implemented by each state class
+	public abstract JPanel setVirtualButtons(); // will be implemented by each state class
 
 	public void DrawFrame() {
 
 		// Actual screen size
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		// Take 80% of screen size for initial start of the software
-		farmeDim = getRationalDimention(dim, 0.8, 0.8);
+		farmeDim = getRationalDimention(dim, 0.9, 0.9);
 		// window dimensions
 		width = farmeDim.width;
 		height = farmeDim.height;
@@ -58,23 +61,26 @@ public abstract class MainFrame extends JFrame {
 		f.setLayout(new FlowLayout());
 		p1.setLayout(new FlowLayout());
 		p2.setLayout(new FlowLayout());
-		p1.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 1));
-		p2.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 1));
+		p1.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 0.97));
+		p2.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.97));
 		f.add(p1);
 		f.add(p2);
 		
 
 		// set panels preferred sizes to get the correct layout
-		virtualButtons.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 0.99));
-		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.183));
-		parkingUseMap.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.183));
-		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
-		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
-		paymentMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.181));
+		
+		virtualButtons.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 0.95));
+		stateHeader.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.06));
+		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		parkingUseMap.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		paymentMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.178));
 		
 
 		// add panels to frame
 		p1.add(virtualButtons);
+		p2.add(stateHeader);
 		p2.add(signPost);
 		p2.add(parkingUseMap);
 		p2.add(entranceMachine);

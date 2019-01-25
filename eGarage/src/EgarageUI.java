@@ -14,8 +14,8 @@ public class EgarageUI {
 		// create all possible 5 states
 		carInEnteranceGate = new CarInEnteranceGate(this);
 		//carInExitGate = new carInExitGate(this);
-		//carEnteredParking = new carEnteredParking(this);
-		//carExitFromParking = new carExitFromParking(this);
+		carEnteredParking = new CarEnteredParking(this);
+		carExitFromParking = new CarExitFromParking(this);
 		//driverPaying = new driverPaying(this);
 		
 		// set the initial state of the UI
@@ -50,6 +50,7 @@ public class EgarageUI {
 	}
 	
 	public State getCarInEnteranceGate() {
+		
 		return carInEnteranceGate;
 	}
 

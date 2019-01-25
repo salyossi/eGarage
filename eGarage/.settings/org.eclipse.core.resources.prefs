@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/CarEnteredParking.java=UTF-8
+encoding//src/CarExitFromParking.java=UTF-8
 encoding//src/CarInEnteranceGate.java=UTF-8
 encoding//src/MainFrame.java=UTF-8
 encoding//src/ParkingUseMapPanel.java=UTF-8

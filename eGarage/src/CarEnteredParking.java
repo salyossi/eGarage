@@ -2,7 +2,7 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class CarInEnteranceGate extends MainFrame implements State, ButtonEventListener {
+public class CarEnteredParking extends MainFrame implements State, ButtonEventListener {
 
 	private EgarageUI egarageUI;
 	private StateHeader stateHeaderPanel;
@@ -14,10 +14,10 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	private VirtualButtonsPanel virtualButtonsPanel;
 	
 	
-	public CarInEnteranceGate(EgarageUI egarageUI) {
+	public CarEnteredParking(EgarageUI egarageUI) {
 		
 		this.egarageUI = egarageUI;
-		stateHeader = setStateHeader("רכב עומד בכניסה");
+		stateHeader = setStateHeader("רכב נכנס לחניה");
 		signPost = setSignPost("תצוגת שילוט");
 		parkingUseMap = setParkingUseMap("חישני החנייה");
 		entranceMachine = setEntranceMachine("מכונת הכניסה");
@@ -25,6 +25,7 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		paymentMachine = setPaymentMachine("מכונת התשלום");
 		virtualButtons = setVirtualButtons();
 		DrawFrame();
+	
 	}
 	
 	
@@ -63,13 +64,11 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		f.setVisible(true);
 	}
 	
-
 	@Override
 	public JPanel setStateHeader(String l1Text) {
 		stateHeaderPanel = new StateHeader(l1Text);
 		return stateHeaderPanel.getP();
 	}
-
 
 	@Override
 	public JPanel setSignPost(String l1Text) {
@@ -78,7 +77,7 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	}
 
 	@Override
-	public JPanel setParkingUseMap(String l1Text) {		
+	public JPanel setParkingUseMap(String l1Text) {	
 		parkingUseMapPanel = new ParkingUseMapPanel();
 		parkingUseMapPanel.getL1().setText(l1Text);
 		return parkingUseMapPanel.getP();
@@ -109,6 +108,7 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		return virtualButtonsPanel.getP();
 	}
 
+
 	@Override
 	public void onPressedEvent(JButton btn, Hashtable argv) {
 		String arg = btn.getActionCommand();
@@ -124,7 +124,7 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		}
 		
 		egarageUI.getState().setVisible();
+		
 	}
-
 
 }

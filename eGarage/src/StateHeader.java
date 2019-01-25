@@ -1,21 +1,16 @@
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.border.EmptyBorder;
 
-
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-public class PaymentMachinePanel {
+public class StateHeader {
 
 	private JPanel p;
 	private JLabel l1;
 	
-	public PaymentMachinePanel(String l1Text) {
+	public StateHeader(String l1Text) {
 		
 		l1 = new JLabel(l1Text);
-		l1.setFont(new Font("Ariel", Font.PLAIN, 16));
+		l1.setFont(new Font("Ariel", Font.PLAIN, 22));
 		setP(new JPanel());
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
 		getP().add(l1);

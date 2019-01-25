@@ -9,7 +9,7 @@ public interface State {
 	public void goToCarEnteredParking();
 	public void goToCarExitFromParking();
 	public void goToDriverPaying();
-	
+
 	public void setVisible(); // Sets the state frame to be visible
-	
+
 }
