@@ -11,5 +11,6 @@ public interface State {
 	public void goToDriverPaying();
 
 	public void setVisible(); // Sets the state frame to be visible
+	public void updateLeds(); // Tells the parking map to refresh it self;
 
 }

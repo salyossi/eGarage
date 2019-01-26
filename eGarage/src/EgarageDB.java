@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class EgarageDB {
 	
-
 	// Status of parking slot on all levels as int
 	public static int getSlotStatus(int SlotID, int Level) {
 		String query;
@@ -16,5 +15,30 @@ public class EgarageDB {
 		}
 	}
 
+	public static boolean UpdateCarEnteredParkingSlot(String Level, String Slot) {
+
+		String query;
+
+		query = "UPDATE `parkinglist` SET `SlotUsed`= 1 WHERE `Level` = " + Level + " and `Slot` = " + Slot;
+
+		try {
+			return connClass.UpdateCarEnteredOrExitParkingSlot(query);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static boolean UpdateCarExitFromParkingSlot(String Level, String Slot) {
+
+		String query;
+
+		query = "UPDATE `parkinglist` SET `SlotUsed`= 0 WHERE `Level` = " + Level + " and `Slot` = " + Slot;
+
+		try {
+			return connClass.UpdateCarEnteredOrExitParkingSlot(query);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
 
 }

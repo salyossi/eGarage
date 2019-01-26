@@ -12,7 +12,6 @@ import com.sun.management.VMOption.Origin;
 
 public class VirtualButtonsPanel implements ActionListener {
 
-
 	private JPanel p, p1p1, pp1, p1p11, pp11, pp12, pp13, pp2, pp21, pp3, pp4;
 	private JLabel l1, l1a, l11, l12, l13, l14, l15, l16, l5, l8, l81;
 	private JButton ba3, b3, b33, b4, b44, b45, b7, b10, b12, b13, b14;
@@ -585,15 +584,43 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		String arg = e.getActionCommand();
 
-		if (arg.equals("רכב נכנס לחניה")) {		
-			eventArgsHash.put("level", "1");
-			eventArgsHash.put("parkingSlot", "5");
-		}
-		else if (arg.equals("רכב זוהה ע''י המצלמה")) {
-			
-		}
-		else if (arg.equals("רכב יצא מחניה")) {
-			
+		switch (arg) {
+		case "רכב זוהה ע''י המצלמה":
+
+			break;
+		case "כרטיס החניה נלקח":
+
+			break;
+		case "הרכב עבר במחסום":
+
+			break;
+		case "רכב נכנס לחניה":
+			// Update the database
+			EgarageDB.UpdateCarEnteredParkingSlot(getT222().getText(), getT22().getText());
+			break;
+		case "רכב יצא מחניה":
+			// Update the database
+			EgarageDB.UpdateCarExitFromParkingSlot(getT224().getText(), getT223().getText());
+			break;
+		case "רכב מול מחסום יציאה":
+
+			break;
+		case "רכב יצא מהחניון":
+
+			break;
+		case "הוכנס כרטיס חניה":
+
+			break;
+		case "סך המטבעות הוכנס":
+
+			break;
+		case "בצע תשלום":
+
+			break;
+		case "הכרטיס נלקח":
+
+			break;
+
 		}
 
 		// pass the event to listeners
@@ -601,7 +628,7 @@ public class VirtualButtonsPanel implements ActionListener {
 			myListener.onPressedEvent((JButton) e.getSource(), (Hashtable<String, String>) eventArgsHash);
 
 	}
-	
+
 	public void setButtonEventListener(ButtonEventListener listener) {
 		this.myListener = listener;
 	}

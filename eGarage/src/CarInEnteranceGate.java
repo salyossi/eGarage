@@ -113,17 +113,54 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	public void onPressedEvent(JButton btn, Hashtable argv) {
 		String arg = btn.getActionCommand();
 
-		if (arg.equals("רכב זוהה ע''י המצלמה")) {		
+		switch (arg) {
+		case "רכב זוהה ע''י המצלמה":
 			goToCarInEnteranceGate();
-		}
-		else if (arg.equals("רכב נכנס לחניה")) {		
+			break;
+		case "כרטיס החניה נלקח":
+
+			break;
+		case "הרכב עבר במחסום":
+
+			break;
+		case "רכב נכנס לחניה":
 			goToCarEnteredParking();
-		}
-		else if (arg.equals("רכב יצא מחניה")) {		
+			// send to Parking map of the new state, to update its LEDs map
+			egarageUI.getState().updateLeds();
+			break;
+		case "רכב יצא מחניה":
 			goToCarExitFromParking();
+			// send to Parking map of the new state, to update its LEDs map
+			egarageUI.getState().updateLeds();
+			break;
+		case "רכב מול מחסום יציאה":
+			goToCarInExitGate();
+			break;
+		case "רכב יצא מהחניון":
+
+			break;
+		case "הוכנס כרטיס חניה":
+			goToDriverPaying();
+			break;
+		case "סך המטבעות הוכנס":
+
+			break;
+		case "בצע תשלום":
+
+			break;
+		case "הכרטיס נלקח":
+
+			break;
+
 		}
 		
 		egarageUI.getState().setVisible();
+	}
+
+
+	@Override
+	public void updateLeds() {
+		parkingUseMapPanel.updatePanel();	
 	}
 
 

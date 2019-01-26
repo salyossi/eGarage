@@ -181,4 +181,26 @@ public class connClass {
 		}
 	}
 
+	public static boolean UpdateCarEnteredOrExitParkingSlot(String query) throws ClassNotFoundException {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = connClass.getConn();
+			if (conn == null)
+				return false;
+			
+			Statement stmt;
+			stmt = conn.createStatement();
+
+			stmt.executeUpdate(query);
+			
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	
+	
 }

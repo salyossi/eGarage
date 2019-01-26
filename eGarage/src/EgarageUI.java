@@ -13,10 +13,10 @@ public class EgarageUI {
 	public EgarageUI() {
 		// create all possible 5 states
 		carInEnteranceGate = new CarInEnteranceGate(this);
-		//carInExitGate = new carInExitGate(this);
+		carInExitGate = new CarInExitGate(this);
 		carEnteredParking = new CarEnteredParking(this);
 		carExitFromParking = new CarExitFromParking(this);
-		//driverPaying = new driverPaying(this);
+		driverPaying = new DriverPaying(this);
 		
 		// set the initial state of the UI
 		state = getCarInEnteranceGate();

@@ -129,5 +129,10 @@ public class ParkingUseMapPanel {
 	public void setSep(JSeparator SEP) {
 		this.sep = SEP;
 	}
+	
+	public void updatePanel() {
+		getP().revalidate();
+		getP().repaint();
+	}
 
 }

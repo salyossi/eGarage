@@ -12,10 +12,9 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 	private ExitMachinePanel exitMachinePanel;
 	private PaymentMachinePanel paymentMachinePanel;
 	private VirtualButtonsPanel virtualButtonsPanel;
-	
-	
+
 	public CarEnteredParking(EgarageUI egarageUI) {
-		
+
 		this.egarageUI = egarageUI;
 		stateHeader = setStateHeader("רכב נכנס לחניה");
 		signPost = setSignPost("תצוגת שילוט");
@@ -25,10 +24,9 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 		paymentMachine = setPaymentMachine("מכונת התשלום");
 		virtualButtons = setVirtualButtons();
 		DrawFrame();
-	
+
 	}
-	
-	
+
 	@Override
 	public void goToCarInEnteranceGate() {
 		f.setVisible(false);
@@ -50,7 +48,7 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 	@Override
 	public void goToCarExitFromParking() {
 		f.setVisible(false);
-		egarageUI.setState(egarageUI.getCarExitFromParking());		
+		egarageUI.setState(egarageUI.getCarExitFromParking());
 	}
 
 	@Override
@@ -63,7 +61,7 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 	public void setVisible() {
 		f.setVisible(true);
 	}
-	
+
 	@Override
 	public JPanel setStateHeader(String l1Text) {
 		stateHeaderPanel = new StateHeader(l1Text);
@@ -77,7 +75,7 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 	}
 
 	@Override
-	public JPanel setParkingUseMap(String l1Text) {	
+	public JPanel setParkingUseMap(String l1Text) {
 		parkingUseMapPanel = new ParkingUseMapPanel();
 		parkingUseMapPanel.getL1().setText(l1Text);
 		return parkingUseMapPanel.getP();
@@ -108,23 +106,58 @@ public class CarEnteredParking extends MainFrame implements State, ButtonEventLi
 		return virtualButtonsPanel.getP();
 	}
 
-
 	@Override
 	public void onPressedEvent(JButton btn, Hashtable argv) {
 		String arg = btn.getActionCommand();
 
-		if (arg.equals("רכב זוהה ע''י המצלמה")) {		
+		switch (arg) {
+		case "רכב זוהה ע''י המצלמה":
 			goToCarInEnteranceGate();
-		}
-		else if (arg.equals("רכב נכנס לחניה")) {		
+			break;
+		case "כרטיס החניה נלקח":
+
+			break;
+		case "הרכב עבר במחסום":
+
+			break;
+		case "רכב נכנס לחניה":
 			goToCarEnteredParking();
-		}
-		else if (arg.equals("רכב יצא מחניה")) {		
+			// send to Parking map of the new state, to update its LEDs map
+			egarageUI.getState().updateLeds();
+			break;
+		case "רכב יצא מחניה":
 			goToCarExitFromParking();
+			// send to Parking map of the new state, to update its LEDs map
+			egarageUI.getState().updateLeds();
+			break;
+		case "רכב מול מחסום יציאה":
+			goToCarInExitGate();
+			break;
+		case "רכב יצא מהחניון":
+
+			break;
+		case "הוכנס כרטיס חניה":
+			goToDriverPaying();
+			break;
+		case "סך המטבעות הוכנס":
+
+			break;
+		case "בצע תשלום":
+
+			break;
+		case "הכרטיס נלקח":
+
+			break;
+
 		}
-		
+
 		egarageUI.getState().setVisible();
-		
+
+	}
+
+	@Override
+	public void updateLeds() {
+		parkingUseMapPanel.updatePanel();
 	}
 
 }
