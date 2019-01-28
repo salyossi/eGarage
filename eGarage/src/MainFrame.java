@@ -10,8 +10,8 @@ import javax.swing.*;
 public abstract class MainFrame extends JFrame {
 
 	protected JFrame f = new JFrame("                                                               "
-			+ "                                                        החניון הממוחשב של יוסי, סשה וזאב       "
-			+ "                                                                                     ");
+			+ "                                                                       "
+			+ "                                                        החניון הממוחשב של יוסי, סשה וזאב ");
 	protected JPanel p1 = new JPanel();
 	protected JPanel p2 = new JPanel();
 	private Dimension farmeDim;
@@ -49,6 +49,10 @@ public abstract class MainFrame extends JFrame {
 		// window dimensions
 		width = farmeDim.width;
 		height = farmeDim.height;
+		
+		// set orientation
+		f.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
 
 		// set the Frame size
 		f.setSize(width, height);
@@ -71,10 +75,10 @@ public abstract class MainFrame extends JFrame {
 		
 		virtualButtons.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.30, 0.95));
 		stateHeader.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.06));
-		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		signPost.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.19));
 		parkingUseMap.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
-		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
-		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.17));
+		entranceMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.16));
+		exitMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.16));
 		paymentMachine.setPreferredSize(getRationalDimention(new Dimension(width, height), 0.68, 0.178));
 		
 

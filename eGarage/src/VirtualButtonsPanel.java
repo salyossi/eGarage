@@ -163,16 +163,6 @@ public class VirtualButtonsPanel implements ActionListener {
 		getB12().setMaximumSize(new Dimension(180, 20));
 		getB12().setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		setB13(new JButton("בצע תשלום"));
-		getB13().addActionListener(this);
-		getB13().setMaximumSize(new Dimension(180, 20));
-		getB13().setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		setB14(new JButton("הכרטיס נלקח"));
-		getB14().addActionListener(this);
-		getB14().setMaximumSize(new Dimension(180, 20));
-		getB14().setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		getP().add(getP1P1());
 		getP().add(getPP1());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
@@ -213,10 +203,7 @@ public class VirtualButtonsPanel implements ActionListener {
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getB12());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		getP().add(getB13());
-		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		getP().add(getB14());
-		getP().add(Box.createRigidArea(new Dimension(40, 2)));
+		
 	}
 
 	public JPanel getP() {
@@ -612,14 +599,6 @@ public class VirtualButtonsPanel implements ActionListener {
 
 			break;
 		case "סך המטבעות הוכנס":
-
-			break;
-		case "בצע תשלום":
-
-			break;
-		case "הכרטיס נלקח":
-
-			break;
 
 		}
 

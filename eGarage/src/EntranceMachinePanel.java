@@ -1,24 +1,65 @@
+import java.awt.*;
 
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class EntranceMachinePanel {
 
 	private JPanel p;
-	private JLabel l1;
+	private JLabel l1, l2;
+	private JButton b1;
+	private JTextArea ta1;
 
 	public EntranceMachinePanel(String l1Text) {
 
-		l1 = new JLabel(l1Text);
-		l1.setFont(new Font("Ariel", Font.PLAIN, 16));
 		setP(new JPanel());
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
-		getP().add(l1);
+		getP().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+		setL1(new JLabel(l1Text));
+		setL2(new JLabel());
+		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		setB1(new JButton("לחץ לכניסה לחניון"));
+		setTA1(new JTextArea("אין רכב בכניסה"));
+		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getTA1().setBorder(BorderFactory.createLineBorder(Color.black));
+
+		addComponentsToPane(getP());
+	}
+
+	public void addComponentsToPane(Container pane) {
+
+		pane.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.weightx = 0.08;
+		c.insets = new Insets(5, 10, 10, 10); // padding
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		pane.add(getB1(), c);
+
+		c.fill = GridBagConstraints.CENTER;
+		c.gridx = 1;
+		c.gridy = 0;
+		pane.add(getL1(), c);
+
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 40; // make this component tall
+		c.weightx = 0.22;
+
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 1;
+		pane.add(getTA1(), c);
+		
+		c.weightx = 0.28;
+		c.gridx = 2;
+		c.gridy = 1;
+		pane.add(getL2(), c);
+
 	}
 
 	public JPanel getP() {
@@ -27,6 +68,38 @@ public class EntranceMachinePanel {
 
 	public void setP(JPanel p) {
 		this.p = p;
+	}
+
+	public JButton getB1() {
+		return b1;
+	}
+
+	public void setB1(JButton b) {
+		this.b1 = b;
+	}
+
+	public JTextArea getTA1() {
+		return ta1;
+	}
+
+	public void setTA1(JTextArea ta) {
+		this.ta1 = ta;
+	}
+
+	public JLabel getL1() {
+		return l1;
+	}
+
+	public void setL1(JLabel l) {
+		this.l1 = l;
+	}
+	
+	public JLabel getL2() {
+		return l2;
+	}
+
+	public void setL2(JLabel l) {
+		this.l2 = l;
 	}
 
 }
