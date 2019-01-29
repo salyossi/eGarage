@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 23, 2019 at 08:20 PM
+-- Generation Time: Jan 29, 2019 at 07:46 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -68,13 +68,13 @@ INSERT INTO `parkinglist` (`Level`, `Slot`, `Type`, `SlotUsed`) VALUES
 (1, 1, 3, 1),
 (1, 2, 3, 0),
 (1, 3, 1, 0),
-(1, 4, 1, 0),
+(1, 4, 1, 1),
 (1, 5, 1, 0),
 (1, 6, 1, 0),
 (1, 7, 1, 0),
 (1, 8, 1, 0),
 (1, 9, 1, 0),
-(1, 10, 2, 0),
+(1, 10, 2, 1),
 (2, 1, 3, 0),
 (2, 2, 3, 0),
 (2, 3, 1, 0),
@@ -82,7 +82,7 @@ INSERT INTO `parkinglist` (`Level`, `Slot`, `Type`, `SlotUsed`) VALUES
 (2, 5, 1, 0),
 (2, 6, 1, 0),
 (2, 7, 1, 0),
-(2, 8, 1, 0),
+(2, 8, 1, 1),
 (2, 9, 1, 0),
 (2, 10, 2, 0),
 (3, 1, 3, 0),
