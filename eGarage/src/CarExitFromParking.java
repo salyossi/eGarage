@@ -114,7 +114,7 @@ public class CarExitFromParking extends MainFrame implements State, ButtonEventL
 		case "רכב זוהה ע''י המצלמה":
 			goToCarInEnteranceGate();
 			break;
-		case "כרטיס החניה נלקח":
+		case "כרטיס חניה נלקח":
 
 			break;
 		case "הרכב עבר במחסום":
@@ -158,6 +158,30 @@ public class CarExitFromParking extends MainFrame implements State, ButtonEventL
 	@Override
 	public void updateLeds() {
 		parkingUseMapPanel.updatePanel();
+	}
+
+	@Override
+	public JTextArea getEntranceConsole() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton getEntranceButton() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void updateStateHeader(String newText) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void passCarIDAtEntranceGateToPanel(String CarIDatEnranceGate) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

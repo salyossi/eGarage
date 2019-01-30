@@ -1,5 +1,8 @@
 import java.util.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 
 public class CarInEnteranceGate extends MainFrame implements State, ButtonEventListener {
@@ -12,12 +15,13 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	private ExitMachinePanel exitMachinePanel;
 	private PaymentMachinePanel paymentMachinePanel;
 	private VirtualButtonsPanel virtualButtonsPanel;
+	private String carInEntranceGate;
 	
 	
 	public CarInEnteranceGate(EgarageUI egarageUI) {
 		
 		this.egarageUI = egarageUI;
-		stateHeader = setStateHeader("רכב עומד בכניסה");
+		stateHeader = setStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
 		signPost = setSignPost("תצוגת שילוט");
 		parkingUseMap = setParkingUseMap("חישני החנייה");
 		entranceMachine = setEntranceMachine("מכונת הכניסה");
@@ -87,6 +91,7 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	@Override
 	public JPanel setEntranceMachine(String l1Text) {
 		entranceMachinePanel = new EntranceMachinePanel(l1Text);
+		entranceMachinePanel.setButtonEventListener(this);
 		return entranceMachinePanel.getP();
 	}
 
@@ -116,11 +121,42 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		switch (arg) {
 		case "רכב זוהה ע''י המצלמה":
 			goToCarInEnteranceGate();
-			break;
-		case "כרטיס החניה נלקח":
+			
+			carInEntranceGate = argv.get("CarInEntranceGate").toString();
+			
+			egarageUI.getState().passCarIDAtEntranceGateToPanel(carInEntranceGate);
+			egarageUI.getState().getEntranceConsole().setText("רכב מספר " + carInEntranceGate + " עומד בכניסה לחניה לחץ על כפתור הכניסה לקבלת כרטיס חניה");
+			egarageUI.getState().getEntranceButton().setEnabled(true);
+			egarageUI.getState().updateStateHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
 
 			break;
-		case "הרכב עבר במחסום":
+		case "לחץ לכניסה לחניון":		
+			carInEntranceGate = argv.get("CarInEntranceGate").toString();
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			
+			egarageUI.getState().getEntranceConsole().setText("כרטיס חניה הונפק לרכב מספר " + carInEntranceGate + " בתאריך ובשעה " + dateFormat.format(date) + " לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+			egarageUI.getState().updateStateHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+
+			break;
+		case "כרטיס חניה נלקח":
+			egarageUI.getState().updateStateHeader("המחסום נפתח , נא להיכנס לחניון");
+			virtualButtonsPanel.getB4().setEnabled(true);
+			break;
+		case "הרכב עבר במחסום":			
+			virtualButtonsPanel.getB4().setEnabled(false);
+			virtualButtonsPanel.getT2().setEditable(true);
+			
+			egarageUI.getState().updateStateHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
+			egarageUI.getState().getEntranceConsole().setText("אין רכב בכניסה");
+			
+			if(!EgarageDB.isExistsCarID(Integer.parseInt(carInEntranceGate))) {
+				EgarageDB.AddRegularCarIdToUserList(Integer.parseInt(carInEntranceGate));			
+			}
+			
+			EgarageDB.AddNewCarIDToUsageList(Integer.parseInt(carInEntranceGate));
+			
 
 			break;
 		case "רכב נכנס לחניה":
@@ -163,5 +199,27 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 		parkingUseMapPanel.updatePanel();	
 	}
 
+
+	@Override
+	public JTextArea getEntranceConsole() {
+		return entranceMachinePanel.getTA1();
+	}
+
+
+	@Override
+	public JButton getEntranceButton() {
+		return entranceMachinePanel.getB1();
+	}
+	
+	@Override
+	public void updateStateHeader(String newText) {
+		stateHeaderPanel.getL1().setText(newText);
+	}
+
+
+	@Override
+	public void passCarIDAtEntranceGateToPanel(String CarIDatEnranceGate) {
+		entranceMachinePanel.setCarIDatEnranceGate(CarIDatEnranceGate);		
+	}
 
 }

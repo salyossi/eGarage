@@ -24,4 +24,12 @@ public class StateHeader {
 		this.p = p;
 	}
 	
+	public JLabel getL1() {
+		return l1;
+	}
+
+	public void setL1(JLabel l) {
+		this.l1 = l;
+	}
+	
 }

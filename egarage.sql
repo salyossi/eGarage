@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 29, 2019 at 07:46 AM
+-- Generation Time: Jan 30, 2019 at 06:05 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -43,6 +43,15 @@ CREATE TABLE IF NOT EXISTS `egarageusage` (
   KEY `IXFK_EgarageUsage_UserList` (`CarID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `egarageusage`
+--
+
+INSERT INTO `egarageusage` (`CarID`, `GarageEnterance`, `ParkingSlotEnterance`, `ParkingSlotExit`, `GarageExit`, `Authorized`, `Level`, `Slot`) VALUES
+(12345678, '2019-01-30 19:46:16', NULL, NULL, NULL, 0, NULL, NULL),
+(12345677, '2019-01-30 19:46:53', NULL, NULL, NULL, 0, NULL, NULL),
+(12345676, '2019-01-30 19:48:32', NULL, NULL, NULL, 0, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -65,16 +74,16 @@ CREATE TABLE IF NOT EXISTS `parkinglist` (
 --
 
 INSERT INTO `parkinglist` (`Level`, `Slot`, `Type`, `SlotUsed`) VALUES
-(1, 1, 3, 1),
+(1, 1, 3, 0),
 (1, 2, 3, 0),
 (1, 3, 1, 0),
-(1, 4, 1, 1),
+(1, 4, 1, 0),
 (1, 5, 1, 0),
 (1, 6, 1, 0),
 (1, 7, 1, 0),
 (1, 8, 1, 0),
 (1, 9, 1, 0),
-(1, 10, 2, 1),
+(1, 10, 2, 0),
 (2, 1, 3, 0),
 (2, 2, 3, 0),
 (2, 3, 1, 0),
@@ -82,7 +91,7 @@ INSERT INTO `parkinglist` (`Level`, `Slot`, `Type`, `SlotUsed`) VALUES
 (2, 5, 1, 0),
 (2, 6, 1, 0),
 (2, 7, 1, 0),
-(2, 8, 1, 1),
+(2, 8, 1, 0),
 (2, 9, 1, 0),
 (2, 10, 2, 0),
 (3, 1, 3, 0),
@@ -147,7 +156,16 @@ CREATE TABLE IF NOT EXISTS `userlist` (
 --
 
 INSERT INTO `userlist` (`CarID`, `Type`) VALUES
-(22642201, 1);
+(22642201, 1),
+(12345678, 1),
+(12345677, 1),
+(12345676, 1),
+(12345675, 1),
+(12345674, 1),
+(12345673, 1),
+(22222222, 2),
+(33333333, 3),
+(12345671, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,8 +1,11 @@
 import java.awt.Color;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class connClass {
+public class ConnClass {
 	private static Connection conn;
 
 	public static Connection getConn() throws ClassNotFoundException {
@@ -21,7 +24,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return null;
 
@@ -47,7 +50,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return 0;
 
@@ -73,7 +76,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return false;
 
@@ -89,11 +92,33 @@ public class connClass {
 		}
 	}
 
+	public static boolean InsertOneIntOneDateParam(String query, int param) throws ClassNotFoundException {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = ConnClass.getConn();
+			if (conn == null)
+				return false;
+
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, param);
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			preparedStmt.setTimestamp(2, date);
+
+			boolean res = preparedStmt.execute();
+
+			conn.close();
+			return res;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	public static boolean InsertTwoIntsParam(String query, int param1, int param2) throws ClassNotFoundException {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return false;
 
@@ -115,7 +140,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return false;
 
@@ -138,7 +163,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return false;
 
@@ -160,7 +185,7 @@ public class connClass {
 			
 			int res = 0;
 
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return 0;
 
@@ -185,7 +210,7 @@ public class connClass {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = connClass.getConn();
+			conn = ConnClass.getConn();
 			if (conn == null)
 				return false;
 			
@@ -201,6 +226,5 @@ public class connClass {
 		}
 	}
 
-	
 	
 }

@@ -1,20 +1,20 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-
+import java.util.*;
 import javax.swing.*;
-
-import com.sun.management.VMOption.Origin;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class VirtualButtonsPanel implements ActionListener {
 
 	private JPanel p, p1p1, pp1, p1p11, pp11, pp12, pp13, pp2, pp21, pp3, pp4;
 	private JLabel l1, l1a, l11, l12, l13, l14, l15, l16, l5, l8, l81;
-	private JButton ba3, b3, b33, b4, b44, b45, b7, b10, b12, b13, b14;
+	private JButton ba3, b33, b4, b44, b45, b7, b10, b12, b13, b14;
 	private JTextField t2, t22, t222, t223, t224, t11;
 	private JComboBox c6, c66, c9;
 	private JSeparator sep1, sep11, sep2;
@@ -36,6 +36,32 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		setPP1(new JPanel(new FlowLayout()));
 		setT2(new JTextField(8));
+		getT2().addKeyListener(new KeyListener() {
+
+		    @Override
+		    public void keyTyped(KeyEvent arg0) {
+
+		    }
+
+		    @Override
+		    public void keyReleased(KeyEvent arg0) {
+		    	// check if number for car entering the garage is entered the number
+	    		// needs to be 8 digits long
+	    		if (getT2().getText().length() >= 8) {
+	    			getBA3().setEnabled(true);
+	    		}
+	    		else
+	    		{
+	    			getBA3().setEnabled(false);
+	    		}
+
+		    }
+
+		    @Override
+		    public void keyPressed(KeyEvent arg0) {
+		        
+		    }
+		});
 		setL1A(new JLabel("מספר הרכב הנכנס לזיהוי מצלמת הכניסה"));
 		getPP1().add(getT2());
 		getPP1().add(getL1A());
@@ -44,16 +70,13 @@ public class VirtualButtonsPanel implements ActionListener {
 		getBA3().addActionListener(this);
 		getBA3().setMaximumSize(new Dimension(180, 20));
 		getBA3().setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		setB3(new JButton("כרטיס החניה נלקח"));
-		getB3().addActionListener(this);
-		getB3().setMaximumSize(new Dimension(180, 20));
-		getB3().setAlignmentX(Component.CENTER_ALIGNMENT);
+		getBA3().setEnabled(false);
 
 		setB4(new JButton("הרכב עבר במחסום"));
 		getB4().addActionListener(this);
 		getB4().setMaximumSize(new Dimension(180, 20));
 		getB4().setAlignmentX(Component.CENTER_ALIGNMENT);
+		getB4().setEnabled(false);
 
 		setSep1(new JSeparator());
 		getSep1().setMaximumSize(new Dimension((int) getSep1().getMaximumSize().getWidth(), 25));
@@ -73,9 +96,9 @@ public class VirtualButtonsPanel implements ActionListener {
 		getC66().setName("VehiclesGoingOut");
 		getC66().setMaximumSize(new Dimension(180, 20));
 		setL13(new JLabel("קומה מספר"));
-		setT22(new JTextField(5));
+		setT22(new JTextField(3));
 		setL14(new JLabel("חניה מספר"));
-		setT222(new JTextField(5));
+		setT222(new JTextField(3));
 		getPP11().add(getT22());
 		getPP11().add(getL14());
 		getPP11().add(getT222());
@@ -90,9 +113,9 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		setPP12(new JPanel(new FlowLayout()));
 		setL15(new JLabel("קומה מספר"));
-		setT223(new JTextField(5));
+		setT223(new JTextField(3));
 		setL16(new JLabel("חניה מספר"));
-		setT224(new JTextField(5));
+		setT224(new JTextField(3));
 		getPP12().add(getT223());
 		getPP12().add(getL16());
 		getPP12().add(getT224());
@@ -168,16 +191,14 @@ public class VirtualButtonsPanel implements ActionListener {
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getBA3());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		getP().add(getB3());
-		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getB4());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getSep1());
 		getP().add(getP1P11());
 		getP().add(getPP11());
-		getP().add(Box.createRigidArea(new Dimension(40, 2)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getB33());
-		getP().add(Box.createRigidArea(new Dimension(40, 20)));
+		getP().add(Box.createRigidArea(new Dimension(40, 5)));
 		getP().add(getPP12());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getB45());
@@ -203,7 +224,7 @@ public class VirtualButtonsPanel implements ActionListener {
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getB12());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		
+
 	}
 
 	public JPanel getP() {
@@ -406,14 +427,6 @@ public class VirtualButtonsPanel implements ActionListener {
 		this.ba3 = B;
 	}
 
-	public JButton getB3() {
-		return b3;
-	}
-
-	public void setB3(JButton B) {
-		this.b3 = B;
-	}
-
 	public JButton getB33() {
 		return b33;
 	}
@@ -573,13 +586,16 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		switch (arg) {
 		case "רכב זוהה ע''י המצלמה":
-
+			eventArgsHash.put("CarInEntranceGate", getT2().getText());
+			getT2().setText("");
+			getT2().setEditable(false);
+			getBA3().setEnabled(false);
 			break;
 		case "כרטיס החניה נלקח":
 
 			break;
 		case "הרכב עבר במחסום":
-
+			
 			break;
 		case "רכב נכנס לחניה":
 			// Update the database
@@ -611,5 +627,6 @@ public class VirtualButtonsPanel implements ActionListener {
 	public void setButtonEventListener(ButtonEventListener listener) {
 		this.myListener = listener;
 	}
+	
 
 }
