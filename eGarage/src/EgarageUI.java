@@ -4,7 +4,6 @@ public class EgarageUI {
 	
 	private State carInEnteranceGate;
 	private State carInExitGate;
-	private State carEnteredParking;
 	private State carExitFromParking;
 	private State driverPaying;
 	
@@ -14,39 +13,33 @@ public class EgarageUI {
 		// create all possible 5 states
 		carInEnteranceGate = new CarInEnteranceGate(this);
 		carInExitGate = new CarInExitGate(this);
-		carEnteredParking = new CarEnteredParking(this);
 		carExitFromParking = new CarExitFromParking(this);
 		driverPaying = new DriverPaying(this);
 		
 		// set the initial state of the UI
 		state = getCarInEnteranceGate();
-		state.setVisible();
+		state.SetVisible();
 	}
 		
 	public void goToCarInEnteranceGate() {
-		getState().goToCarInEnteranceGate();
-		state.setVisible();
+		getState().GoToCarInEnteranceGate();
+		state.SetVisible();
 	}
 		
 	public void goToCarInExitGate() {
-		getState().goToCarInExitGate();
-		state.setVisible();
-	}
-	
-	public void goToCarEnteredParking() {
-		getState().goToCarEnteredParking();
-		state.setVisible();
+		getState().GoToCarInExitGate();
+		state.SetVisible();
 	}
 	
 	public void goToCarExitFromParking() {
-		getState().goToCarExitFromParking();
-		state.setVisible();
+		getState().GoToCarExitFromParking();
+		state.SetVisible();
 		
 	}
 	
 	public void goToDriverPaying() {
-		getState().goToDriverPaying();
-		state.setVisible();
+		getState().GoToDriverPaying();
+		state.SetVisible();
 	}
 	
 	public State getCarInEnteranceGate() {
@@ -58,9 +51,6 @@ public class EgarageUI {
 		return carInExitGate;
 	}
 	
-	public State getCarEnteredParking() {
-		return carEnteredParking;
-	}
 		
 	public State getCarExitFromParking() {
 		return carExitFromParking;

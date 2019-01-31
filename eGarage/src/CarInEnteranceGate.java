@@ -33,37 +33,31 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	
 	
 	@Override
-	public void goToCarInEnteranceGate() {
+	public void GoToCarInEnteranceGate() {
 		f.setVisible(false);
 		egarageUI.setState(egarageUI.getCarInEnteranceGate());
 	}
 
 	@Override
-	public void goToCarInExitGate() {
+	public void GoToCarInExitGate() {
 		f.setVisible(false);
 		egarageUI.setState(egarageUI.getCarInExitGate());
 	}
 
 	@Override
-	public void goToCarEnteredParking() {
-		f.setVisible(false);
-		egarageUI.setState(egarageUI.getCarEnteredParking());
-	}
-
-	@Override
-	public void goToCarExitFromParking() {
+	public void GoToCarExitFromParking() {
 		f.setVisible(false);
 		egarageUI.setState(egarageUI.getCarExitFromParking());		
 	}
 
 	@Override
-	public void goToDriverPaying() {
+	public void GoToDriverPaying() {
 		f.setVisible(false);
 		egarageUI.setState(egarageUI.getDriverPaying());
 	}
 
 	@Override
-	public void setVisible() {
+	public void SetVisible() {
 		f.setVisible(true);
 	}
 	
@@ -120,14 +114,14 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 
 		switch (arg) {
 		case "רכב זוהה ע''י המצלמה":
-			goToCarInEnteranceGate();
+			//GoToCarInEnteranceGate();
 			
 			carInEntranceGate = argv.get("CarInEntranceGate").toString();
 			
-			egarageUI.getState().passCarIDAtEntranceGateToPanel(carInEntranceGate);
-			egarageUI.getState().getEntranceConsole().setText("רכב מספר " + carInEntranceGate + " עומד בכניסה לחניה לחץ על כפתור הכניסה לקבלת כרטיס חניה");
-			egarageUI.getState().getEntranceButton().setEnabled(true);
-			egarageUI.getState().updateStateHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
+			egarageUI.getState().PassCarIDAtEntranceGateToPanel(carInEntranceGate);
+			egarageUI.getState().GetEntranceConsole().setText("רכב מספר " + carInEntranceGate + " עומד בכניסה לחניה לחץ על כפתור הכניסה לקבלת כרטיס חניה");
+			egarageUI.getState().GetEntranceButton().setEnabled(true);
+			egarageUI.getState().UpdateStateHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
 
 			break;
 		case "לחץ לכניסה לחניון":		
@@ -136,47 +130,50 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			
-			egarageUI.getState().getEntranceConsole().setText("כרטיס חניה הונפק לרכב מספר " + carInEntranceGate + " בתאריך ובשעה " + dateFormat.format(date) + " לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
-			egarageUI.getState().updateStateHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+			egarageUI.getState().GetEntranceConsole().setText("כרטיס חניה הונפק לרכב מספר " + carInEntranceGate + " בתאריך ובשעה " + dateFormat.format(date) + " לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+			egarageUI.getState().UpdateStateHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
 
 			break;
 		case "כרטיס חניה נלקח":
-			egarageUI.getState().updateStateHeader("המחסום נפתח , נא להיכנס לחניון");
+			egarageUI.getState().UpdateStateHeader("המחסום נפתח , נא להיכנס לחניון");
 			virtualButtonsPanel.getB4().setEnabled(true);
 			break;
 		case "הרכב עבר במחסום":			
 			virtualButtonsPanel.getB4().setEnabled(false);
 			virtualButtonsPanel.getT2().setEditable(true);
 			
-			egarageUI.getState().updateStateHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
-			egarageUI.getState().getEntranceConsole().setText("אין רכב בכניסה");
+			egarageUI.getState().UpdateStateHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
+			egarageUI.getState().GetEntranceConsole().setText("אין רכב בכניסה");
 			
 			if(!EgarageDB.isExistsCarID(Integer.parseInt(carInEntranceGate))) {
 				EgarageDB.AddRegularCarIdToUserList(Integer.parseInt(carInEntranceGate));			
 			}
 			
-			EgarageDB.AddNewCarIDToUsageList(Integer.parseInt(carInEntranceGate));
+			EgarageDB.AddNewCarIDToUsageList(Integer.parseInt(carInEntranceGate));			
+			egarageUI.getState().AddCarEnteredParkingCB();
 			
 
 			break;
 		case "רכב נכנס לחניה":
-			goToCarEnteredParking();
+			egarageUI.getState().RemoveCarEnteredParkingCB();
+			//GoToCarEnteredParking();
 			// send to Parking map of the new state, to update its LEDs map
-			egarageUI.getState().updateLeds();
+			egarageUI.getState().UpdateLeds();
+			//egarageUI.getState().RefreshEnteredParkingCB();
 			break;
 		case "רכב יצא מחניה":
-			goToCarExitFromParking();
+			GoToCarExitFromParking();
 			// send to Parking map of the new state, to update its LEDs map
-			egarageUI.getState().updateLeds();
+			egarageUI.getState().UpdateLeds();
 			break;
 		case "רכב מול מחסום יציאה":
-			goToCarInExitGate();
+			GoToCarInExitGate();
 			break;
 		case "רכב יצא מהחניון":
 
 			break;
 		case "הוכנס כרטיס חניה":
-			goToDriverPaying();
+			GoToDriverPaying();
 			break;
 		case "סך המטבעות הוכנס":
 
@@ -190,36 +187,57 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 
 		}
 		
-		egarageUI.getState().setVisible();
+		egarageUI.getState().SetVisible();
 	}
 
 
 	@Override
-	public void updateLeds() {
+	public void UpdateLeds() {
 		parkingUseMapPanel.updatePanel();	
 	}
-
+	
 
 	@Override
-	public JTextArea getEntranceConsole() {
+	public JTextArea GetEntranceConsole() {
 		return entranceMachinePanel.getTA1();
 	}
 
 
 	@Override
-	public JButton getEntranceButton() {
+	public JButton GetEntranceButton() {
 		return entranceMachinePanel.getB1();
 	}
 	
 	@Override
-	public void updateStateHeader(String newText) {
+	public void UpdateStateHeader(String newText) {
 		stateHeaderPanel.getL1().setText(newText);
 	}
 
 
 	@Override
-	public void passCarIDAtEntranceGateToPanel(String CarIDatEnranceGate) {
+	public void PassCarIDAtEntranceGateToPanel(String CarIDatEnranceGate) {
 		entranceMachinePanel.setCarIDatEnranceGate(CarIDatEnranceGate);		
 	}
+
+
+	
+	@Override
+	public void AddCarEnteredParkingCB() {
+		virtualButtonsPanel.getVehiclesEnteredGarageModel().addElement(carInEntranceGate);
+	}
+
+
+	@Override
+	public void RemoveCarEnteredParkingCB() {
+		virtualButtonsPanel.getVehiclesEnteredGarageModel().removeElement(virtualButtonsPanel.getC66().getSelectedItem().toString());
+		
+	}
+
+
+	@Override
+	public void RefreshEnteredParkingCB() {
+		virtualButtonsPanel.RefreshCarsEnteredGarage();
+	}
+
 
 }

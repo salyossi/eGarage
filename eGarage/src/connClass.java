@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 public class ConnClass {
 	private static Connection conn;
@@ -104,6 +105,32 @@ public class ConnClass {
 			preparedStmt.setInt(1, param);
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			preparedStmt.setTimestamp(2, date);
+
+			boolean res = preparedStmt.execute();
+
+			conn.close();
+			return res;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+
+	public static boolean InsertForIntOneDateParam(String Query, int Level, int Slot, int CatID) throws ClassNotFoundException {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = ConnClass.getConn();
+			if (conn == null)
+				return false;
+
+			PreparedStatement preparedStmt = conn.prepareStatement(Query);
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			preparedStmt.setTimestamp(1, date);
+			preparedStmt.setInt(2, Level);
+			preparedStmt.setInt(3, Slot);
+			preparedStmt.setInt(4, CatID);
+			
 
 			boolean res = preparedStmt.execute();
 
@@ -223,6 +250,34 @@ public class ConnClass {
 			return true;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	public static Vector<String> CarsEnteredGarageList(String query, String key) throws ClassNotFoundException {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			Vector<String> rsList = new Vector<String>();
+			
+			conn = ConnClass.getConn();
+			if (conn == null)
+				return null;
+
+			Statement stmt;
+			ResultSet rs;
+
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				rsList.add(Integer.toString(rs.getInt(key)));
+			}
+
+			conn.close();
+			return rsList;
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
