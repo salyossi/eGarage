@@ -1,75 +1,63 @@
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Hashtable;
+
 import javax.swing.*;
 
-public class PaymentMachinePanel {
+public class PaymentMachinePanel implements ActionListener {
 
-	private JPanel p;
+	private JPanel p, pp1, pp2, pp3;
 	private JLabel l1;
 	private JButton b1, b2, b3, b4, b5;
 	private JTextArea ta1;
+	
+	private ButtonEventListener myListener;
+	private Hashtable<String, String> eventArgsHash = new Hashtable<String, String>();
 
 	public PaymentMachinePanel(String l1Text) {
 
-		setP(new JPanel());
+		setP(new JPanel(new GridLayout(0, 3)));
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
 		getP().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-
+		
+		setPP1(new JPanel());
+		getPP1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		getPP1().setLayout(new GridLayout(3, 0));
+		setPP2(new JPanel());
+		getPP2().setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black));
+		setPP3(new JPanel(new GridLayout(1, 0)));
+		getP().add(getPP1());
+		getP().add(getPP2());
+		getP().add(getPP3());
+		
 		setL1(new JLabel(l1Text));
 		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		getPP2().add(getL1());
+		
 		setB1(new JButton("בצע תשלום"));
+		getB1().setEnabled(false);
+		getB1().addActionListener(this);
 		setB3(new JButton("קבל את הכרטיס"));
+		getB3().setEnabled(false);
+		getB3().addActionListener(this);
 		setB5(new JButton("קבל את העודף"));
-		setTA1(new JTextArea("הכנס כרטיס לתשלום"));
+		getB5().setEnabled(false);
+		getB5().addActionListener(this);
+			
+		getPP1().add(getB1());
+		getPP1().add(getB3());
+		getPP1().add(getB5());
+			
+		setTA1(new JTextArea("הכנס כרטיס לתשלום"));	
+		getTA1().setLineWrap(true);
+		getTA1().setWrapStyleWord(true);
+		getTA1().setFont(new Font("Ariel", Font.PLAIN, 14));
 		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		getTA1().setBorder(BorderFactory.createLineBorder(Color.black));
+		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		addComponentsToPane(getP());
-	}
-
-	public void addComponentsToPane(Container pane) {
-
-		pane.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.weightx = 0.2;
-		c.insets = new Insets(5, 10, 0, 10); // padding
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		pane.add(getB1(), c);
-
-		c.fill = GridBagConstraints.CENTER;
-		c.gridx = 1;
-		c.gridy = 0;
-		pane.add(getL1(), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.2;
-		c.insets = new Insets(5, 10, 0, 10); // padding
-		c.gridx = 2;
-		c.gridy = 0;
-		pane.add(getB3(), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 40; // make this component tall
-		c.weightx = 0.3;
-
-		c.gridwidth = 1;
-		c.gridx = 1;
-		c.gridy = 1;
-		pane.add(getTA1(), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 0; // reset to default
-		c.weighty = 1.0; // request any extra vertical space
-		c.anchor = GridBagConstraints.PAGE_END; // bottom of space
-		c.insets = new Insets(0, 10, 5, 10); // padding
-		c.gridx = 2; // aligned with button 3
-		c.gridwidth = 1; // 2 columns wide
-		c.gridy = 2; // third row
-		pane.add(getB5(), c);
-
+		getPP3().add(getTA1());
 	}
 
 	public JPanel getP() {
@@ -80,6 +68,33 @@ public class PaymentMachinePanel {
 		this.p = p;
 	}
 
+
+	public JPanel getPP1() {
+		return pp1;
+	}
+
+	public void setPP1(JPanel p) {
+		this.pp1 = p;
+	}
+	
+	public JPanel getPP2() {
+		return pp2;
+	}
+
+	public void setPP2(JPanel p) {
+		this.pp2 = p;
+	}
+	
+
+	public JPanel getPP3() {
+		return pp3;
+	}
+
+	public void setPP3(JPanel p) {
+		this.pp3 = p;
+	}
+	
+	
 	public JButton getB1() {
 		return b1;
 	}
@@ -134,5 +149,11 @@ public class PaymentMachinePanel {
 
 	public void setL1(JLabel l) {
 		this.l1 = l;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class EgarageDB {
 	
@@ -23,6 +24,20 @@ public class EgarageDB {
 
 		try {
 			return ConnClass.UpdateCarEnteredOrExitParkingSlot(query);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+
+	public static boolean UpdateCarEnteredParkingSlotUsageList(int Level, int Slot, int CarId) {
+
+		String query;
+
+		query = "UPDATE `egarageusage` SET `ParkingSlotEnterance`= ?, `Level` = ?, `Slot` = ? WHERE `CarID` = ?";
+
+		try {
+			return ConnClass.InsertForIntOneDateParam(query, Level, Slot, CarId);	
 		} catch (ClassNotFoundException e) {
 			return false;
 		}
@@ -86,4 +101,18 @@ public class EgarageDB {
 		}
 	}
 
+	public static Vector<String> getCarsEnteredGarage() {
+		String query;
+		try {
+			query = "SELECT `CarID` FROM `egarageusage` WHERE `ParkingSlotEnterance` IS NULL";
+			
+			return ConnClass.CarsEnteredGarageList(query, "CarID");
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
+
+	//UPDATE `egarageusage` SET `ParkingSlotEnterance`= now() WHERE `CarID` = 12345678
+	
+	
 }
