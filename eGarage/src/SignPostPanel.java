@@ -27,7 +27,14 @@ public class SignPostPanel {
 		// Create a default table model consisting of the headers columns
 		// and 4 rows representing the eGarage Levels.
 		String[] headers = { "קומה", "חניה רגיל", "חניה מנוי", "חניה נכה" };
-		DefaultTableModel dtm = new DefaultTableModel(headers, 4);
+		DefaultTableModel dtm = new DefaultTableModel(headers, 4){
+
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 
 		// Populate all cells in the default table model.
 
