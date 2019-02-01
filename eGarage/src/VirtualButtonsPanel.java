@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class VirtualButtonsPanel implements ActionListener {
+public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 	private JPanel p, p1p1, pp1, p1p11, pp11, pp12, pp13, pp2, pp21, pp3, pp4;
 	private JLabel l1, l1a, l11, l12, l13, l14, l15, l16, l5, l8, l81;
@@ -20,6 +20,8 @@ public class VirtualButtonsPanel implements ActionListener {
 	private JSeparator sep1, sep11, sep2;
 	private Vector<String> vehiclesEnteredGarageV;
 	private DefaultComboBoxModel<String> vehiclesEnteredGarageModel;
+	private Vector<String> vehiclesInPaymentModeV;
+	private DefaultComboBoxModel<String> vehiclesInPaymentModeModel;
 
 	private ButtonEventListener myListener;
 	private Hashtable<String, String> eventArgsHash = new Hashtable<String, String>();
@@ -38,6 +40,7 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		setPP1(new JPanel(new FlowLayout()));
 		setT2(new JTextField(8));
+		getT2().addActionListener(this);
 		getT2().addKeyListener(new KeyListener() {
 
 		    @Override
@@ -98,7 +101,6 @@ public class VirtualButtonsPanel implements ActionListener {
 
 		setC66(new JComboBox<String>(vehiclesEnteredGarageModel));
 		
-		getC66().addActionListener(this);
 		getC66().setName("VehiclesGoingOut");
 		getC66().setMaximumSize(new Dimension(180, 20));
 		setL13(new JLabel("קומה מספר"));
@@ -248,9 +250,7 @@ public class VirtualButtonsPanel implements ActionListener {
 		getPP13().add(getL5());
 
 		setPP2(new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)));
-		String[] Vehicles1 = { "123456", "456789", "369258" };
-		setC6(new JComboBox(Vehicles1));
-		getC6().addActionListener(this);
+		setC6(new JComboBox<String>(vehiclesEnteredGarageModel));
 		getC6().setName("VehiclesGoingOut");
 		getC6().setMaximumSize(new Dimension(180, 20));
 		getPP2().add(getC6());
@@ -276,9 +276,10 @@ public class VirtualButtonsPanel implements ActionListener {
 		getPP21().add(getL8());
 
 		setPP3(new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)));
-		String[] Vehicles2 = { "123456", "456789", "369258" };
-		setC9(new JComboBox(Vehicles2));
-		getC9().addActionListener(this);
+		vehiclesInPaymentModeV = new Vector<String>();
+		vehiclesInPaymentModeV = EgarageDB.getCarsInPaymentMode();
+		vehiclesInPaymentModeModel = new DefaultComboBoxModel<String>(vehiclesInPaymentModeV);
+		setC9(new JComboBox<String>(vehiclesInPaymentModeModel));
 		getC9().setName("VehiclesToPay");
 		getC9().setMaximumSize(new Dimension(180, 20));
 		getPP3().add(getC9());
@@ -695,10 +696,14 @@ public class VirtualButtonsPanel implements ActionListener {
 	public DefaultComboBoxModel<String> getVehiclesEnteredGarageModel() {
 		return vehiclesEnteredGarageModel;
 	}
-
-		
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource() == getT2()) {
+			getBA3().doClick();
+			return;
+		}
 
 		String arg = e.getActionCommand();
 
@@ -712,12 +717,15 @@ public class VirtualButtonsPanel implements ActionListener {
 			eventArgsHash.put("CarInEntranceGate", tmpT2);
 			
 			break;
+			
 		case "כרטיס החניה נלקח":
 
 			break;
+			
 		case "הרכב עבר במחסום":
 			
 			break;
+			
 		case "רכב נכנס לחניה":
 			String tmpT222 = getT222().getText();
 			String tmpT22 = getT22().getText();
@@ -726,12 +734,16 @@ public class VirtualButtonsPanel implements ActionListener {
 			getT22().setText("");
 			getT222().setText("");
 			
-			// Update the parkinglist in database
+			// Add to hash table the car ID that enter a parking
+			eventArgsHash.put("CarEnteredParking", tmpC66);						
+			
+			// Update the parking list in database
 			EgarageDB.UpdateCarEnteredParkingSlot(tmpT222, tmpT22);
 			// Update usage list in database
 			EgarageDB.UpdateCarEnteredParkingSlotUsageList(Integer.parseInt(tmpT222), Integer.parseInt(tmpT22), Integer.parseInt(tmpC66));
 					
 			break;
+			
 		case "רכב יצא מחניה":
 			String tmpT223 = getT223().getText();
 			String tmpT224 = getT224().getText();
@@ -739,19 +751,62 @@ public class VirtualButtonsPanel implements ActionListener {
 			getT223().setText("");
 			getT224().setText("");
 			
-			// Update the database
+			// Add to hash table the car ID that exits from parking
+			eventArgsHash.put("CarExitFromParking", Integer.toString(EgarageDB.getCarIdInLevelAndSlot(tmpT224, tmpT223)));
+			
+			// Update the parking list in database
 			EgarageDB.UpdateCarExitFromParkingSlot(tmpT224, tmpT223);
+			// Update usage list in database
+			EgarageDB.UpdateCarExitFromParkingSlotUsageList(Integer.parseInt(tmpT224), Integer.parseInt(tmpT223));
+			
+				
+			break;
+			
+		case "רכב מול מחסום יציאה":
+			
+			try
+			{
+				String tmpC6 = getC6().getSelectedItem().toString();
+				
+				getB44().setEnabled(false);
+				getC6().setEnabled(false);
+				
+				// Add to hash table the car ID that enter a parking
+				eventArgsHash.put("CarExitingParking", tmpC6);	
+				
+			}
+			catch (Exception e01) {
+				//don't do any this here
+				return;
+			}
 			
 			break;
-		case "רכב מול מחסום יציאה":
-
-			break;
+			
 		case "רכב יצא מהחניון":
+			getB44().setEnabled(true);
+			getC6().setEnabled(true);
+			
 
 			break;
+			
 		case "הוכנס כרטיס חניה":
-
+			
+			try
+			{
+				String tmpC9 = getC9().getSelectedItem().toString();
+				getB10().setEnabled(false);
+				getC9().setEnabled(false);
+				
+				// Add to hash table the car ID that enter a parking
+				eventArgsHash.put("PayingCarID", tmpC9);		
+				
+			}
+			catch (Exception e01) {
+				//don't do any this here
+				return;
+			}
 			break;
+			
 		case "סך המטבעות הוכנס":
 
 		}
@@ -765,16 +820,6 @@ public class VirtualButtonsPanel implements ActionListener {
 	public void setButtonEventListener(ButtonEventListener listener) {
 		this.myListener = listener;
 	}
-	
-	
-	public void RefreshCarsEnteredGarage() {
-		vehiclesEnteredGarageV = new Vector<String>();
-		vehiclesEnteredGarageV = EgarageDB.getCarsEnteredGarage();
-		vehiclesEnteredGarageModel = new DefaultComboBoxModel<String>(vehiclesEnteredGarageV);
-
-		setC66(new JComboBox<String>(vehiclesEnteredGarageModel));
-	}
-	
 	
 
 }

@@ -56,6 +56,7 @@ public class PaymentMachinePanel implements ActionListener {
 		getTA1().setFont(new Font("Ariel", Font.PLAIN, 14));
 		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		getTA1().setEditable(false);
 
 		getPP3().add(getTA1());
 	}

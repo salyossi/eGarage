@@ -4,11 +4,11 @@ import java.util.Vector;
 
 public class EgarageDB {
 	
-	// Status of parking slot on all levels as int
-	public static int getSlotStatus(int SlotID, int Level) {
+	// Status of parking slot on all levels as integer
+	public static int getSlotStatus(int Slot, int Level) {
 		String query;
 		try {
-			query = "SELECT CASE `SlotUsed` WHEN 0 THEN type ELSE 4 END AS SlotType FROM `parkinglist` WHERE `Slot` = " + SlotID + " AND `Level` = " + Level;
+			query = "SELECT CASE `SlotUsed` WHEN 0 THEN type ELSE 4 END AS SlotType FROM `parkinglist` WHERE `Slot` = " + Slot + " AND `Level` = " + Level;
 			
 			return ConnClass.SlotStatus(query, "SlotType");
 		} catch (ClassNotFoundException e) {
@@ -28,7 +28,6 @@ public class EgarageDB {
 			return false;
 		}
 	}
-
 
 	public static boolean UpdateCarEnteredParkingSlotUsageList(int Level, int Slot, int CarId) {
 
@@ -51,6 +50,32 @@ public class EgarageDB {
 
 		try {
 			return ConnClass.UpdateCarEnteredOrExitParkingSlot(query);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static boolean UpdateCarExitFromParkingSlotUsageList(int Level, int Slot) {
+
+		String query;
+
+		query = "UPDATE `egarageusage` SET `ParkingSlotExit`= now() WHERE `Level` = ? and `Slot` = ?";
+
+		try {
+			return ConnClass.InsertTwoIntsParam(query, Level, Slot);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static boolean UpdateCarIsPayingUsageList(int CarId) {
+
+		String query;
+
+		query = "UPDATE egarageusage SET TiketPaid= now() WHERE `CarID` = ?";
+
+		try {
+			return ConnClass.InsertOneIntParam(query, CarId);	
 		} catch (ClassNotFoundException e) {
 			return false;
 		}
@@ -104,15 +129,70 @@ public class EgarageDB {
 	public static Vector<String> getCarsEnteredGarage() {
 		String query;
 		try {
-			query = "SELECT `CarID` FROM `egarageusage` WHERE `ParkingSlotEnterance` IS NULL";
+			query = "SELECT `CarID` FROM `egarageusage` "
+					+ "WHERE `ParkingSlotEnterance` IS NULL "
+					+ "OR (`ParkingSlotExit` IS NOT NULL "
+					+ "AND `ParkingSlotEnterance` < `ParkingSlotExit`)";
 			
-			return ConnClass.CarsEnteredGarageList(query, "CarID");
+			return ConnClass.CarsInGarageList(query, "CarID");
 		} catch (ClassNotFoundException e) {
 			return null;
 		}
 	}
 
-	//UPDATE `egarageusage` SET `ParkingSlotEnterance`= now() WHERE `CarID` = 12345678
+	public static Vector<String> getCarsInPaymentMode() {
+		String query;
+		try {
+			query = "SELECT CarID FROM egarageusage WHERE `ParkingSlotEnterance` IS NOT NULL ";
+			
+			return ConnClass.CarsInGarageList(query, "CarID");
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
 	
-	
+
+	public static int getCarIdInLevelAndSlot(String Level, String Slot) {
+		String query;
+		try {
+			query = "SELECT CarID FROM egarageusage WHERE Slot = " + Slot + " AND Level = " + Level;;
+			
+			return ConnClass.CarIdInLevelAndSlot(query, "CarID");
+		} catch (ClassNotFoundException e) {
+			return 0;
+		}
+	}
+
+	public static boolean DeleteCarExitingGarage(String CarID) {
+
+		String query;
+
+		query = "DELETE FROM egarageusage WHERE CarID = " + CarID;
+
+		try {
+			return ConnClass.DeleteCarExiting(query);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static boolean isAuthorized(String CarId) {
+
+		String query;
+
+		query = "SELECT `Authorized` FROM `egarageusage` WHERE `CarID` = " + CarId;
+
+		try {
+			int i = ConnClass.IntegerSelect(query, "Authorized");
+			if (i > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (ClassNotFoundException e) {
+
+			return false;
+		}
+	}
+
 }

@@ -7,7 +7,7 @@ import javax.swing.table.*;
 public class ParkingUseMapPanel {
 
 	
-	private JPanel p;
+	private JPanel p, pp1;
 	private JLabel l1;
 	private JTable table;
 	private JScrollPane sp;
@@ -15,7 +15,7 @@ public class ParkingUseMapPanel {
 
 	public ParkingUseMapPanel() {
 
-		JTextField textBox = new JTextField();
+		//JTextField textBox = new JTextField();
 
 		setL1(new JLabel("no-text"));
 		getL1().setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -80,11 +80,17 @@ public class ParkingUseMapPanel {
 		ListSelectionModel select = getTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setSP(new JScrollPane(getTable()));
+		
+		setPP1(new JPanel());
+		getPP1().setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+		getPP1().setLayout(new GridLayout(1, 0));
+		getPP1().add(getSP());
+
 
 		getP().removeAll();
 		getP().add(getL1());
 		getP().add(getSep());
-		getP().add(getSP());
+		getP().add(getPP1());
 		getP().revalidate();
 		getP().repaint();
 
@@ -98,6 +104,16 @@ public class ParkingUseMapPanel {
 		this.p = p;
 	}
 
+
+	public JPanel getPP1() {
+		return pp1;
+	}
+
+	public void setPP1(JPanel p) {
+		this.pp1 = p;
+	}
+
+	
 	public JLabel getL1() {
 		return l1;
 	}
