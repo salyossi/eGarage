@@ -6,9 +6,6 @@ public interface State {
 	
 	// The 6 different states of KinderGarten application
 	public void GoToCarInEnteranceGate();
-	public void GoToCarInExitGate();
-	public void GoToCarExitFromParking();
-	public void GoToDriverPaying();
 
 	public void SetVisible(); // Sets the state frame to be visible
 	public void UpdateLeds(); // Tells the parking map to refresh it self;

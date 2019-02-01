@@ -39,24 +39,6 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 	}
 
 	@Override
-	public void GoToCarInExitGate() {
-		f.setVisible(false);
-		egarageUI.setState(egarageUI.getCarInExitGate());
-	}
-
-	@Override
-	public void GoToCarExitFromParking() {
-		f.setVisible(false);
-		egarageUI.setState(egarageUI.getCarExitFromParking());		
-	}
-
-	@Override
-	public void GoToDriverPaying() {
-		f.setVisible(false);
-		egarageUI.setState(egarageUI.getDriverPaying());
-	}
-
-	@Override
 	public void SetVisible() {
 		f.setVisible(true);
 	}
@@ -114,7 +96,6 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 
 		switch (arg) {
 		case "רכב זוהה ע''י המצלמה":
-			//GoToCarInEnteranceGate();
 			
 			carInEntranceGate = argv.get("CarInEntranceGate").toString();
 			
@@ -162,18 +143,15 @@ public class CarInEnteranceGate extends MainFrame implements State, ButtonEventL
 			//egarageUI.getState().RefreshEnteredParkingCB();
 			break;
 		case "רכב יצא מחניה":
-			GoToCarExitFromParking();
 			// send to Parking map of the new state, to update its LEDs map
 			egarageUI.getState().UpdateLeds();
 			break;
 		case "רכב מול מחסום יציאה":
-			GoToCarInExitGate();
 			break;
 		case "רכב יצא מהחניון":
 
 			break;
 		case "הוכנס כרטיס חניה":
-			GoToDriverPaying();
 			break;
 		case "סך המטבעות הוכנס":
 
