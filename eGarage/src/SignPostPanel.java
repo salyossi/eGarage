@@ -26,7 +26,7 @@ public class SignPostPanel {
 
 		// Create a default table model consisting of the headers columns
 		// and 4 rows representing the eGarage Levels.
-		String[] headers = { "קומה", "חניה רגיל", "חניה מנוי", "חניה נכה" };
+		String[] headers = { "קומה", "סה''כ", "חניה רגיל", "חניה מנוי", "חניה נכה" };
 		DefaultTableModel dtm = new DefaultTableModel(headers, 4){
 
 		    @Override
@@ -39,9 +39,10 @@ public class SignPostPanel {
 		// Populate all cells in the default table model.
 
 		String[] levels = { "קומה 0", "קומה 1", "קומה 2", "קומה 3" };
-		String[] sign1 = { "", "", "", "" };
-		String[] sign2 = { "", "", "", "" };
-		String[] sign3 = { "", "", "", "" };
+		String[] sign1 = { "", "", "", "1" };
+		String[] sign2 = { "", "", "1", "" };
+		String[] sign3 = { "", "1", "", "" };
+		String[] sign4 = { "1", "", "", "" };
 
 		int nrows = dtm.getRowCount();
 		int ncols = dtm.getColumnCount();
@@ -51,6 +52,7 @@ public class SignPostPanel {
 			dtm.setValueAt(sign1[i], i, 1);
 			dtm.setValueAt(sign2[i], i, 2);
 			dtm.setValueAt(sign3[i], i, 3);
+			dtm.setValueAt(sign4[i], i, 4);
 		}
 
 		// Create a table using the previously created default table

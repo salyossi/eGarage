@@ -9,9 +9,9 @@ import javax.swing.*;
 public class PaymentMachinePanel implements ActionListener {
 
 	private JPanel p, pp1, pp2, pp3;
-	private JLabel l1;
+	private JLabel l1, l2, l3;
 	private JButton b1, b2, b3, b4, b5;
-	private JTextArea ta1;
+	private JTextArea  ta1;
 	
 	private ButtonEventListener myListener;
 	private Hashtable<String, String> eventArgsHash = new Hashtable<String, String>();
@@ -34,7 +34,13 @@ public class PaymentMachinePanel implements ActionListener {
 		
 		setL1(new JLabel(l1Text));
 		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		setL2(new JLabel("תעריף חניה לשעה = 15 ש''ח"));
+		getL2().setFont(new Font("Ariel", Font.PLAIN, 16));
+		setL3(new JLabel("תעריף יומי = 40 ש''ח"));
+		getL3().setFont(new Font("Ariel", Font.PLAIN, 16));
 		getPP2().add(getL1());
+		getPP2().add(getL2());
+		getPP2().add(getL3());
 		
 		setB1(new JButton("בצע תשלום"));
 		getB1().setEnabled(false);
@@ -50,12 +56,13 @@ public class PaymentMachinePanel implements ActionListener {
 		getPP1().add(getB3());
 		getPP1().add(getB5());
 			
-		setTA1(new JTextArea("הכנס כרטיס לתשלום"));	
+		setTA1(new JTextArea ("הכנס כרטיס לתשלום"));	
 		getTA1().setLineWrap(true);
 		getTA1().setWrapStyleWord(true);
-		getTA1().setFont(new Font("Ariel", Font.PLAIN, 14));
+		getTA1().setFont(new Font("Ariel", Font.PLAIN, 12));
 		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		JScrollPane sp = new JScrollPane(getTA1());
 		getTA1().setEditable(false);
 
 		getPP3().add(getTA1());
@@ -148,13 +155,59 @@ public class PaymentMachinePanel implements ActionListener {
 		return l1;
 	}
 
+
 	public void setL1(JLabel l) {
 		this.l1 = l;
 	}
 
+	public JLabel getL2() {
+		return l2;
+	}
+
+	public void setL2(JLabel l) {
+		this.l2 = l;
+	}
+
+	public JLabel getL3() {
+		return l3;
+	}
+
+	public void setL3(JLabel l) {
+		this.l3 = l;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		String arg = e.getActionCommand();
+
+		switch (arg) {
+		case "בצע תשלום":
+			
+			getB3().setEnabled(true);
+			
+			break;
+			
+		case "קבל את הכרטיס":
+			getB1().setEnabled(false);
+			getB3().setEnabled(false);
+			
+			break;
+			
+		case "קבל את העודף":
+			
+			getB5().setEnabled(false);
+		}
+	
+
+		// pass the event to listeners
+		if (myListener != null)
+			myListener.onPressedEvent((JButton) e.getSource(), (Hashtable<String, String>) eventArgsHash);
+
 	}
+	
+
+	public void setButtonEventListener(ButtonEventListener listener) {
+		this.myListener = listener;
+	}
+
 }

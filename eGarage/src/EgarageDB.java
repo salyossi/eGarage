@@ -143,7 +143,7 @@ public class EgarageDB {
 	public static Vector<String> getCarsInPaymentMode() {
 		String query;
 		try {
-			query = "SELECT CarID FROM egarageusage WHERE `ParkingSlotEnterance` IS NOT NULL ";
+			query = "SELECT CarID FROM egarageusage WHERE ParkingSlotEnterance IS NOT NULL AND Authorized = 0";
 			
 			return ConnClass.CarsInGarageList(query, "CarID");
 		} catch (ClassNotFoundException e) {
@@ -151,13 +151,34 @@ public class EgarageDB {
 		}
 	}
 	
-
-	public static int getCarIdInLevelAndSlot(String Level, String Slot) {
+	public static int getCarIdInLevelAndSlot(int Level, int Slot) {
 		String query;
 		try {
-			query = "SELECT CarID FROM egarageusage WHERE Slot = " + Slot + " AND Level = " + Level;;
+			query = "SELECT CarID FROM egarageusage WHERE Slot = " + Slot + " AND Level = " + Level;
 			
-			return ConnClass.CarIdInLevelAndSlot(query, "CarID");
+			return ConnClass.IntegerSelect(query, "CarID");
+		} catch (ClassNotFoundException e) {
+			return 0;
+		}
+	}
+
+	public static int getCarTypeInParkingList(int Level, int Slot) {
+		String query;
+		try {
+			query = "SELECT Type FROM parkinglist WHERE Level = " + Level + " and Slot = " + Slot;
+			
+			return ConnClass.IntegerSelect(query, "Type");
+		} catch (ClassNotFoundException e) {
+			return 0;
+		}
+	}
+
+	public static int getCarTypeInUserList(int CarId) {
+		String query;
+		try {
+			query = "SELECT Type FROM userlist WHERE CarID = " + CarId;
+			
+			return ConnClass.IntegerSelect(query, "Type");
 		} catch (ClassNotFoundException e) {
 			return 0;
 		}
@@ -195,4 +216,73 @@ public class EgarageDB {
 		}
 	}
 
+	public static boolean SetAuthorized(int CarId) {
+
+		String query;
+
+		query = "UPDATE egarageusage SET Authorized = 1 WHERE CarID = ?";
+
+		try {
+			return ConnClass.InsertOneIntParam(query, CarId);	
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public static java.sql.Timestamp ParkingStartTime(String CarId) {
+
+		String query;
+
+		query = "SELECT ParkingSlotEnterance FROM egarageusage where CarID = " + CarId;
+
+		try {
+			return ConnClass.TimeStampSelect(query, "ParkingSlotEnterance");
+		} catch (ClassNotFoundException e) {
+
+			return null;
+		}
+	}
+	
+	public static java.sql.Timestamp ParkingEndTime(String CarId) {
+
+		String query;
+
+		query = "SELECT TiketPaid FROM egarageusage where CarID = " + CarId;
+
+		try {
+			return ConnClass.TimeStampSelect(query, "TiketPaid");
+		} catch (ClassNotFoundException e) {
+
+			return null;
+		}
+	}
+		
+	public static int ParkingTimeInHours(String CarId) {
+
+		String query;
+
+		query = "SELECT CEILING((UNIX_TIMESTAMP(`TiketPaid`)-UNIX_TIMESTAMP(`ParkingSlotEnterance`))/3600) time FROM `egarageusage` where `CarID` = " + CarId;
+
+		try {
+			return ConnClass.IntegerSelect(query, "time");
+		} catch (ClassNotFoundException e) {
+
+			return 0;
+		}
+	}
+
+	public static int ParkingTimeInDays(String CarId) {
+
+		String query;
+
+		query = "SELECT CEILING((UNIX_TIMESTAMP(`TiketPaid`)-UNIX_TIMESTAMP(`ParkingSlotEnterance`))/86400) time FROM `egarageusage` where `CarID` = " + CarId;
+
+		try {
+			return ConnClass.IntegerSelect(query, "time");
+		} catch (ClassNotFoundException e) {
+
+			return 0;
+		}
+	}
+	
 }

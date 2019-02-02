@@ -33,7 +33,7 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
 
 		setP1P1(new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2)));
-		setL1(new JLabel("<HTML><U>אזור ווירטואלי למצב כניסת רכב מהחניון</U></HTML>"));
+		setL1(new JLabel("<HTML><U>אזור ווירטואלי למצב כניסת רכב אל החניון</U></HTML>"));
 		getL1().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		getP1P1().add(getL1());
@@ -43,29 +43,27 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getT2().addActionListener(this);
 		getT2().addKeyListener(new KeyListener() {
 
-		    @Override
-		    public void keyTyped(KeyEvent arg0) {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
 
-		    }
+			}
 
-		    @Override
-		    public void keyReleased(KeyEvent arg0) {
-		    	// check if number for car entering the garage is entered the number
-	    		// needs to be 8 digits long
-	    		if (getT2().getText().length() >= 8) {
-	    			getBA3().setEnabled(true);
-	    		}
-	    		else
-	    		{
-	    			getBA3().setEnabled(false);
-	    		}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// check if number for car entering the garage is entered the number
+				// needs to be 8 digits long
+				if (getT2().getText().length() >= 8) {
+					getBA3().setEnabled(true);
+				} else {
+					getBA3().setEnabled(false);
+				}
 
-		    }
+			}
 
-		    @Override
-		    public void keyPressed(KeyEvent arg0) {
-		        
-		    }
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
 		});
 		setL1A(new JLabel("מספר הרכב הנכנס לזיהוי מצלמת הכניסה"));
 		getPP1().add(getT2());
@@ -94,70 +92,68 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 		setPP11(new JPanel(new FlowLayout()));
 		setL12(new JLabel("רכבים בחניון"));
-		
+
 		vehiclesEnteredGarageV = new Vector<String>();
 		vehiclesEnteredGarageV = EgarageDB.getCarsEnteredGarage();
 		vehiclesEnteredGarageModel = new DefaultComboBoxModel<String>(vehiclesEnteredGarageV);
 
 		setC66(new JComboBox<String>(vehiclesEnteredGarageModel));
-		
+
 		getC66().setName("VehiclesGoingOut");
 		getC66().setMaximumSize(new Dimension(180, 20));
 		setL13(new JLabel("קומה מספר"));
 		setT22(new JTextField(3));
 		getT22().addKeyListener(new KeyListener() {
 
-		    @Override
-		    public void keyTyped(KeyEvent arg0) {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
 
-		    }
+			}
 
-		    @Override
-		    public void keyReleased(KeyEvent arg0) {
-		    	// check if number for car entering the garage is entered the number
-	    		// needs to be 8 digits long
-	    		if (getT22().getText().length() >= 1 && getT222().getText().length() >= 1) {
-	    			getB33().setEnabled(true);
-	    		}
-	    		else
-	    		{
-	    			getB33().setEnabled(false);
-	    		}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// check if number for car entering the garage is entered the number
+				// needs to be 8 digits long
+				if (getT22().getText().length() >= 1 && getT222().getText().length() >= 1
+						&& getC66().getItemCount() != 0) {
+					getB33().setEnabled(true);
+				} else {
+					getB33().setEnabled(false);
+				}
 
-		    }
+			}
 
-		    @Override
-		    public void keyPressed(KeyEvent arg0) {
-		        
-		    }
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
 		});
 		setL14(new JLabel("חניה מספר"));
 		setT222(new JTextField(3));
 		getT222().addKeyListener(new KeyListener() {
 
-		    @Override
-		    public void keyTyped(KeyEvent arg0) {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
 
-		    }
+			}
 
-		    @Override
-		    public void keyReleased(KeyEvent arg0) {
-		    	// check if number for car entering the garage is entered the number
-	    		// needs to be 8 digits long
-	    		if (getT22().getText().length() >= 1 && getT222().getText().length() >= 1) {
-	    			getB33().setEnabled(true);
-	    		}
-	    		else
-	    		{
-	    			getB33().setEnabled(false);
-	    		}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// check if number for car entering the garage is entered the number
+				// needs to be 8 digits long
+				if (getT22().getText().length() >= 1 && getT222().getText().length() >= 1
+						&& getC66().getItemCount() != 0) {
+					getB33().setEnabled(true);
+				} else {
+					getB33().setEnabled(false);
+				}
 
-		    }
+			}
 
-		    @Override
-		    public void keyPressed(KeyEvent arg0) {
-		        
-		    }
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
 		});
 		getPP11().add(getT22());
 		getPP11().add(getL14());
@@ -177,57 +173,53 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		setT223(new JTextField(3));
 		getT223().addKeyListener(new KeyListener() {
 
-		    @Override
-		    public void keyTyped(KeyEvent arg0) {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
 
-		    }
+			}
 
-		    @Override
-		    public void keyReleased(KeyEvent arg0) {
-		    	// check if number for car entering the garage is entered the number
-	    		// needs to be 8 digits long
-	    		if (getT223().getText().length() >= 1 && getT224().getText().length() >= 1) {
-	    			getB45().setEnabled(true);
-	    		}
-	    		else
-	    		{
-	    			getB45().setEnabled(false);
-	    		}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// check if number for car entering the garage is entered the number
+				// needs to be 8 digits long
+				if (getT223().getText().length() >= 1 && getT224().getText().length() >= 1) {
+					getB45().setEnabled(true);
+				} else {
+					getB45().setEnabled(false);
+				}
 
-		    }
+			}
 
-		    @Override
-		    public void keyPressed(KeyEvent arg0) {
-		        
-		    }
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
 		});
 		setL16(new JLabel("חניה מספר"));
 		setT224(new JTextField(3));
 		getT224().addKeyListener(new KeyListener() {
 
-		    @Override
-		    public void keyTyped(KeyEvent arg0) {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
 
-		    }
+			}
 
-		    @Override
-		    public void keyReleased(KeyEvent arg0) {
-		    	// check if number for car entering the garage is entered the number
-	    		// needs to be 8 digits long
-	    		if (getT223().getText().length() >= 1 && getT224().getText().length() >= 1) {
-	    			getB45().setEnabled(true);
-	    		}
-	    		else
-	    		{
-	    			getB45().setEnabled(false);
-	    		}
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// check if number for car entering the garage is entered the number
+				// needs to be 8 digits long
+				if (getT223().getText().length() >= 1 && getT224().getText().length() >= 1) {
+					getB45().setEnabled(true);
+				} else {
+					getB45().setEnabled(false);
+				}
 
-		    }
+			}
 
-		    @Override
-		    public void keyPressed(KeyEvent arg0) {
-		        
-		    }
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
 		});
 		getPP12().add(getT223());
 		getPP12().add(getL16());
@@ -254,12 +246,11 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getC6().setName("VehiclesGoingOut");
 		getC6().setMaximumSize(new Dimension(180, 20));
 		getPP2().add(getC6());
-		
+
 		setB44(new JButton("רכב מול מחסום יציאה"));
 		getB44().addActionListener(this);
 		getB44().setMaximumSize(new Dimension(180, 20));
 		getB44().setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
 		setB7(new JButton("רכב יצא מהחניון"));
 		getB7().addActionListener(this);
@@ -292,6 +283,7 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		setPP4(new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2)));
 		setL81(new JLabel("סך המטבעות"));
 		setT11(new JTextField(10));
+		getT11().setEditable(false);
 		getPP4().add(getT11());
 		getPP4().add(getL81());
 
@@ -299,6 +291,7 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getB12().addActionListener(this);
 		getB12().setMaximumSize(new Dimension(180, 20));
 		getB12().setAlignmentX(Component.CENTER_ALIGNMENT);
+		getB12().setEnabled(false);
 
 		getP().add(getP1P1());
 		getP().add(getPP1());
@@ -696,7 +689,11 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 	public DefaultComboBoxModel<String> getVehiclesEnteredGarageModel() {
 		return vehiclesEnteredGarageModel;
 	}
-	
+
+	public DefaultComboBoxModel<String> getVehiclesInPaymentModeModel() {
+		return vehiclesInPaymentModeModel;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -713,101 +710,142 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			getT2().setText("");
 			getT2().setEditable(false);
 			getBA3().setEnabled(false);
-			
+
 			eventArgsHash.put("CarInEntranceGate", tmpT2);
-			
+
 			break;
-			
+
 		case "כרטיס החניה נלקח":
 
 			break;
-			
+
 		case "הרכב עבר במחסום":
-			
-			break;
-			
-		case "רכב נכנס לחניה":
-			String tmpT222 = getT222().getText();
-			String tmpT22 = getT22().getText();
-			String tmpC66 = getC66().getSelectedItem().toString();
-			getB33().setEnabled(false);
+
 			getT22().setText("");
 			getT222().setText("");
-			
-			// Add to hash table the car ID that enter a parking
-			eventArgsHash.put("CarEnteredParking", tmpC66);						
-			
-			// Update the parking list in database
-			EgarageDB.UpdateCarEnteredParkingSlot(tmpT222, tmpT22);
-			// Update usage list in database
-			EgarageDB.UpdateCarEnteredParkingSlotUsageList(Integer.parseInt(tmpT222), Integer.parseInt(tmpT22), Integer.parseInt(tmpC66));
-					
+			getT223().setText("");
+			getT224().setText("");
+
 			break;
-			
+
+		case "רכב נכנס לחניה":
+
+			try {
+				String tmpC66 = getC66().getSelectedItem().toString();
+
+				String tmpT222 = getT222().getText();
+				String tmpT22 = getT22().getText();
+
+				getB33().setEnabled(false);
+				getT22().setText("");
+				getT222().setText("");
+
+				// Add to hash table the car ID that enter a parking
+				eventArgsHash.put("CarEnteredParking", tmpC66);
+
+				// Update the parking list in database
+				EgarageDB.UpdateCarEnteredParkingSlot(tmpT222, tmpT22);
+				// Update usage list in database
+				EgarageDB.UpdateCarEnteredParkingSlotUsageList(Integer.parseInt(tmpT222), Integer.parseInt(tmpT22),
+						Integer.parseInt(tmpC66));
+				
+				// if the car is VIP or Handicaps - mark as authorized
+				// so it dose not need to go to the paying machine
+				// else add the car to paying list
+				int tmpCarType = EgarageDB.getCarTypeInUserList(Integer.parseInt(tmpC66));
+				if(tmpCarType > 1)
+					EgarageDB.SetAuthorized(Integer.parseInt(tmpC66));
+				else
+					// Update combo box of cars in payment mode
+					getVehiclesInPaymentModeModel().addElement(tmpC66);
+
+				// Update combo box of cars to enter a parking slot with the car just entered a
+				// parking slot
+				getVehiclesEnteredGarageModel().removeElement(tmpC66);
+
+
+			} catch (Exception e01) {
+				// don't do any this here
+				return;
+			}
+
+			break;
+
 		case "רכב יצא מחניה":
+
 			String tmpT223 = getT223().getText();
 			String tmpT224 = getT224().getText();
+			
+			int tmpCaeExitFromParking = EgarageDB.getCarIdInLevelAndSlot(Integer.parseInt(tmpT224), Integer.parseInt(tmpT223));
+
+			if (tmpCaeExitFromParking == 0) {
+				return;
+			}
+			
 			getB45().setEnabled(false);
 			getT223().setText("");
 			getT224().setText("");
-			
+
 			// Add to hash table the car ID that exits from parking
-			eventArgsHash.put("CarExitFromParking", Integer.toString(EgarageDB.getCarIdInLevelAndSlot(tmpT224, tmpT223)));
-			
+			eventArgsHash.put("CarExitFromParking", Integer.toString(tmpCaeExitFromParking));
+
 			// Update the parking list in database
 			EgarageDB.UpdateCarExitFromParkingSlot(tmpT224, tmpT223);
 			// Update usage list in database
 			EgarageDB.UpdateCarExitFromParkingSlotUsageList(Integer.parseInt(tmpT224), Integer.parseInt(tmpT223));
-			
-				
+
 			break;
-			
+
 		case "רכב מול מחסום יציאה":
-			
-			try
-			{
+
+			try {
 				String tmpC6 = getC6().getSelectedItem().toString();
-				
+
 				getB44().setEnabled(false);
 				getC6().setEnabled(false);
-				
+
 				// Add to hash table the car ID that enter a parking
-				eventArgsHash.put("CarExitingParking", tmpC6);	
-				
-			}
-			catch (Exception e01) {
-				//don't do any this here
+				eventArgsHash.put("CarExitingParking", tmpC6);
+
+			} catch (Exception e01) {
+				// don't do any this here
 				return;
 			}
-			
+
 			break;
-			
+
 		case "רכב יצא מהחניון":
 			getB44().setEnabled(true);
 			getC6().setEnabled(true);
-			
 
 			break;
-			
+
 		case "הוכנס כרטיס חניה":
-			
-			try
-			{
+
+			try {
 				String tmpC9 = getC9().getSelectedItem().toString();
+
+				getT11().setEditable(true);
+				getB12().setEnabled(true);
+
 				getB10().setEnabled(false);
 				getC9().setEnabled(false);
-				
+
 				// Add to hash table the car ID that enter a parking
-				eventArgsHash.put("PayingCarID", tmpC9);		
-				
-			}
-			catch (Exception e01) {
-				//don't do any this here
+				eventArgsHash.put("PayingCarID", tmpC9);
+
+			} catch (Exception e01) {
+				// don't do any this here
 				return;
 			}
+
 			break;
-			
+
 		case "סך המטבעות הוכנס":
+			String tmpT11 = getT11().getText();
+
+			// Add to hash table the amount of coins entered
+			eventArgsHash.put("CoinsEntered", tmpT11);
 
 		}
 
@@ -820,6 +858,5 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 	public void setButtonEventListener(ButtonEventListener listener) {
 		this.myListener = listener;
 	}
-	
 
 }

@@ -844,3 +844,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2019-02-01 14:31:07.685
 !MESSAGE No repository found at https://www.uml-lab.com/en/uml-lab/eclipse/.
+
+!ENTRY org.eclipse.jdt.debug 2 0 2019-02-02 12:46:31.470
+!MESSAGE Unable to find location of java.lang.Thread.setName() in debuggee JVM, for type java.lang.Thread

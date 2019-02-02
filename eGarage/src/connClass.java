@@ -73,6 +73,32 @@ public class ConnClass {
 		}
 	}
 
+	public static java.sql.Timestamp TimeStampSelect(String query, String field) throws ClassNotFoundException {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = ConnClass.getConn();
+			if (conn == null)
+				return null;
+
+			Statement stmt;
+			ResultSet rs;
+			java.sql.Timestamp res = null;
+
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				res = rs.getTimestamp(field);
+			}
+
+			conn.close();
+			return res;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public static boolean InsertOneIntParam(String query, int param) throws ClassNotFoundException {
 
 		try {
@@ -114,7 +140,6 @@ public class ConnClass {
 			return false;
 		}
 	}
-
 
 	public static boolean InsertForIntOneDateParam(String Query, int Level, int Slot, int CatID) throws ClassNotFoundException {
 
@@ -233,34 +258,6 @@ public class ConnClass {
 		}
 	}
 
-	public static int CarIdInLevelAndSlot(String query, String key) throws ClassNotFoundException {
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			int res = 0;
-
-			conn = ConnClass.getConn();
-			if (conn == null)
-				return 0;
-
-			Statement stmt;
-			ResultSet rs;
-
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-
-			while (rs.next()) {
-				res = rs.getInt(key);	
-			}
-
-			conn.close();
-			return res;
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-	
 	public static boolean DeleteCarExiting(String query) throws ClassNotFoundException {
 
 		try {

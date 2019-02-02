@@ -1,21 +1,28 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.*;
 import javax.swing.table.*;
 
-public class ParkingUseMapPanel {
+public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener {
 
-	
 	private JPanel p, pp1;
 	private JLabel l1;
 	private JTable table;
 	private JScrollPane sp;
 	private JSeparator sep;
 
+	private Timer timer;
+	private int alarmColumn = 0;
+	private int alarmRow = 0;
+
+	private AlarmEventListener myAlarmEventListener;
+
 	public ParkingUseMapPanel() {
 
-		//JTextField textBox = new JTextField();
+		// JTextField textBox = new JTextField();
 
 		setL1(new JLabel("no-text"));
 		getL1().setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -31,7 +38,14 @@ public class ParkingUseMapPanel {
 		// and 4 rows representing the eGarage Levels.
 		String[] headers = { "קומה", "חניה 1", "חניה 2", "חניה 3", "חניה 4", "חניה 5", "חניה 6", "חניה 7", "חניה 8",
 				"חניה 9", "חניה 10" };
-		DefaultTableModel dtm = new DefaultTableModel(headers, 4);
+		DefaultTableModel dtm = new DefaultTableModel(headers, 4) {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// all cells false
+				return false;
+			}
+		};
 
 		// Populate all cells in the default table model.
 
@@ -67,10 +81,11 @@ public class ParkingUseMapPanel {
 		// Create a table using the previously created default table
 		// model
 		table = new JTable(dtm);
-		
+
 		// Create a renderer for displaying cells in certain colors.
 		// this represents LEDS in the Garage
 		TableColorCellRenderer renderer = new TableColorCellRenderer();
+		renderer.setAlarmEventListener(this);
 		table.setDefaultRenderer(Object.class, renderer);
 
 		getTable().setCellSelectionEnabled(true);
@@ -80,12 +95,11 @@ public class ParkingUseMapPanel {
 		ListSelectionModel select = getTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setSP(new JScrollPane(getTable()));
-		
+
 		setPP1(new JPanel());
 		getPP1().setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
 		getPP1().setLayout(new GridLayout(1, 0));
 		getPP1().add(getSP());
-
 
 		getP().removeAll();
 		getP().add(getL1());
@@ -104,7 +118,6 @@ public class ParkingUseMapPanel {
 		this.p = p;
 	}
 
-
 	public JPanel getPP1() {
 		return pp1;
 	}
@@ -113,7 +126,6 @@ public class ParkingUseMapPanel {
 		this.pp1 = p;
 	}
 
-	
 	public JLabel getL1() {
 		return l1;
 	}
@@ -145,10 +157,57 @@ public class ParkingUseMapPanel {
 	public void setSep(JSeparator SEP) {
 		this.sep = SEP;
 	}
-	
+
 	public void updatePanel() {
 		getP().revalidate();
 		getP().repaint();
+	}
+
+	@Override
+	public void raseAlarm(int Level, int Slot) {
+
+		alarmColumn = Slot;
+		alarmRow = Level;
+
+		timer = new Timer();
+		timer.schedule(this, 0, 1000);
+
+		if (myAlarmEventListener != null)
+			myAlarmEventListener
+					.reportAlarm("רכב לא מאושר נכנס לחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופעל");
+		;
+
+	}
+
+	@Override
+	public void checkAlarm(int Level, int Slot) {
+		if (alarmColumn == Slot && alarmRow == Level) {
+			if (timer != null) {
+				timer.cancel();
+				if (myAlarmEventListener != null)
+					myAlarmEventListener.reportAlarm(
+							"רכב לא מאושר יצא מהחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופסק");
+				alarmColumn = 0;
+				alarmRow = 0;
+
+			}
+
+		}
+	}
+
+	@Override
+	public void run() {
+		Toolkit.getDefaultToolkit().beep();
+	}
+
+	@Override
+	public void reportAlarm(String AlarmMessage) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setAlarmEventListener(AlarmEventListener listener) {
+		this.myAlarmEventListener = listener;
 	}
 
 }
