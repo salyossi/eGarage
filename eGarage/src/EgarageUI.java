@@ -17,6 +17,10 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	private String carInEntranceGate;
 	private String carEnteredParking;
 	private String carExitFromParking;
+
+	private String parkingListCarType;
+	private String parkingLevelUsed;
+
 	private String carInExitGate;
 	private String payingCarID;
 	private java.sql.Timestamp parkingStartTime;
@@ -161,10 +165,19 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		case "רכב נכנס לחניה":
 			// get car ID just entered a parking slot, from virtual Panel via hash table
 			carEnteredParking = argv.get("CarEnteredParking").toString();
-			
+
 			// send to Parking map of the new state, to update its LEDs map
 			UpdateLeds();
-	
+
+			// update signPost
+			// get car Type just entered a parking slot, from virtual Panel via hash table
+			parkingListCarType = argv.get("ParkingListCarType").toString();
+			// get Parking level just used by a car entering a parking slot, from virtual
+			// Panel via hash table
+			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+
+			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
+
 			break;
 
 		case "רכב יצא מחניה":
@@ -176,6 +189,15 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 			// send to Parking map of the new state, to update its LEDs map
 			UpdateLeds();
+
+			// update signPost
+			// get car Type just entered a parking slot, from virtual Panel via hash table
+			parkingListCarType = argv.get("ParkingListCarType").toString();
+			// get Parking level just used by a car entering a parking slot, from virtual
+			// Panel via hash table
+			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+
+			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
 
 			break;
 
@@ -365,8 +387,6 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		// update UI header text
 		UpdateStateHeader(AlarmMessage);
 
-		
-		
 	}
 
 }

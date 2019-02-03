@@ -752,13 +752,18 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 				// if the car is VIP or Handicaps - mark as authorized
 				// so it dose not need to go to the paying machine
 				// else add the car to paying list
-				int tmpCarType = EgarageDB.getCarTypeInUserList(Integer.parseInt(tmpC66));
-				if(tmpCarType > 1)
+				int tmpUserListCarType = EgarageDB.getCarTypeInUserList(Integer.parseInt(tmpC66));
+				if(tmpUserListCarType > 1)
 					EgarageDB.SetAuthorized(Integer.parseInt(tmpC66));
 				else
 					// Update combo box of cars in payment mode
 					getVehiclesInPaymentModeModel().addElement(tmpC66);
 
+				// Add to hash table the car ID that enter a parking
+				String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpT222), Integer.parseInt(tmpT22)));
+				eventArgsHash.put("ParkingListCarType", tmpParkingListCarType);
+				eventArgsHash.put("ParkingLevelUsed", tmpT222);
+				
 				// Update combo box of cars to enter a parking slot with the car just entered a
 				// parking slot
 				getVehiclesEnteredGarageModel().removeElement(tmpC66);
@@ -794,6 +799,12 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			// Update usage list in database
 			EgarageDB.UpdateCarExitFromParkingSlotUsageList(Integer.parseInt(tmpT224), Integer.parseInt(tmpT223));
 
+			
+			// Add to hash table the car ID that exit from a parking
+			String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpT224), Integer.parseInt(tmpT223)));
+			eventArgsHash.put("ParkingListCarType", tmpParkingListCarType);
+			eventArgsHash.put("ParkingLevelUsed", tmpT224);
+			
 			break;
 
 		case "רכב מול מחסום יציאה":

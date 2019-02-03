@@ -285,4 +285,15 @@ public class EgarageDB {
 		}
 	}
 	
+	public static int getFreeRegularInLevel(int Level, int Type) {
+		String query;
+		try {
+			query = "SELECT count(*) free FROM parkinglist p left outer join egarageusage e on p.Level = e.Level and p.Slot = e.Slot WHERE p.Level = " + Level + " and p.SlotUsed = 0 and p.Type = " + Type;
+			
+			return ConnClass.IntegerSelect(query, "free");
+		} catch (ClassNotFoundException e) {
+			return 0;
+		}
+	}
+
 }

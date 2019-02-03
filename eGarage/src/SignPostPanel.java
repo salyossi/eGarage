@@ -11,6 +11,14 @@ public class SignPostPanel {
 	private JTable table;
 	private JScrollPane sp;
 	private JSeparator sep;
+	private int nrows = 4;
+	// Populate levels & headers for default table model.
+	private String[] levels = { "קומה 0", "קומה 1", "קומה 2", "קומה 3" };
+	private String[] headers = { "קומה", "פנוי חניה רגילה", "פנוי חניה מנויים", "פנוי חניה נכים" };
+	private String[] free1 = new String[nrows]; // Free parking of general parking for each level
+	private String[] free2 = new String[nrows]; // Free parking of VIP parking for each level
+	private String[] free3 = new String[nrows]; // Free parking of handicaps parking for each level
+	private DefaultTableModel dtm;
 
 	public SignPostPanel(String l1Text) {
 
@@ -25,45 +33,35 @@ public class SignPostPanel {
 		getSep().setMaximumSize(new Dimension((int) sep.getMaximumSize().getWidth(), 25));
 
 		// Create a default table model consisting of the headers columns
-		// and 4 rows representing the eGarage Levels.
-		String[] headers = { "קומה", "סה''כ", "חניה רגיל", "חניה מנוי", "חניה נכה" };
-		DefaultTableModel dtm = new DefaultTableModel(headers, 4){
+		// and "nrows" representing the eGarage Levels.
+		dtm = new DefaultTableModel(headers, nrows) {
 
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		       //all cells false
-		       return false;
-		    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// all cells false
+				return false;
+			}
 		};
 
-		// Populate all cells in the default table model.
-
-		String[] levels = { "קומה 0", "קומה 1", "קומה 2", "קומה 3" };
-		String[] sign1 = { "", "", "", "1" };
-		String[] sign2 = { "", "", "1", "" };
-		String[] sign3 = { "", "1", "", "" };
-		String[] sign4 = { "1", "", "", "" };
-
-		int nrows = dtm.getRowCount();
-		int ncols = dtm.getColumnCount();
-
 		for (int i = 0; i < nrows; i++) {
+			free1[i] = Integer.toString(EgarageDB.getFreeRegularInLevel(i, 1)); // Column of free regular clients
+			free2[i] = Integer.toString(EgarageDB.getFreeRegularInLevel(i, 2)); // Column of free VIP clients
+			free3[i] = Integer.toString(EgarageDB.getFreeRegularInLevel(i, 3)); // Column of free handicaps clients
 			dtm.setValueAt(levels[i], i, 0);
-			dtm.setValueAt(sign1[i], i, 1);
-			dtm.setValueAt(sign2[i], i, 2);
-			dtm.setValueAt(sign3[i], i, 3);
-			dtm.setValueAt(sign4[i], i, 4);
+			dtm.setValueAt(free1[i], i, 1);
+			dtm.setValueAt(free2[i], i, 2);
+			dtm.setValueAt(free3[i], i, 3);
 		}
 
 		// Create a table using the previously created default table
 		// model
 		table = new JTable(dtm);
-		
+
 		// Create a renderer for displaying cells in certain colors.
 		// this represents LEDS in the Garage
 		TableSignRenderer renderer = new TableSignRenderer();
 		table.setDefaultRenderer(Object.class, renderer);
-		
+
 		getTable().setCellSelectionEnabled(true);
 		getTable().enableInputMethods(false);
 		getTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -71,7 +69,7 @@ public class SignPostPanel {
 		ListSelectionModel select = getTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setSP(new JScrollPane(getTable()));
-		
+
 		setPP1(new JPanel());
 		getPP1().setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		getPP1().setLayout(new GridLayout(1, 0));
@@ -94,7 +92,6 @@ public class SignPostPanel {
 		this.p = p;
 	}
 
-
 	public JPanel getPP1() {
 		return pp1;
 	}
@@ -103,7 +100,6 @@ public class SignPostPanel {
 		this.pp1 = p;
 	}
 
-	
 	public JLabel getL1() {
 		return l1;
 	}
@@ -111,7 +107,6 @@ public class SignPostPanel {
 	public void setL1(JLabel L) {
 		this.l1 = L;
 	}
-
 
 	public JTable getTable() {
 		return table;
@@ -129,7 +124,21 @@ public class SignPostPanel {
 		this.sp = SP;
 	}
 
-	
+	public void updateSignPost(String Level, String Type) {
+
+		switch (Type) {
+		case "1":
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 1)), Integer.parseInt(Level), 1);
+			break;
+		case "2":
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 2)), Integer.parseInt(Level), 2);
+			break;
+		case "3":
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 3)), Integer.parseInt(Level), 3);
+			break;
+		}
+	}
+
 	public JSeparator getSep() {
 		return sep;
 	}
