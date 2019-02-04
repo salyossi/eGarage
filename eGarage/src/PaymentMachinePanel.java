@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class PaymentMachinePanel implements ActionListener {
 
-	private JPanel p, pp1, pp2, pp3;
+	private JPanel p, pp1, pp2, p1p2, p2p2, p3p2, pp3;
 	private JLabel l1, l2, l3;
 	private JButton b1, b2, b3, b4, b5;
 	private JTextArea  ta1;
@@ -26,6 +26,8 @@ public class PaymentMachinePanel implements ActionListener {
 		getPP1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		getPP1().setLayout(new GridLayout(3, 0));
 		setPP2(new JPanel());
+		getPP2().setLayout(new BoxLayout(getPP2(), BoxLayout.PAGE_AXIS));
+		getPP2().setAlignmentX(Component.CENTER_ALIGNMENT);
 		getPP2().setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black));
 		setPP3(new JPanel(new GridLayout(1, 0)));
 		getP().add(getPP1());
@@ -33,14 +35,20 @@ public class PaymentMachinePanel implements ActionListener {
 		getP().add(getPP3());
 		
 		setL1(new JLabel(l1Text));
-		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		setL2(new JLabel("תעריף חניה לשעה = 15 ש''ח"));
 		getL2().setFont(new Font("Ariel", Font.PLAIN, 16));
 		setL3(new JLabel("תעריף יומי = 40 ש''ח"));
 		getL3().setFont(new Font("Ariel", Font.PLAIN, 16));
-		getPP2().add(getL1());
-		getPP2().add(getL2());
-		getPP2().add(getL3());
+		setP1P2(new JPanel());
+		setP2P2(new JPanel());
+		setP3P2(new JPanel());
+		getP1P2().add(getL1());
+		getP2P2().add(getL2());
+		getP3P2().add(getL3());
+		getPP2().add(getP1P2());
+		getPP2().add(getP2P2());
+		getPP2().add(getP3P2());
 		
 		setB1(new JButton("בצע תשלום"));
 		getB1().setEnabled(false);
@@ -93,7 +101,31 @@ public class PaymentMachinePanel implements ActionListener {
 		this.pp2 = p;
 	}
 	
+	
+	public JPanel getP1P2() {
+		return p1p2;
+	}
 
+	public void setP1P2(JPanel p) {
+		this.p1p2 = p;
+	}
+	
+	public JPanel getP2P2() {
+		return p2p2;
+	}
+
+	public void setP2P2(JPanel p) {
+		this.p2p2 = p;
+	}
+	
+	public JPanel getP3P2() {
+		return p3p2;
+	}
+
+	public void setP3P2(JPanel p) {
+		this.p3p2 = p;
+	}
+	
 	public JPanel getPP3() {
 		return pp3;
 	}

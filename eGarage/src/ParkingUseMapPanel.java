@@ -26,7 +26,7 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 
 		setL1(new JLabel(l1Text));
 		getL1().setAlignmentX(Component.CENTER_ALIGNMENT);
-		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		setP(new JPanel());
 		getP().setLayout(new BoxLayout(getP(), BoxLayout.PAGE_AXIS));
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));

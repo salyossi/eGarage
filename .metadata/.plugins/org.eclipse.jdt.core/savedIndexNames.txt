@@ -15,7 +15,6 @@ INDEX VERSION 1.131+C:\Technion2017\Egarage\.metadata\.plugins\org.eclipse.jdt.c
 3363692690.index
 3609888128.index
 3273689814.index
-2540543804.index
 2569137926.index
 100574398.index
 806062888.index
