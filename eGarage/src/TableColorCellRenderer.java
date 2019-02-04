@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -12,7 +14,7 @@ import javax.swing.table.TableCellRenderer;
 
 public class TableColorCellRenderer implements TableCellRenderer {
 
-	private static final TableCellRenderer RENDERER = new DefaultTableCellRenderer();
+	private static final DefaultTableCellRenderer RENDERER = new DefaultTableCellRenderer();
 	private AlarmEventListener myAlarmEventListener;
 
 	@Override
@@ -62,7 +64,16 @@ public class TableColorCellRenderer implements TableCellRenderer {
 			break;
 		}
 
-		c.applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		switch (column) {
+		
+		case 0:
+			RENDERER.setHorizontalAlignment( JLabel.RIGHT );
+			RENDERER.setFont(new Font("Ariel", Font.BOLD, 14));
+			
+			break;
+		default:
+			RENDERER.setHorizontalAlignment( JLabel.CENTER );
+		}
 
 		return c;
 	}

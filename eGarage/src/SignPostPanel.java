@@ -2,7 +2,9 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class SignPostPanel {
 
@@ -57,10 +59,14 @@ public class SignPostPanel {
 		// model
 		table = new JTable(dtm);
 
-		// Create a renderer for displaying cells in certain colors.
-		// this represents LEDS in the Garage
+		// Create a renderer for displaying cells in certain orientation.
 		TableSignRenderer renderer = new TableSignRenderer();
 		table.setDefaultRenderer(Object.class, renderer);
+
+		// set headers to be bold
+		Font f = new Font("Arial", Font.BOLD, 14);
+		JTableHeader header = table.getTableHeader();
+		header.setFont(f);
 
 		getTable().setCellSelectionEnabled(true);
 		getTable().enableInputMethods(false);
@@ -128,13 +134,16 @@ public class SignPostPanel {
 
 		switch (Type) {
 		case "1":
-			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 1)), Integer.parseInt(Level), 1);
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 1)),
+					Integer.parseInt(Level), 1);
 			break;
 		case "2":
-			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 2)), Integer.parseInt(Level), 2);
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 2)),
+					Integer.parseInt(Level), 2);
 			break;
 		case "3":
-			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 3)), Integer.parseInt(Level), 3);
+			dtm.setValueAt(Integer.toString(EgarageDB.getFreeRegularInLevel(Integer.parseInt(Level), 3)),
+					Integer.parseInt(Level), 3);
 			break;
 		}
 	}

@@ -7,41 +7,44 @@ import javax.swing.*;
 
 public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEventListener {
 
-	private StateHeader stateHeaderPanel;
-	private SignPostPanel signPostPanel;
-	private ParkingUseMapPanel parkingUseMapPanel;
-	private EntranceMachinePanel entranceMachinePanel;
-	private ExitMachinePanel exitMachinePanel;
-	private PaymentMachinePanel paymentMachinePanel;
-	private VirtualButtonsPanel virtualButtonsPanel;
-	private String carInEntranceGate;
-	private String carEnteredParking;
-	private String carExitFromParking;
+	private StateHeader stateHeaderPanel; // Panel object to host general instructions as big header if UI
+	private SignPostPanel signPostPanel; // Panel object illustrating all SignPost installed in the Garage
+	private ParkingUseMapPanel parkingUseMapPanel; // Panel object illustrating all parking indicators and LEDs installed in every parking slot
+	private EntranceMachinePanel entranceMachinePanel; //Panel object illustrating the entrance machine installed in every entrance gate of the Garage
+	private ExitMachinePanel exitMachinePanel; //Panel object illustrating the exit machine installed in every exit gate of the Garage
+	private PaymentMachinePanel paymentMachinePanel; //Panel object illustrating the payment machine
+	private VirtualButtonsPanel virtualButtonsPanel; //Panel object illustrating the interaction between the driver and the system like 
+													 // taking the parking ticket from the entrance machine and also illustrating interactions 
+													 // between deferment hardwares and the software system like camera identifying the car number
+													 // and sending the number to the system or car passing the barrier and then the barrier is closing.
+	private String carInEntranceGate; // A private member to hold the carID reported by the entrance gate camera - here it is done by the virtual panel 
+	private String carEnteredParking; // A private member to hold the carID reported entering by the parking slot camera - here it is done by the virtual panel
+	private String carExitFromParking; // A private member to hold the carID reported exiting by the parking slot camera - here it is done by the virtual panel 
 
-	private String parkingListCarType;
-	private String parkingLevelUsed;
+	private String parkingListCarType; // A private member to hold the car type of a specific parking slot (1= General, 2=VIP, 3=handicaps) 
+	private String parkingLevelUsed; // A private member to hold the level of a specific parking slot - in this demo there are 4 levels (0 - 3)
 
-	private String carInExitGate;
-	private String payingCarID;
-	private java.sql.Timestamp parkingStartTime;
-	private java.sql.Timestamp parkingEndTime;
-	private int parkingTimeInHours;
-	private int parkingTimeInDays;
-	private String parkingTimeTotal;
-	private String paymentConsoleTextWithoutCoins;
-	private int coinsEntered = 0;
-	int amountToPay;
+	private String carInExitGate; // A private member to hold the carID reported by the exit gate camera - here it is done by the virtual panel 
+	private String payingCarID; // A private member to hold the carID reported by the parking ticket when entered to the paying machine - here it is done by the virtual panel 
+	private java.sql.Timestamp parkingStartTime; // A private member to hold the start time of parking when car enters a parking slot 
+	private java.sql.Timestamp parkingEndTime; // A private member to hold the end time of parking when paying a parking ticket
+	private int parkingTimeInHours; // A private member to hold the time of parking in hours if <= 12 hours celled i.e. 1.5 hours = 2 hours for payment
+	private int parkingTimeInDays; // A private member to hold the time of parking in days if > 12 hours celled i.e. 1.5 days = 2 days for payment
+	private String parkingTimeTotal; // A private String member to hold the time for displaying in payment machine
+	private String paymentConsoleTextWithoutCoins; // A private String member to hold the start time, end time, duration and cost for displaying in payment machine
+	private int coinsEntered = 0; // A private member to hold the amount of coins entered to the payment machine
+	int amountToPay; // A private member to hold the amount to pay
 
 	public EgarageUI() {
 
-		stateHeader = setStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
-		signPost = setSignPost("תצוגת שילוט");
-		parkingUseMap = setParkingUseMap("חישני החנייה");
-		entranceMachine = setEntranceMachine("מכונת הכניסה");
-		exitMachine = setExitMachine("מכונת היציאה");
-		paymentMachine = setPaymentMachine("מכונת התשלום");
-		virtualButtons = setVirtualButtons();
-		DrawFrame();
+		stateHeader = setStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper JPanel member variable created via local Panel object
+		signPost = setSignPost("תצוגת שילוט");  // A supper JPanel member variable created via local Panel object
+		parkingUseMap = setParkingUseMap("חישני החנייה");  // A supper JPanel member variable created via local Panel object
+		entranceMachine = setEntranceMachine("מכונת הכניסה");  // A supper JPanel member variable created via local Panel object
+		exitMachine = setExitMachine("מכונת היציאה");  // A supper JPanel member variable created via local Panel object
+		paymentMachine = setPaymentMachine("מכונת התשלום");  // A supper JPanel member variable created via local Panel object
+		virtualButtons = setVirtualButtons();  // A supper JPanel member variable created via local Panel object
+		DrawFrame(); // A Super method that draws the UI
 		f.setVisible(true);
 	}
 
@@ -55,12 +58,12 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	public JPanel setSignPost(String l1Text) {
 		signPostPanel = new SignPostPanel(l1Text);
 		return signPostPanel.getP();
-	}
+	}	
 
 	@Override
 	public JPanel setParkingUseMap(String l1Text) {
-		parkingUseMapPanel = new ParkingUseMapPanel();
-		parkingUseMapPanel.getL1().setText(l1Text);
+		parkingUseMapPanel = new ParkingUseMapPanel(l1Text);
+		// register this object as the alarm event listener so when alarm is raised this object will know
 		parkingUseMapPanel.setAlarmEventListener(this);
 		return parkingUseMapPanel.getP();
 	}
@@ -68,6 +71,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setEntranceMachine(String l1Text) {
 		entranceMachinePanel = new EntranceMachinePanel(l1Text);
+		// register this object as the button event listener so when button is pressed this object will know
 		entranceMachinePanel.setButtonEventListener(this);
 		return entranceMachinePanel.getP();
 	}
@@ -81,6 +85,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setPaymentMachine(String l1Text) {
 		paymentMachinePanel = new PaymentMachinePanel(l1Text);
+		// register this object as the button event listener so when button is pressed this object will know
 		paymentMachinePanel.setButtonEventListener(this);
 		return paymentMachinePanel.getP();
 	}
@@ -88,10 +93,12 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setVirtualButtons() {
 		virtualButtonsPanel = new VirtualButtonsPanel();
+		// register this object as the button event listener so when button is pressed this object will know
 		virtualButtonsPanel.setButtonEventListener(this);
 		return virtualButtonsPanel.getP();
 	}
 
+	// when buttons are activated in registered pannels this method is fired
 	@Override
 	public void onPressedEvent(JButton btn, Hashtable argv) {
 		String arg = btn.getActionCommand();
@@ -372,16 +379,15 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 	@Override
 	public void raseAlarm(int Level, int Slot) {
-		// TODO Auto-generated method stub
-
+		// not used here
 	}
 
 	@Override
 	public void checkAlarm(int Level, int Slot) {
-		// TODO Auto-generated method stub
-
+		// not used here
 	}
 
+	// when alarm is activated in registered pannels this method is fired and is used to pass a texyt for UI header
 	@Override
 	public void reportAlarm(String AlarmMessage) {
 		// update UI header text
