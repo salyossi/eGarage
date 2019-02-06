@@ -26,7 +26,7 @@ public abstract class MainFrame extends JFrame {
 	protected JPanel paymentMachine; // Payment Machine JPanel
 	protected JPanel virtualButtons; // JPanel of buttons for the interaction between the system and drivers
 
-	public abstract JPanel setStateHeader(String l1Text); // will be implemented by each state class
+	public abstract JPanel setUIHeader(String l1Text); // will be implemented by each state class
 	
 	public abstract JPanel setSignPost(String l1Text); // will be implemented by each state class
 

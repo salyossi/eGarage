@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEventListener {
 
-	private StateHeader stateHeaderPanel; // Panel object to host general instructions as big header if UI
+	private UIHeader uiHeaderPanel; // Panel object to host general instructions as big header if UI
 	private SignPostPanel signPostPanel; // Panel object illustrating all SignPost installed in the Garage
 	private ParkingUseMapPanel parkingUseMapPanel; // Panel object illustrating all parking indicators and LEDs installed in every parking slot
 	private EntranceMachinePanel entranceMachinePanel; //Panel object illustrating the entrance machine installed in every entrance gate of the Garage
@@ -37,7 +37,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 	public EgarageUI() {
 
-		stateHeader = setStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper JPanel member variable created via local Panel object
+		stateHeader = setUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper JPanel member variable created via local Panel object
 		signPost = setSignPost("תצוגת שילוט");  // A supper JPanel member variable created via local Panel object
 		parkingUseMap = setParkingUseMap("חישני החנייה");  // A supper JPanel member variable created via local Panel object
 		entranceMachine = setEntranceMachine("מכונת הכניסה");  // A supper JPanel member variable created via local Panel object
@@ -49,9 +49,9 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	}
 
 	@Override
-	public JPanel setStateHeader(String l1Text) {
-		stateHeaderPanel = new StateHeader(l1Text);
-		return stateHeaderPanel.getP();
+	public JPanel setUIHeader(String l1Text) {
+		uiHeaderPanel = new UIHeader(l1Text);
+		return uiHeaderPanel.getP();
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetEntranceButton().setEnabled(true);
 
 			// update UI header text
-			UpdateStateHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
+			UpdateUIHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
 
 			break;
 
@@ -135,13 +135,13 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 					+ dateFormat.format(date) + " לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
 
 			// update UI header text
-			UpdateStateHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+			UpdateUIHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
 
 			break;
 
 		case "כרטיס חניה נלקח":
 			// Update entrance machine console with relevant text
-			UpdateStateHeader("המחסום נפתח , נא להיכנס לחניון");
+			UpdateUIHeader("המחסום נפתח , נא להיכנס לחניון");
 
 			// enable next button in process
 			virtualButtonsPanel.getB4().setEnabled(true);
@@ -153,7 +153,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			virtualButtonsPanel.getT2().setEditable(true);
 
 			// update UI header text
-			UpdateStateHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
+			UpdateUIHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
 
 			// Update entrance machine console with relevant text
 			GetEntranceConsole().setText("אין רכב בכניסה");
@@ -217,7 +217,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 				GetExitConsole().setText("רכב מספר " + carInExitGate + " מאושר ליציאה - המחסום נפתח נא לצאת");
 
 				// update UI header text
-				UpdateStateHeader("רכב מאושר ליציאה - דרך צלחה ותודה שהשתמשתם בחניון של יוסי סאשה וזאב");
+				UpdateUIHeader("רכב מאושר ליציאה - דרך צלחה ותודה שהשתמשתם בחניון של יוסי סאשה וזאב");
 
 			} else {
 				// Update exit machine console with relevant text
@@ -225,7 +225,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 						"רכב מספר " + carInExitGate + " אינו מאושר ליציאה - המחסום ישאר סגור, נא לגשת לעמדת התשלום");
 
 				// update UI header text
-				UpdateStateHeader("רכב לא מאושר ליציאה - יש לגשת למכונת התשלום");
+				UpdateUIHeader("רכב לא מאושר ליציאה - יש לגשת למכונת התשלום");
 
 				// disable next button in process and force client to go and pay
 				virtualButtonsPanel.getB7().setEnabled(false);
@@ -237,7 +237,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetExitConsole().setText("המחסום סגור - אין רכב ביציאה");
 
 			// update UI header text
-			UpdateStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
+			UpdateUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
 
 			// Delete from DB the car exiting the garage
 			EgarageDB.DeleteCarExitingGarage(carInExitGate);
@@ -292,7 +292,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetPayingConsole().setText(paymentConsoleTextWithoutCoins);
 
 			// update UI header text
-			UpdateStateHeader("פרטי התשלום מופיעים על צג מכונת התשלום");
+			UpdateUIHeader("פרטי התשלום מופיעים על צג מכונת התשלום");
 
 			break;
 		case "סך המטבעות הוכנס":
@@ -317,7 +317,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetPayingConsole().setText(paymentConsoleTextWithoutCoins + " התשלום בוצע");
 
 			// update UI header text
-			UpdateStateHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
+			UpdateUIHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
 
 			break;
 		case "קבל את הכרטיס":
@@ -373,8 +373,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		return paymentMachinePanel.getTA1();
 	}
 
-	public void UpdateStateHeader(String newText) {
-		stateHeaderPanel.getL1().setText(newText);
+	public void UpdateUIHeader(String newText) {
+		uiHeaderPanel.getL1().setText(newText);
 	}
 
 	@Override
@@ -391,7 +391,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public void reportAlarm(String AlarmMessage) {
 		// update UI header text
-		UpdateStateHeader(AlarmMessage);
+		UpdateUIHeader(AlarmMessage);
 
 	}
 

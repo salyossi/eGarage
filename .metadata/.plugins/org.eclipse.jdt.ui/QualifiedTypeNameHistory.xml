@@ -14,7 +14,6 @@
 <fullyQualifiedTypeName name="javax.swing.JTable"/>
 <fullyQualifiedTypeName name="com.sun.prism.paint.Color"/>
 <fullyQualifiedTypeName name="javax.swing.table.TableCellRenderer"/>
-<fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
 <fullyQualifiedTypeName name="com.sun.management.VMOption.Origin"/>
@@ -54,4 +53,6 @@
 <fullyQualifiedTypeName name="EgarageDB"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
+<fullyQualifiedTypeName name="javax.swing.table.JTableHeader"/>
 </qualifiedTypeNameHistroy>
