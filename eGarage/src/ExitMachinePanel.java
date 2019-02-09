@@ -32,7 +32,7 @@ public class ExitMachinePanel implements ActionListener {
 		getP().add(getPP3());
 
 		setL1(new JLabel(l1Text));
-		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		getPP2().add(getL1());
 
 		setB1(new JButton("כרטיס חניה הוכנס"));

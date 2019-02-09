@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-public class StateHeader {
+public class UIHeader {
 
 	private JPanel p;
 	private JLabel l1;
 	
-	public StateHeader(String l1Text) {
+	public UIHeader(String l1Text) {
 		
 		l1 = new JLabel(l1Text);
 		l1.setFont(new Font("Ariel", Font.PLAIN, 22));

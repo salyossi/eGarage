@@ -20,13 +20,13 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 
 	private AlarmEventListener myAlarmEventListener;
 
-	public ParkingUseMapPanel() {
+	public ParkingUseMapPanel(String l1Text) {
 
 		// JTextField textBox = new JTextField();
 
-		setL1(new JLabel("no-text"));
+		setL1(new JLabel(l1Text));
 		getL1().setAlignmentX(Component.CENTER_ALIGNMENT);
-		getL1().setFont(new Font("Ariel", Font.PLAIN, 16));
+		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		setP(new JPanel());
 		getP().setLayout(new BoxLayout(getP(), BoxLayout.PAGE_AXIS));
 		getP().setBorder(BorderFactory.createLineBorder(Color.black));
@@ -87,6 +87,11 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 		TableColorCellRenderer renderer = new TableColorCellRenderer();
 		renderer.setAlarmEventListener(this);
 		table.setDefaultRenderer(Object.class, renderer);
+
+		// set headers to be bold
+		Font f = new Font("Arial", Font.BOLD, 14);
+		JTableHeader header = table.getTableHeader();
+		header.setFont(f);
 
 		getTable().setCellSelectionEnabled(true);
 		getTable().enableInputMethods(false);

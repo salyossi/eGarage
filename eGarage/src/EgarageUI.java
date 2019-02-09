@@ -7,56 +7,63 @@ import javax.swing.*;
 
 public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEventListener {
 
-	private StateHeader stateHeaderPanel;
-	private SignPostPanel signPostPanel;
-	private ParkingUseMapPanel parkingUseMapPanel;
-	private EntranceMachinePanel entranceMachinePanel;
-	private ExitMachinePanel exitMachinePanel;
-	private PaymentMachinePanel paymentMachinePanel;
-	private VirtualButtonsPanel virtualButtonsPanel;
-	private String carInEntranceGate;
-	private String carEnteredParking;
-	private String carExitFromParking;
-	private String carInExitGate;
-	private String payingCarID;
-	private java.sql.Timestamp parkingStartTime;
-	private java.sql.Timestamp parkingEndTime;
-	private int parkingTimeInHours;
-	private int parkingTimeInDays;
-	private String parkingTimeTotal;
-	private String paymentConsoleTextWithoutCoins;
-	private int coinsEntered = 0;
-	int amountToPay;
+	private UIHeader uiHeaderPanel; // Panel object to host general instructions as big header if UI
+	private SignPostPanel signPostPanel; // Panel object illustrating all SignPost installed in the Garage
+	private ParkingUseMapPanel parkingUseMapPanel; // Panel object illustrating all parking indicators and LEDs installed in every parking slot
+	private EntranceMachinePanel entranceMachinePanel; //Panel object illustrating the entrance machine installed in every entrance gate of the Garage
+	private ExitMachinePanel exitMachinePanel; //Panel object illustrating the exit machine installed in every exit gate of the Garage
+	private PaymentMachinePanel paymentMachinePanel; //Panel object illustrating the payment machine
+	private VirtualButtonsPanel virtualButtonsPanel; //Panel object illustrating the interaction between the driver and the system like 
+													 // taking the parking ticket from the entrance machine and also illustrating interactions 
+													 // between deferment hardwares and the software system like camera identifying the car number
+													 // and sending the number to the system or car passing the barrier and then the barrier is closing.
+	private String carInEntranceGate; // A private member to hold the carID reported by the entrance gate camera - here it is done by the virtual panel 
+	private String carEnteredParking; // A private member to hold the carID reported entering by the parking slot camera - here it is done by the virtual panel
+	private String carExitFromParking; // A private member to hold the carID reported exiting by the parking slot camera - here it is done by the virtual panel 
+
+	private String parkingListCarType; // A private member to hold the car type of a specific parking slot (1= General, 2=VIP, 3=handicaps) 
+	private String parkingLevelUsed; // A private member to hold the level of a specific parking slot - in this demo there are 4 levels (0 - 3)
+
+	private String carInExitGate; // A private member to hold the carID reported by the exit gate camera - here it is done by the virtual panel 
+	private String payingCarID; // A private member to hold the carID reported by the parking ticket when entered to the paying machine - here it is done by the virtual panel 
+	private java.sql.Timestamp parkingStartTime; // A private member to hold the start time of parking when car enters a parking slot 
+	private java.sql.Timestamp parkingEndTime; // A private member to hold the end time of parking when paying a parking ticket
+	private int parkingTimeInHours; // A private member to hold the time of parking in hours if <= 12 hours celled i.e. 1.5 hours = 2 hours for payment
+	private int parkingTimeInDays; // A private member to hold the time of parking in days if > 12 hours celled i.e. 1.5 days = 2 days for payment
+	private String parkingTimeTotal; // A private String member to hold the time for displaying in payment machine
+	private String paymentConsoleTextWithoutCoins; // A private String member to hold the start time, end time, duration and cost for displaying in payment machine
+	private int coinsEntered = 0; // A private member to hold the amount of coins entered to the payment machine
+	int amountToPay; // A private member to hold the amount to pay
 
 	public EgarageUI() {
 
-		stateHeader = setStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
-		signPost = setSignPost("תצוגת שילוט");
-		parkingUseMap = setParkingUseMap("חישני החנייה");
-		entranceMachine = setEntranceMachine("מכונת הכניסה");
-		exitMachine = setExitMachine("מכונת היציאה");
-		paymentMachine = setPaymentMachine("מכונת התשלום");
-		virtualButtons = setVirtualButtons();
-		DrawFrame();
+		stateHeader = setUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper JPanel member variable created via local Panel object
+		signPost = setSignPost("תצוגת שילוט");  // A supper JPanel member variable created via local Panel object
+		parkingUseMap = setParkingUseMap("חישני החנייה");  // A supper JPanel member variable created via local Panel object
+		entranceMachine = setEntranceMachine("מכונת הכניסה");  // A supper JPanel member variable created via local Panel object
+		exitMachine = setExitMachine("מכונת היציאה");  // A supper JPanel member variable created via local Panel object
+		paymentMachine = setPaymentMachine("מכונת התשלום");  // A supper JPanel member variable created via local Panel object
+		virtualButtons = setVirtualButtons();  // A supper JPanel member variable created via local Panel object
+		DrawFrame(); // A Super method that draws the UI
 		f.setVisible(true);
 	}
 
 	@Override
-	public JPanel setStateHeader(String l1Text) {
-		stateHeaderPanel = new StateHeader(l1Text);
-		return stateHeaderPanel.getP();
+	public JPanel setUIHeader(String l1Text) {
+		uiHeaderPanel = new UIHeader(l1Text);
+		return uiHeaderPanel.getP();
 	}
 
 	@Override
 	public JPanel setSignPost(String l1Text) {
 		signPostPanel = new SignPostPanel(l1Text);
 		return signPostPanel.getP();
-	}
+	}	
 
 	@Override
 	public JPanel setParkingUseMap(String l1Text) {
-		parkingUseMapPanel = new ParkingUseMapPanel();
-		parkingUseMapPanel.getL1().setText(l1Text);
+		parkingUseMapPanel = new ParkingUseMapPanel(l1Text);
+		// register this object as the alarm event listener so when alarm is raised this object will know
 		parkingUseMapPanel.setAlarmEventListener(this);
 		return parkingUseMapPanel.getP();
 	}
@@ -64,6 +71,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setEntranceMachine(String l1Text) {
 		entranceMachinePanel = new EntranceMachinePanel(l1Text);
+		// register this object as the button event listener so when button is pressed this object will know
 		entranceMachinePanel.setButtonEventListener(this);
 		return entranceMachinePanel.getP();
 	}
@@ -77,6 +85,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setPaymentMachine(String l1Text) {
 		paymentMachinePanel = new PaymentMachinePanel(l1Text);
+		// register this object as the button event listener so when button is pressed this object will know
 		paymentMachinePanel.setButtonEventListener(this);
 		return paymentMachinePanel.getP();
 	}
@@ -84,10 +93,12 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setVirtualButtons() {
 		virtualButtonsPanel = new VirtualButtonsPanel();
+		// register this object as the button event listener so when button is pressed this object will know
 		virtualButtonsPanel.setButtonEventListener(this);
 		return virtualButtonsPanel.getP();
 	}
 
+	// when buttons are activated in registered pannels this method is fired
 	@Override
 	public void onPressedEvent(JButton btn, Hashtable argv) {
 		String arg = btn.getActionCommand();
@@ -107,7 +118,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetEntranceButton().setEnabled(true);
 
 			// update UI header text
-			UpdateStateHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
+			UpdateUIHeader("רכב עומד בכניסה יש ללחוץ על כפתור הכניסה במכונה כדי לקבל כרטיס חניה");
 
 			break;
 
@@ -124,25 +135,25 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 					+ dateFormat.format(date) + " לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
 
 			// update UI header text
-			UpdateStateHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
+			UpdateUIHeader("כרטיס החניה הונפק, לפתיחת המחסום נא לקחת את כרטיס החניה מהמכונה");
 
 			break;
 
 		case "כרטיס חניה נלקח":
 			// Update entrance machine console with relevant text
-			UpdateStateHeader("המחסום נפתח , נא להיכנס לחניון");
+			UpdateUIHeader("המחסום נפתח , נא להיכנס לחניון");
 
 			// enable next button in process
-			virtualButtonsPanel.getB4().setEnabled(true);
+			virtualButtonsPanel.getCarPassedBarier().setEnabled(true);
 			break;
 
 		case "הרכב עבר במחסום":
 			// enable next button in process and disable not relevant ones
-			virtualButtonsPanel.getB4().setEnabled(false);
-			virtualButtonsPanel.getT2().setEditable(true);
+			virtualButtonsPanel.getCarPassedBarier().setEnabled(false);
+			virtualButtonsPanel.getCarIDtextBox().setEditable(true);
 
 			// update UI header text
-			UpdateStateHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
+			UpdateUIHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
 
 			// Update entrance machine console with relevant text
 			GetEntranceConsole().setText("אין רכב בכניסה");
@@ -161,10 +172,19 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		case "רכב נכנס לחניה":
 			// get car ID just entered a parking slot, from virtual Panel via hash table
 			carEnteredParking = argv.get("CarEnteredParking").toString();
-			
+
 			// send to Parking map of the new state, to update its LEDs map
 			UpdateLeds();
-	
+
+			// update signPost
+			// get car Type just entered a parking slot, from virtual Panel via hash table
+			parkingListCarType = argv.get("ParkingListCarType").toString();
+			// get Parking level just used by a car entering a parking slot, from virtual
+			// Panel via hash table
+			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+
+			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
+
 			break;
 
 		case "רכב יצא מחניה":
@@ -177,6 +197,15 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			// send to Parking map of the new state, to update its LEDs map
 			UpdateLeds();
 
+			// update signPost
+			// get car Type just entered a parking slot, from virtual Panel via hash table
+			parkingListCarType = argv.get("ParkingListCarType").toString();
+			// get Parking level just used by a car entering a parking slot, from virtual
+			// Panel via hash table
+			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+
+			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
+
 			break;
 
 		case "רכב מול מחסום יציאה":
@@ -188,7 +217,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 				GetExitConsole().setText("רכב מספר " + carInExitGate + " מאושר ליציאה - המחסום נפתח נא לצאת");
 
 				// update UI header text
-				UpdateStateHeader("רכב מאושר ליציאה - דרך צלחה ותודה שהשתמשתם בחניון של יוסי סאשה וזאב");
+				UpdateUIHeader("רכב מאושר ליציאה - דרך צלחה ותודה שהשתמשתם בחניון של יוסי סאשה וזאב");
 
 			} else {
 				// Update exit machine console with relevant text
@@ -196,7 +225,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 						"רכב מספר " + carInExitGate + " אינו מאושר ליציאה - המחסום ישאר סגור, נא לגשת לעמדת התשלום");
 
 				// update UI header text
-				UpdateStateHeader("רכב לא מאושר ליציאה - יש לגשת למכונת התשלום");
+				UpdateUIHeader("רכב לא מאושר ליציאה - יש לגשת למכונת התשלום");
 
 				// disable next button in process and force client to go and pay
 				virtualButtonsPanel.getB7().setEnabled(false);
@@ -208,7 +237,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetExitConsole().setText("המחסום סגור - אין רכב ביציאה");
 
 			// update UI header text
-			UpdateStateHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
+			UpdateUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי");
 
 			// Delete from DB the car exiting the garage
 			EgarageDB.DeleteCarExitingGarage(carInExitGate);
@@ -263,7 +292,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetPayingConsole().setText(paymentConsoleTextWithoutCoins);
 
 			// update UI header text
-			UpdateStateHeader("פרטי התשלום מופיעים על צג מכונת התשלום");
+			UpdateUIHeader("פרטי התשלום מופיעים על צג מכונת התשלום");
 
 			break;
 		case "סך המטבעות הוכנס":
@@ -288,7 +317,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetPayingConsole().setText(paymentConsoleTextWithoutCoins + " התשלום בוצע");
 
 			// update UI header text
-			UpdateStateHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
+			UpdateUIHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
 
 			break;
 		case "קבל את הכרטיס":
@@ -329,11 +358,11 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	}
 
 	public JTextArea GetEntranceConsole() {
-		return entranceMachinePanel.getTA1();
+		return entranceMachinePanel.getEntranceMachineConsole();
 	}
 
 	public JButton GetEntranceButton() {
-		return entranceMachinePanel.getB1();
+		return entranceMachinePanel.getEntranceButon();
 	}
 
 	public JTextArea GetExitConsole() {
@@ -344,29 +373,26 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		return paymentMachinePanel.getTA1();
 	}
 
-	public void UpdateStateHeader(String newText) {
-		stateHeaderPanel.getL1().setText(newText);
+	public void UpdateUIHeader(String newText) {
+		uiHeaderPanel.getL1().setText(newText);
 	}
 
 	@Override
 	public void raseAlarm(int Level, int Slot) {
-		// TODO Auto-generated method stub
-
+		// not used here
 	}
 
 	@Override
 	public void checkAlarm(int Level, int Slot) {
-		// TODO Auto-generated method stub
-
+		// not used here
 	}
 
+	// when alarm is activated in registered pannels this method is fired and is used to pass a texyt for UI header
 	@Override
 	public void reportAlarm(String AlarmMessage) {
 		// update UI header text
-		UpdateStateHeader(AlarmMessage);
+		UpdateUIHeader(AlarmMessage);
 
-		
-		
 	}
 
 }
