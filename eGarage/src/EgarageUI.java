@@ -144,13 +144,13 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			UpdateUIHeader("המחסום נפתח , נא להיכנס לחניון");
 
 			// enable next button in process
-			virtualButtonsPanel.getB4().setEnabled(true);
+			virtualButtonsPanel.getCarPassedBarier().setEnabled(true);
 			break;
 
 		case "הרכב עבר במחסום":
 			// enable next button in process and disable not relevant ones
-			virtualButtonsPanel.getB4().setEnabled(false);
-			virtualButtonsPanel.getT2().setEditable(true);
+			virtualButtonsPanel.getCarPassedBarier().setEnabled(false);
+			virtualButtonsPanel.getCarIDtextBox().setEditable(true);
 
 			// update UI header text
 			UpdateUIHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
@@ -358,11 +358,11 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	}
 
 	public JTextArea GetEntranceConsole() {
-		return entranceMachinePanel.getTA1();
+		return entranceMachinePanel.getEntranceMachineConsole();
 	}
 
 	public JButton GetEntranceButton() {
-		return entranceMachinePanel.getB1();
+		return entranceMachinePanel.getEntranceButon();
 	}
 
 	public JTextArea GetExitConsole() {

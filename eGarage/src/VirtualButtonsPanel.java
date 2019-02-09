@@ -14,8 +14,8 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 	private JPanel p, p1p1, pp1, p1p11, pp11, pp12, pp13, pp2, pp21, pp3, pp4;
 	private JLabel l1, l1a, l11, l12, l13, l14, l15, l16, l5, l8, l81;
-	private JButton ba3, b33, b4, b44, b45, b7, b10, b12, b13, b14;
-	private JTextField t2, t22, t222, t223, t224, t11;
+	private JButton carIDRecognizedByCameraButton, b33, carPassedBarier, b44, b45, b7, b10, b12, b13, b14;
+	private JTextField carIDtextBox, t22, t222, t223, t224, t11;
 	private JComboBox c6, c66, c9;
 	private JSeparator sep1, sep11, sep2;
 	private Vector<String> vehiclesEnteredGarageV;
@@ -39,9 +39,9 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getP1P1().add(getL1());
 
 		setPP1(new JPanel(new FlowLayout()));
-		setT2(new JTextField(8));
-		getT2().addActionListener(this);
-		getT2().addKeyListener(new KeyListener() {
+		setCarIDtextBox(new JTextField(8));
+		getCarIDtextBox().addActionListener(this);
+		getCarIDtextBox().addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
@@ -52,10 +52,10 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			public void keyReleased(KeyEvent arg0) {
 				// check if number for car entering the garage is entered the number
 				// needs to be 8 digits long
-				if (getT2().getText().length() >= 8) {
-					getBA3().setEnabled(true);
+				if (getCarIDtextBox().getText().length() >= 8) {
+					getCarIDRecognizedByCameraButton().setEnabled(true);
 				} else {
-					getBA3().setEnabled(false);
+					getCarIDRecognizedByCameraButton().setEnabled(false);
 				}
 
 			}
@@ -66,20 +66,20 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			}
 		});
 		setL1A(new JLabel("מספר הרכב הנכנס לזיהוי מצלמת הכניסה"));
-		getPP1().add(getT2());
+		getPP1().add(getCarIDtextBox());
 		getPP1().add(getL1A());
 
-		setBA3(new JButton("רכב זוהה ע''י המצלמה"));
-		getBA3().addActionListener(this);
-		getBA3().setMaximumSize(new Dimension(180, 20));
-		getBA3().setAlignmentX(Component.CENTER_ALIGNMENT);
-		getBA3().setEnabled(false);
+		setCarIDRecognizedByCameraButton(new JButton("רכב זוהה ע''י המצלמה"));
+		getCarIDRecognizedByCameraButton().addActionListener(this);
+		getCarIDRecognizedByCameraButton().setMaximumSize(new Dimension(180, 20));
+		getCarIDRecognizedByCameraButton().setAlignmentX(Component.CENTER_ALIGNMENT);
+		getCarIDRecognizedByCameraButton().setEnabled(false);
 
-		setB4(new JButton("הרכב עבר במחסום"));
-		getB4().addActionListener(this);
-		getB4().setMaximumSize(new Dimension(180, 20));
-		getB4().setAlignmentX(Component.CENTER_ALIGNMENT);
-		getB4().setEnabled(false);
+		setCarPassedBarier(new JButton("הרכב עבר במחסום"));
+		getCarPassedBarier().addActionListener(this);
+		getCarPassedBarier().setMaximumSize(new Dimension(180, 20));
+		getCarPassedBarier().setAlignmentX(Component.CENTER_ALIGNMENT);
+		getCarPassedBarier().setEnabled(false);
 
 		setSep1(new JSeparator());
 		getSep1().setMaximumSize(new Dimension((int) getSep1().getMaximumSize().getWidth(), 25));
@@ -296,9 +296,9 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		getP().add(getP1P1());
 		getP().add(getPP1());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		getP().add(getBA3());
+		getP().add(getCarIDRecognizedByCameraButton());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
-		getP().add(getB4());
+		getP().add(getCarPassedBarier());
 		getP().add(Box.createRigidArea(new Dimension(40, 2)));
 		getP().add(getSep1());
 		getP().add(getP1P11());
@@ -486,12 +486,12 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		this.l16 = L;
 	}
 
-	public JTextField getT2() {
-		return t2;
+	public JTextField getCarIDtextBox() {
+		return carIDtextBox;
 	}
 
-	public void setT2(JTextField T) {
-		this.t2 = T;
+	public void setCarIDtextBox(JTextField T) {
+		this.carIDtextBox = T;
 	}
 
 	public JTextField getT22() {
@@ -526,12 +526,12 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		this.t224 = T;
 	}
 
-	public JButton getBA3() {
-		return ba3;
+	public JButton getCarIDRecognizedByCameraButton() {
+		return carIDRecognizedByCameraButton;
 	}
 
-	public void setBA3(JButton B) {
-		this.ba3 = B;
+	public void setCarIDRecognizedByCameraButton(JButton B) {
+		this.carIDRecognizedByCameraButton = B;
 	}
 
 	public JButton getB33() {
@@ -542,12 +542,12 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 		this.b33 = B;
 	}
 
-	public JButton getB4() {
-		return b4;
+	public JButton getCarPassedBarier() {
+		return carPassedBarier;
 	}
 
-	public void setB4(JButton B) {
-		this.b4 = B;
+	public void setCarPassedBarier(JButton B) {
+		this.carPassedBarier = B;
 	}
 
 	public JButton getB44() {
@@ -697,8 +697,8 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == getT2()) {
-			getBA3().doClick();
+		if (e.getSource() == getCarIDtextBox()) {
+			getCarIDRecognizedByCameraButton().doClick();
 			return;
 		}
 
@@ -706,10 +706,10 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 		switch (arg) {
 		case "רכב זוהה ע''י המצלמה":
-			String tmpT2 = getT2().getText();
-			getT2().setText("");
-			getT2().setEditable(false);
-			getBA3().setEnabled(false);
+			String tmpT2 = getCarIDtextBox().getText();
+			getCarIDtextBox().setText("");
+			getCarIDtextBox().setEditable(false);
+			getCarIDRecognizedByCameraButton().setEnabled(false);
 
 			eventArgsHash.put("CarInEntranceGate", tmpT2);
 

@@ -10,8 +10,8 @@ public class EntranceMachinePanel implements ActionListener  {
 
 	private JPanel p, pp1, pp2, pp3;
 	private JLabel l1;
-	private JButton b1, b2;
-	private JTextArea ta1;
+	private JButton entranceButon, takeParkingTicket;
+	private JTextArea entranceMachineConsole;
 	private String carIDatEnranceGate;
 	
 	private ButtonEventListener myListener;
@@ -38,26 +38,26 @@ public class EntranceMachinePanel implements ActionListener  {
 		getL1().setFont(new Font("Ariel", Font.BOLD, 16));
 		getPP2().add(getL1());
 		
-		setB1(new JButton("לחץ לכניסה לחניון"));
-		getB1().setEnabled(false);
-		getB1().addActionListener(this);
-		setB2(new JButton("כרטיס חניה נלקח"));
-		getB2().setEnabled(false);
-		getB2().addActionListener(this);
+		setEntranceButon(new JButton("לחץ לכניסה לחניון"));
+		getEntranceButon().setEnabled(false);
+		getEntranceButon().addActionListener(this);
+		setTakeParkingTicket(new JButton("כרטיס חניה נלקח"));
+		getTakeParkingTicket().setEnabled(false);
+		getTakeParkingTicket().addActionListener(this);
 		
-		getPP1().add(getB1());
+		getPP1().add(getEntranceButon());
 		getPP1().add(Box.createRigidArea(new Dimension(40, 2)));
-		getPP1().add(getB2());
+		getPP1().add(getTakeParkingTicket());
 	
-		setTA1(new JTextArea("אין רכב בכניסה"));
-		getTA1().setLineWrap(true);
-		getTA1().setWrapStyleWord(true);
-		getTA1().setFont(new Font("Ariel", Font.PLAIN, 14));
-		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		getTA1().setEditable(false);
+		setEntranceMachineConsole(new JTextArea("אין רכב בכניסה"));
+		getEntranceMachineConsole().setLineWrap(true);
+		getEntranceMachineConsole().setWrapStyleWord(true);
+		getEntranceMachineConsole().setFont(new Font("Ariel", Font.PLAIN, 14));
+		getEntranceMachineConsole().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getEntranceMachineConsole().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		getEntranceMachineConsole().setEditable(false);
 
-		getPP3().add(getTA1());
+		getPP3().add(getEntranceMachineConsole());
 	
 	}
 
@@ -96,29 +96,29 @@ public class EntranceMachinePanel implements ActionListener  {
 	}
 	
 
-	public JButton getB1() {
-		return b1;
+	public JButton getEntranceButon() {
+		return entranceButon;
 	}
 
-	public void setB1(JButton b) {
-		this.b1 = b;
+	public void setEntranceButon(JButton b) {
+		this.entranceButon = b;
 	}
 
 
-	public JButton getB2() {
-		return b2;
+	public JButton getTakeParkingTicket() {
+		return takeParkingTicket;
 	}
 
-	public void setB2(JButton b) {
-		this.b2 = b;
+	public void setTakeParkingTicket(JButton b) {
+		this.takeParkingTicket = b;
 	}
 	
-	public JTextArea getTA1() {
-		return ta1;
+	public JTextArea getEntranceMachineConsole() {
+		return entranceMachineConsole;
 	}
 
-	public void setTA1(JTextArea ta) {
-		this.ta1 = ta;
+	public void setEntranceMachineConsole(JTextArea ta) {
+		this.entranceMachineConsole = ta;
 	}
 
 	public JLabel getL1() {
@@ -135,16 +135,16 @@ public class EntranceMachinePanel implements ActionListener  {
 
 		switch (arg) {
 		case "כרטיס חניה נלקח":
-			getB2().setEnabled(false);
-			getTA1().setText("המחסום נפתח , נא להיכנס לחניון");
+			getTakeParkingTicket().setEnabled(false);
+			getEntranceMachineConsole().setText("המחסום נפתח , נא להיכנס לחניון");
 			break;
 			
 		case "לחץ לכניסה לחניון":
 			
 			eventArgsHash.put("CarInEntranceGate", getCarIDatEnranceGate());
 			
-			getB1().setEnabled(false);
-			getB2().setEnabled(true);
+			getEntranceButon().setEnabled(false);
+			getTakeParkingTicket().setEnabled(true);
 			
 			break;
 		}
