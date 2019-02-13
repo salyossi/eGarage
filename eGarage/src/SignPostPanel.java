@@ -10,7 +10,7 @@ public class SignPostPanel {
 
 	private JPanel p, pp1;
 	private JLabel l1;
-	private JTable table;
+	private JTable signPostTable;
 	private JScrollPane sp;
 	private JSeparator sep;
 	private int nrows = 4;
@@ -57,24 +57,24 @@ public class SignPostPanel {
 
 		// Create a table using the previously created default table
 		// model
-		table = new JTable(dtm);
+		signPostTable = new JTable(dtm);
 
 		// Create a renderer for displaying cells in certain orientation.
 		TableSignRenderer renderer = new TableSignRenderer();
-		table.setDefaultRenderer(Object.class, renderer);
+		getSignPostTable().setDefaultRenderer(Object.class, renderer);
 
 		// set headers to be bold
 		Font f = new Font("Arial", Font.BOLD, 14);
-		JTableHeader header = table.getTableHeader();
+		JTableHeader header = getSignPostTable().getTableHeader();
 		header.setFont(f);
 
-		getTable().setCellSelectionEnabled(true);
-		getTable().enableInputMethods(false);
-		getTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getSignPostTable().setCellSelectionEnabled(true);
+		getSignPostTable().enableInputMethods(false);
+		getSignPostTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
-		ListSelectionModel select = getTable().getSelectionModel();
+		ListSelectionModel select = getSignPostTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setSP(new JScrollPane(getTable()));
+		setSP(new JScrollPane(getSignPostTable()));
 
 		setPP1(new JPanel());
 		getPP1().setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -114,12 +114,12 @@ public class SignPostPanel {
 		this.l1 = L;
 	}
 
-	public JTable getTable() {
-		return table;
+	public JTable getSignPostTable() {
+		return signPostTable;
 	}
 
-	public void setTable(JTable TBL) {
-		this.table = TBL;
+	public void setSignPostTable(JTable TBL) {
+		this.signPostTable = TBL;
 	}
 
 	public JScrollPane getSP() {
