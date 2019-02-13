@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 30, 2019 at 06:05 PM
+-- Generation Time: Feb 13, 2019 at 07:59 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `egarageusage` (
   `CarID` int(11) NOT NULL,
   `GarageEnterance` datetime NOT NULL,
   `ParkingSlotEnterance` datetime DEFAULT NULL,
+  `TiketPaid` datetime DEFAULT NULL,
   `ParkingSlotExit` datetime DEFAULT NULL,
   `GarageExit` datetime DEFAULT NULL,
   `Authorized` tinyint(1) NOT NULL DEFAULT '0',
@@ -42,15 +43,6 @@ CREATE TABLE IF NOT EXISTS `egarageusage` (
   KEY `IXFK_EgarageUsage_ParkingList` (`Level`,`Slot`),
   KEY `IXFK_EgarageUsage_UserList` (`CarID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `egarageusage`
---
-
-INSERT INTO `egarageusage` (`CarID`, `GarageEnterance`, `ParkingSlotEnterance`, `ParkingSlotExit`, `GarageExit`, `Authorized`, `Level`, `Slot`) VALUES
-(12345678, '2019-01-30 19:46:16', NULL, NULL, NULL, 0, NULL, NULL),
-(12345677, '2019-01-30 19:46:53', NULL, NULL, NULL, 0, NULL, NULL),
-(12345676, '2019-01-30 19:48:32', NULL, NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -165,7 +157,52 @@ INSERT INTO `userlist` (`CarID`, `Type`) VALUES
 (12345673, 1),
 (22222222, 2),
 (33333333, 3),
-(12345671, 1);
+(12345671, 1),
+(12312312, 1),
+(16948925, 1),
+(46791345, 1),
+(123456784, 1),
+(12121212, 1),
+(31313131, 3),
+(12345672, 1),
+(14141414, 1),
+(24242424, 1),
+(34343434, 1),
+(97979797, 1),
+(15151515, 1),
+(18181818, 1),
+(98989898, 1),
+(16161616, 1),
+(36363636, 1),
+(45454545, 1),
+(46464646, 1),
+(91919191, 1),
+(64646464, 1),
+(44444444, 1),
+(55555555, 1),
+(96969696, 1),
+(79797979, 1),
+(52525252, 1),
+(11111111, 1),
+(46467979, 1),
+(37373737, 1),
+(333333333, 1),
+(46793164, 1),
+(46798255, 1),
+(545454656, 1),
+(1916141718, 1),
+(649522548, 1),
+(464971684, 1),
+(66666666, 1),
+(99999999, 1),
+(88888888, 1),
+(77777777, 1),
+(123456789, 1),
+(12344678, 1),
+(21212121, 2),
+(12356788, 1),
+(125412874, 1),
+(15427874, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
