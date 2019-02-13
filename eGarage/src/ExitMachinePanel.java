@@ -10,7 +10,7 @@ public class ExitMachinePanel implements ActionListener {
 	private JPanel p, pp1, pp2, pp3;
 	private JLabel l1, l2;
 	private JButton b1;
-	private JTextArea ta1;
+	private JTextArea exitMachineConsole;
 
 	private ButtonEventListener myListener;
 	private Hashtable<String, String> eventArgsHash = new Hashtable<String, String>();
@@ -41,15 +41,15 @@ public class ExitMachinePanel implements ActionListener {
 
 		getPP1().add(getB1());
 
-		setTA1(new JTextArea("המחסום סגור - אין רכב ביציאה"));
-		getTA1().setLineWrap(true);
-		getTA1().setWrapStyleWord(true);
-		getTA1().setFont(new Font("Ariel", Font.PLAIN, 14));
-		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		getTA1().setEditable(false);
+		setExitMachineConsole(new JTextArea("המחסום סגור - אין רכב ביציאה"));
+		getExitMachineConsole().setLineWrap(true);
+		getExitMachineConsole().setWrapStyleWord(true);
+		getExitMachineConsole().setFont(new Font("Ariel", Font.PLAIN, 14));
+		getExitMachineConsole().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getExitMachineConsole().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		getExitMachineConsole().setEditable(false);
 
-		getPP3().add(getTA1());
+		getPP3().add(getExitMachineConsole());
 
 	}
 
@@ -93,12 +93,12 @@ public class ExitMachinePanel implements ActionListener {
 		this.b1 = b;
 	}
 
-	public JTextArea getTA1() {
-		return ta1;
+	public JTextArea getExitMachineConsole() {
+		return exitMachineConsole;
 	}
 
-	public void setTA1(JTextArea ta) {
-		this.ta1 = ta;
+	public void setExitMachineConsole(JTextArea ta) {
+		this.exitMachineConsole = ta;
 	}
 
 	public JLabel getL1() {

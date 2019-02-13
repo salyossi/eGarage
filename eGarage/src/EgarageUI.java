@@ -9,41 +9,68 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 	private UIHeader uiHeaderPanel; // Panel object to host general instructions as big header if UI
 	private SignPostPanel signPostPanel; // Panel object illustrating all SignPost installed in the Garage
-	private ParkingUseMapPanel parkingUseMapPanel; // Panel object illustrating all parking indicators and LEDs installed in every parking slot
-	private EntranceMachinePanel entranceMachinePanel; //Panel object illustrating the entrance machine installed in every entrance gate of the Garage
-	private ExitMachinePanel exitMachinePanel; //Panel object illustrating the exit machine installed in every exit gate of the Garage
-	private PaymentMachinePanel paymentMachinePanel; //Panel object illustrating the payment machine
-	private VirtualButtonsPanel virtualButtonsPanel; //Panel object illustrating the interaction between the driver and the system like 
-													 // taking the parking ticket from the entrance machine and also illustrating interactions 
-													 // between deferment hardwares and the software system like camera identifying the car number
-													 // and sending the number to the system or car passing the barrier and then the barrier is closing.
-	private String carInEntranceGate; // A private member to hold the carID reported by the entrance gate camera - here it is done by the virtual panel 
-	private String carEnteredParking; // A private member to hold the carID reported entering by the parking slot camera - here it is done by the virtual panel
-	private String carExitFromParking; // A private member to hold the carID reported exiting by the parking slot camera - here it is done by the virtual panel 
+	private ParkingUseMapPanel parkingUseMapPanel; // Panel object illustrating all parking indicators and LEDs
+													// installed in every parking slot
+	private EntranceMachinePanel entranceMachinePanel; // Panel object illustrating the entrance machine installed in
+														// every entrance gate of the Garage
+	private ExitMachinePanel exitMachinePanel; // Panel object illustrating the exit machine installed in every exit
+												// gate of the Garage
+	private PaymentMachinePanel paymentMachinePanel; // Panel object illustrating the payment machine
+	private VirtualButtonsPanel virtualButtonsPanel; // Panel object illustrating the interaction between the driver and
+														// the system like
+														// taking the parking ticket from the entrance machine and also
+														// illustrating interactions
+														// between deferment hardwares and the software system like
+														// camera identifying the car number
+														// and sending the number to the system or car passing the
+														// barrier and then the barrier is closing.
+	private String carInEntranceGate; // A private member to hold the carID reported by the entrance gate camera -
+										// here it is done by the virtual panel
+	private String carEnteredParking; // A private member to hold the carID reported entering by the parking slot
+										// camera - here it is done by the virtual panel
+	private String carExitFromParking; // A private member to hold the carID reported exiting by the parking slot
+										// camera - here it is done by the virtual panel
 
-	private String parkingListCarType; // A private member to hold the car type of a specific parking slot (1= General, 2=VIP, 3=handicaps) 
-	private String parkingLevelUsed; // A private member to hold the level of a specific parking slot - in this demo there are 4 levels (0 - 3)
+	private String parkingListCarType; // A private member to hold the car type of a specific parking slot (1= General,
+										// 2=VIP, 3=handicaps)
+	private String parkingLevelUsed; // A private member to hold the level of a specific parking slot - in this demo
+										// there are 4 levels (0 - 3)
 
-	private String carInExitGate; // A private member to hold the carID reported by the exit gate camera - here it is done by the virtual panel 
-	private String payingCarID; // A private member to hold the carID reported by the parking ticket when entered to the paying machine - here it is done by the virtual panel 
-	private java.sql.Timestamp parkingStartTime; // A private member to hold the start time of parking when car enters a parking slot 
-	private java.sql.Timestamp parkingEndTime; // A private member to hold the end time of parking when paying a parking ticket
-	private int parkingTimeInHours; // A private member to hold the time of parking in hours if <= 12 hours celled i.e. 1.5 hours = 2 hours for payment
-	private int parkingTimeInDays; // A private member to hold the time of parking in days if > 12 hours celled i.e. 1.5 days = 2 days for payment
+	private String carInExitGate; // A private member to hold the carID reported by the exit gate camera - here it
+									// is done by the virtual panel
+	private String payingCarID; // A private member to hold the carID reported by the parking ticket when
+								// entered to the paying machine - here it is done by the virtual panel
+	private java.sql.Timestamp parkingStartTime; // A private member to hold the start time of parking when car enters a
+													// parking slot
+	private java.sql.Timestamp parkingEndTime; // A private member to hold the end time of parking when paying a parking
+												// ticket
+	private int parkingTimeInHours; // A private member to hold the time of parking in hours if <= 12 hours celled
+									// i.e. 1.5 hours = 2 hours for payment
+	private int parkingTimeInDays; // A private member to hold the time of parking in days if > 12 hours celled
+									// i.e. 1.5 days = 2 days for payment
 	private String parkingTimeTotal; // A private String member to hold the time for displaying in payment machine
-	private String paymentConsoleTextWithoutCoins; // A private String member to hold the start time, end time, duration and cost for displaying in payment machine
+	private String paymentConsoleTextWithoutCoins; // A private String member to hold the start time, end time, duration
+													// and cost for displaying in payment machine
 	private int coinsEntered = 0; // A private member to hold the amount of coins entered to the payment machine
 	int amountToPay; // A private member to hold the amount to pay
 
 	public EgarageUI() {
 
-		stateHeader = setUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper JPanel member variable created via local Panel object
-		signPost = setSignPost("תצוגת שילוט");  // A supper JPanel member variable created via local Panel object
-		parkingUseMap = setParkingUseMap("חישני החנייה");  // A supper JPanel member variable created via local Panel object
-		entranceMachine = setEntranceMachine("מכונת הכניסה");  // A supper JPanel member variable created via local Panel object
-		exitMachine = setExitMachine("מכונת היציאה");  // A supper JPanel member variable created via local Panel object
-		paymentMachine = setPaymentMachine("מכונת התשלום");  // A supper JPanel member variable created via local Panel object
-		virtualButtons = setVirtualButtons();  // A supper JPanel member variable created via local Panel object
+		stateHeader = setUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper
+																										// JPanel member
+																										// variable
+																										// created via
+																										// local Panel
+																										// object
+		signPost = setSignPost("תצוגת שילוט"); // A supper JPanel member variable created via local Panel object
+		parkingUseMap = setParkingUseMap("חישני החנייה"); // A supper JPanel member variable created via local Panel
+															// object
+		entranceMachine = setEntranceMachine("מכונת הכניסה"); // A supper JPanel member variable created via local Panel
+																// object
+		exitMachine = setExitMachine("מכונת היציאה"); // A supper JPanel member variable created via local Panel object
+		paymentMachine = setPaymentMachine("מכונת התשלום"); // A supper JPanel member variable created via local Panel
+															// object
+		virtualButtons = setVirtualButtons(); // A supper JPanel member variable created via local Panel object
 		DrawFrame(); // A Super method that draws the UI
 		f.setVisible(true);
 	}
@@ -58,12 +85,13 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	public JPanel setSignPost(String l1Text) {
 		signPostPanel = new SignPostPanel(l1Text);
 		return signPostPanel.getP();
-	}	
+	}
 
 	@Override
 	public JPanel setParkingUseMap(String l1Text) {
 		parkingUseMapPanel = new ParkingUseMapPanel(l1Text);
-		// register this object as the alarm event listener so when alarm is raised this object will know
+		// register this object as the alarm event listener so when alarm is raised this
+		// object will know
 		parkingUseMapPanel.setAlarmEventListener(this);
 		return parkingUseMapPanel.getP();
 	}
@@ -71,7 +99,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setEntranceMachine(String l1Text) {
 		entranceMachinePanel = new EntranceMachinePanel(l1Text);
-		// register this object as the button event listener so when button is pressed this object will know
+		// register this object as the button event listener so when button is pressed
+		// this object will know
 		entranceMachinePanel.setButtonEventListener(this);
 		return entranceMachinePanel.getP();
 	}
@@ -85,7 +114,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setPaymentMachine(String l1Text) {
 		paymentMachinePanel = new PaymentMachinePanel(l1Text);
-		// register this object as the button event listener so when button is pressed this object will know
+		// register this object as the button event listener so when button is pressed
+		// this object will know
 		paymentMachinePanel.setButtonEventListener(this);
 		return paymentMachinePanel.getP();
 	}
@@ -93,7 +123,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setVirtualButtons() {
 		virtualButtonsPanel = new VirtualButtonsPanel();
-		// register this object as the button event listener so when button is pressed this object will know
+		// register this object as the button event listener so when button is pressed
+		// this object will know
 		virtualButtonsPanel.setButtonEventListener(this);
 		return virtualButtonsPanel.getP();
 	}
@@ -150,7 +181,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		case "הרכב עבר במחסום":
 			// enable next button in process and disable not relevant ones
 			virtualButtonsPanel.getCarPassedBarier().setEnabled(false);
-			virtualButtonsPanel.getCarIDtextBox().setEditable(true);
+			virtualButtonsPanel.getCarIDtextField().setEditable(true);
 
 			// update UI header text
 			UpdateUIHeader("רכב חדש נכנס לחניון בדרך לעוד חניה טובה מוצלחת ובטוחה");
@@ -306,7 +337,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 			// Enable next button in process
 			if (coinsEntered >= amountToPay)
-				paymentMachinePanel.getB1().setEnabled(true);
+				paymentMachinePanel.getMakePayment().setEnabled(true);
 
 			break;
 		case "בצע תשלום":
@@ -318,29 +349,34 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 			// update UI header text
 			UpdateUIHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
+			
+			// and reset virtual buttons and disable coins field and button
+			virtualButtonsPanel.getAmountOfCoinsField().setText("");
+			virtualButtonsPanel.getAmountOfCoinsField().setEditable(false);
+			virtualButtonsPanel.getAmountOfCoinsEntered().setEnabled(false);
 
 			break;
 		case "קבל את הכרטיס":
 
-			if (coinsEntered > amountToPay)
-				paymentMachinePanel.getB5().setEnabled(true);
+			if (coinsEntered > amountToPay) {
+				paymentMachinePanel.getTakeChange().setEnabled(true);
+			} else {
+				coinsEntered = 0; // reset coins entered for next car if no change else reset in change area
 
-			// Update paying machine console with the coins entered
+				// Update paying machine console with general instructions
+				virtualButtonsPanel.getParkingCardEntered().setEnabled(true);
+				virtualButtonsPanel.getCarInPaymentModeComboBox().setEnabled(true);
+				virtualButtonsPanel.getVehiclesInPaymentModeModel().removeElement(payingCarID);
+			
+
+				virtualButtonsPanel.getCarIDInExitModeComboBox().setEnabled(true);
+				virtualButtonsPanel.getCarInFrontOfExitBarier().setEnabled(true);
+				virtualButtonsPanel.getB7().setEnabled(true);
+			}
+
+			// Update paying machine console that card was taken
 			GetPayingConsole().setText(paymentConsoleTextWithoutCoins + " הכרטיס נלקח מהמכונה");
 
-			// Update paying machine console with general instructions and reset virtual
-			// buttons
-			// GetPayingConsole().setText("הכנס כרטיס לתשלום");
-			virtualButtonsPanel.getB10().setEnabled(true);
-			virtualButtonsPanel.getC9().setEnabled(true);
-			virtualButtonsPanel.getVehiclesInPaymentModeModel().removeElement(payingCarID);
-			virtualButtonsPanel.getT11().setText("");
-			virtualButtonsPanel.getT11().setEditable(false);
-			virtualButtonsPanel.getB12().setEnabled(false);
-
-			virtualButtonsPanel.getC6().setEnabled(true);
-			virtualButtonsPanel.getB44().setEnabled(true);
-			virtualButtonsPanel.getB7().setEnabled(true);
 			break;
 
 		case "קבל את העודף":
@@ -349,6 +385,18 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			GetPayingConsole().setText(
 					paymentConsoleTextWithoutCoins + "עודף בסך " + (coinsEntered - amountToPay) + "ש'''ח נלקח מהמכונה");
 
+			// Update paying machine console with general instructions and reset virtual
+			// buttons
+			// GetPayingConsole().setText("הכנס כרטיס לתשלום");
+			virtualButtonsPanel.getParkingCardEntered().setEnabled(true);
+			virtualButtonsPanel.getCarInPaymentModeComboBox().setEnabled(true);
+			virtualButtonsPanel.getVehiclesInPaymentModeModel().removeElement(payingCarID);
+			
+			virtualButtonsPanel.getCarIDInExitModeComboBox().setEnabled(true);
+			virtualButtonsPanel.getCarInFrontOfExitBarier().setEnabled(true);
+			virtualButtonsPanel.getB7().setEnabled(true);
+
+			coinsEntered = 0; // reset coins entered for next car
 		}
 
 	}
@@ -366,11 +414,11 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	}
 
 	public JTextArea GetExitConsole() {
-		return exitMachinePanel.getTA1();
+		return exitMachinePanel.getExitMachineConsole();
 	}
 
 	public JTextArea GetPayingConsole() {
-		return paymentMachinePanel.getTA1();
+		return paymentMachinePanel.getPaymentMachineConsole();
 	}
 
 	public void UpdateUIHeader(String newText) {
@@ -387,7 +435,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		// not used here
 	}
 
-	// when alarm is activated in registered pannels this method is fired and is used to pass a texyt for UI header
+	// when alarm is activated in registered pannels this method is fired and is
+	// used to pass a texyt for UI header
 	@Override
 	public void reportAlarm(String AlarmMessage) {
 		// update UI header text

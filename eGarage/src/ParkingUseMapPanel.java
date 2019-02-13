@@ -10,7 +10,7 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 
 	private JPanel p, pp1;
 	private JLabel l1;
-	private JTable table;
+	private JTable parkingUseMapTable;
 	private JScrollPane sp;
 	private JSeparator sep;
 
@@ -80,26 +80,26 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 
 		// Create a table using the previously created default table
 		// model
-		table = new JTable(dtm);
+		parkingUseMapTable = new JTable(dtm);
 
 		// Create a renderer for displaying cells in certain colors.
 		// this represents LEDS in the Garage
 		TableColorCellRenderer renderer = new TableColorCellRenderer();
 		renderer.setAlarmEventListener(this);
-		table.setDefaultRenderer(Object.class, renderer);
+		getParkingUseMapTable().setDefaultRenderer(Object.class, renderer);
 
 		// set headers to be bold
 		Font f = new Font("Arial", Font.BOLD, 14);
-		JTableHeader header = table.getTableHeader();
+		JTableHeader header = getParkingUseMapTable().getTableHeader();
 		header.setFont(f);
 
-		getTable().setCellSelectionEnabled(true);
-		getTable().enableInputMethods(false);
-		getTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getParkingUseMapTable().setCellSelectionEnabled(true);
+		getParkingUseMapTable().enableInputMethods(false);
+		getParkingUseMapTable().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
-		ListSelectionModel select = getTable().getSelectionModel();
+		ListSelectionModel select = getParkingUseMapTable().getSelectionModel();
 		select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		setSP(new JScrollPane(getTable()));
+		setSP(new JScrollPane(getParkingUseMapTable()));
 
 		setPP1(new JPanel());
 		getPP1().setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
@@ -139,12 +139,12 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 		this.l1 = L;
 	}
 
-	public JTable getTable() {
-		return table;
+	public JTable getParkingUseMapTable() {
+		return parkingUseMapTable;
 	}
 
-	public void setTable(JTable TBL) {
-		this.table = TBL;
+	public void setParkingUseMapTable(JTable TBL) {
+		this.parkingUseMapTable = TBL;
 	}
 
 	public JScrollPane getSP() {

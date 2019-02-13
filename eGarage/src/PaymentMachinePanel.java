@@ -10,8 +10,8 @@ public class PaymentMachinePanel implements ActionListener {
 
 	private JPanel p, pp1, pp2, p1p2, p2p2, p3p2, pp3;
 	private JLabel l1, l2, l3;
-	private JButton b1, b2, b3, b4, b5;
-	private JTextArea  ta1;
+	private JButton makePayment, b2, takeParkingTicket, b4, takeChange;
+	private JTextArea  paymentMachineConsole;
 	
 	private ButtonEventListener myListener;
 	private Hashtable<String, String> eventArgsHash = new Hashtable<String, String>();
@@ -50,30 +50,30 @@ public class PaymentMachinePanel implements ActionListener {
 		getPP2().add(getP2P2());
 		getPP2().add(getP3P2());
 		
-		setB1(new JButton("בצע תשלום"));
-		getB1().setEnabled(false);
-		getB1().addActionListener(this);
-		setB3(new JButton("קבל את הכרטיס"));
-		getB3().setEnabled(false);
-		getB3().addActionListener(this);
-		setB5(new JButton("קבל את העודף"));
-		getB5().setEnabled(false);
-		getB5().addActionListener(this);
+		setMakePayment(new JButton("בצע תשלום"));
+		getMakePayment().setEnabled(false);
+		getMakePayment().addActionListener(this);
+		setTakeParkingTicket(new JButton("קבל את הכרטיס"));
+		getTakeParkingTicket().setEnabled(false);
+		getTakeParkingTicket().addActionListener(this);
+		setTakeChange(new JButton("קבל את העודף"));
+		getTakeChange().setEnabled(false);
+		getTakeChange().addActionListener(this);
 			
-		getPP1().add(getB1());
-		getPP1().add(getB3());
-		getPP1().add(getB5());
+		getPP1().add(getMakePayment());
+		getPP1().add(getTakeParkingTicket());
+		getPP1().add(getTakeChange());
 			
-		setTA1(new JTextArea ("הכנס כרטיס לתשלום"));	
-		getTA1().setLineWrap(true);
-		getTA1().setWrapStyleWord(true);
-		getTA1().setFont(new Font("Ariel", Font.PLAIN, 12));
-		getTA1().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		getTA1().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		JScrollPane sp = new JScrollPane(getTA1());
-		getTA1().setEditable(false);
+		setPaymentMachineConsole(new JTextArea ("הכנס כרטיס לתשלום"));	
+		getPaymentMachineConsole().setLineWrap(true);
+		getPaymentMachineConsole().setWrapStyleWord(true);
+		getPaymentMachineConsole().setFont(new Font("Ariel", Font.PLAIN, 12));
+		getPaymentMachineConsole().setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		getPaymentMachineConsole().setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		JScrollPane sp = new JScrollPane(getPaymentMachineConsole());
+		getPaymentMachineConsole().setEditable(false);
 
-		getPP3().add(getTA1());
+		getPP3().add(getPaymentMachineConsole());
 	}
 
 	public JPanel getP() {
@@ -135,12 +135,12 @@ public class PaymentMachinePanel implements ActionListener {
 	}
 	
 	
-	public JButton getB1() {
-		return b1;
+	public JButton getMakePayment() {
+		return makePayment;
 	}
 
-	public void setB1(JButton b) {
-		this.b1 = b;
+	public void setMakePayment(JButton b) {
+		this.makePayment = b;
 	}
 
 	public JButton getB2() {
@@ -151,12 +151,12 @@ public class PaymentMachinePanel implements ActionListener {
 		this.b2 = b;
 	}
 
-	public JButton getB3() {
-		return b3;
+	public JButton getTakeParkingTicket() {
+		return takeParkingTicket;
 	}
 
-	public void setB3(JButton b) {
-		this.b3 = b;
+	public void setTakeParkingTicket(JButton b) {
+		this.takeParkingTicket = b;
 	}
 
 	public JButton getB4() {
@@ -167,20 +167,20 @@ public class PaymentMachinePanel implements ActionListener {
 		this.b4 = b;
 	}
 
-	public JButton getB5() {
-		return b5;
+	public JButton getTakeChange() {
+		return takeChange;
 	}
 
-	public void setB5(JButton b) {
-		this.b5 = b;
+	public void setTakeChange(JButton b) {
+		this.takeChange = b;
 	}
 
-	public JTextArea getTA1() {
-		return ta1;
+	public JTextArea getPaymentMachineConsole() {
+		return paymentMachineConsole;
 	}
 
-	public void setTA1(JTextArea ta) {
-		this.ta1 = ta;
+	public void setPaymentMachineConsole(JTextArea ta) {
+		this.paymentMachineConsole = ta;
 	}
 
 	public JLabel getL1() {
@@ -215,19 +215,19 @@ public class PaymentMachinePanel implements ActionListener {
 		switch (arg) {
 		case "בצע תשלום":
 			
-			getB3().setEnabled(true);
+			getTakeParkingTicket().setEnabled(true);
 			
 			break;
 			
 		case "קבל את הכרטיס":
-			getB1().setEnabled(false);
-			getB3().setEnabled(false);
+			getMakePayment().setEnabled(false);
+			getTakeParkingTicket().setEnabled(false);
 			
 			break;
 			
 		case "קבל את העודף":
 			
-			getB5().setEnabled(false);
+			getTakeChange().setEnabled(false);
 		}
 	
 
