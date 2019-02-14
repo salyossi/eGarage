@@ -763,13 +763,18 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 				
 				// if the car is VIP or Handicaps - mark as authorized
 				// so it dose not need to go to the paying machine
-				// else add the car to paying list
+				// else add the car to paying list if its not already there
 				int tmpUserListCarType = EgarageDB.getCarTypeInUserList(Integer.parseInt(tmpVehiclesEnteredGarageComboBox));
 				if(tmpUserListCarType > 1)
 					EgarageDB.SetAuthorized(Integer.parseInt(tmpVehiclesEnteredGarageComboBox));
 				else
 					// Update combo box of cars in payment mode
-					getVehiclesInPaymentModeModel().addElement(tmpVehiclesEnteredGarageComboBox);
+					
+					if(getVehiclesInPaymentModeModel().getIndexOf(tmpVehiclesEnteredGarageComboBox) == -1 ) {
+						getVehiclesInPaymentModeModel().addElement(tmpVehiclesEnteredGarageComboBox);
+					}
+					
+					
 
 				// Add to hash table the car ID that enter a parking
 				String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpEnterParkingSlotTextField), Integer.parseInt(tmpEnterParkingLevelTextField)));

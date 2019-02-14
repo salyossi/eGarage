@@ -206,7 +206,12 @@ public class EgarageUI extends MainFrame implements ButtonEventListener {
 			EgarageDB.AddNewCarIDToUsageList(Integer.parseInt(carInEntranceGate));
 
 			// Update combo box of cars to enter a parking slot with the car just entered
-			virtualButtonsPanel.getVehiclesEnteredGarageModel().addElement(carInEntranceGate);
+			
+			if(virtualButtonsPanel.getVehiclesEnteredGarageModel().getIndexOf(carInEntranceGate) == -1 ) {
+				virtualButtonsPanel.getVehiclesEnteredGarageModel().addElement(carInEntranceGate);
+			}
+			
+			
 
 			break;
 
@@ -242,7 +247,10 @@ public class EgarageUI extends MainFrame implements ButtonEventListener {
 			carExitFromParking = argv.get("CarExitFromParking").toString();
 			// Update combo box of cars to enter a parking slot with the car just exit from
 			// a parking slot
-			virtualButtonsPanel.getVehiclesEnteredGarageModel().addElement(carExitFromParking);
+			if(virtualButtonsPanel.getVehiclesEnteredGarageModel().getIndexOf(carExitFromParking) == -1) {
+				virtualButtonsPanel.getVehiclesEnteredGarageModel().addElement(carExitFromParking);
+			}
+			
 
 			// send to Parking map of the new state, to update its LEDs map
 			UpdateLeds();
