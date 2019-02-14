@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 13, 2019 at 07:59 PM
+-- Generation Time: Feb 14, 2019 at 04:19 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -202,7 +202,10 @@ INSERT INTO `userlist` (`CarID`, `Type`) VALUES
 (21212121, 2),
 (12356788, 1),
 (125412874, 1),
-(15427874, 1);
+(15427874, 1),
+(11111112, 1),
+(121212121, 1),
+(12345786, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
