@@ -56,4 +56,5 @@
 <fullyQualifiedTypeName name="javax.swing.table.JTableHeader"/>
 <fullyQualifiedTypeName name="javax.swing.JTextField"/>
 <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
+<fullyQualifiedTypeName name="AlarmClass"/>
 </qualifiedTypeNameHistroy>

@@ -1,11 +1,12 @@
 import java.util.*;
+import java.util.Timer;
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 
-public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEventListener {
+public class EgarageUI extends MainFrame implements ButtonEventListener {
 
 	private UIHeader uiHeaderPanel; // Panel object to host general instructions as big header if UI
 	private SignPostPanel signPostPanel; // Panel object illustrating all SignPost installed in the Garage
@@ -35,6 +36,8 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 										// 2=VIP, 3=handicaps)
 	private String parkingLevelUsed; // A private member to hold the level of a specific parking slot - in this demo
 										// there are 4 levels (0 - 3)
+	private String parkingSlotUsed; // A private member to hold the level of a specific parking slot - in this demo
+	// there are 10 slots in every levels (1 - 10)
 
 	private String carInExitGate; // A private member to hold the carID reported by the exit gate camera - here it
 									// is done by the virtual panel
@@ -54,6 +57,13 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	private int coinsEntered = 0; // A private member to hold the amount of coins entered to the payment machine
 	int amountToPay; // A private member to hold the amount to pay
 
+	// variables for alarm
+	private Timer timer;
+	private int alarmColumn = 0;
+	private int alarmRow = 0;
+	private boolean isAlarmOn;
+	AlarmClass ac;
+
 	public EgarageUI() {
 
 		stateHeader = setUIHeader("כדי להפעיל את החניון יש לבחור מצבי עבודה באמצעות האזור הווירטואלי"); // A supper
@@ -71,6 +81,9 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		paymentMachine = setPaymentMachine("מכונת התשלום"); // A supper JPanel member variable created via local Panel
 															// object
 		virtualButtons = setVirtualButtons(); // A supper JPanel member variable created via local Panel object
+		
+		ac = new AlarmClass();
+		
 		DrawFrame(); // A Super method that draws the UI
 		f.setVisible(true);
 	}
@@ -90,9 +103,6 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 	@Override
 	public JPanel setParkingUseMap(String l1Text) {
 		parkingUseMapPanel = new ParkingUseMapPanel(l1Text);
-		// register this object as the alarm event listener so when alarm is raised this
-		// object will know
-		parkingUseMapPanel.setAlarmEventListener(this);
 		return parkingUseMapPanel.getP();
 	}
 
@@ -213,8 +223,17 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			// get Parking level just used by a car entering a parking slot, from virtual
 			// Panel via hash table
 			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+			// get Parking Slot just used by a car entering a parking from virtual
+			// Panel via hash table
+			parkingSlotUsed = argv.get("parkingSlotUsed").toString();
 
 			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
+			// check if needs to raise an alarm
+			
+			uiHeaderPanel.getL1().setText("רכב  נכנס לחניה בקומה " + parkingLevelUsed + " בחניה מספר " + parkingSlotUsed);
+
+			// if needed raise an alarm
+			raseAlarm(Integer.parseInt(parkingLevelUsed), Integer.parseInt(parkingSlotUsed));
 
 			break;
 
@@ -231,11 +250,19 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			// update signPost
 			// get car Type just entered a parking slot, from virtual Panel via hash table
 			parkingListCarType = argv.get("ParkingListCarType").toString();
-			// get Parking level just used by a car entering a parking slot, from virtual
+			// get Parking level just used by a car exiting a parking slot, from virtual
 			// Panel via hash table
 			parkingLevelUsed = argv.get("ParkingLevelUsed").toString();
+			// get Parking Slot just used by a car exiting a parking from virtual
+			// Panel via hash table
+			parkingSlotUsed = argv.get("parkingSlotUsed").toString();
 
 			signPostPanel.updateSignPost(parkingLevelUsed, parkingListCarType);
+			
+			uiHeaderPanel.getL1().setText("רכב  יצא מהחניה בקומה " + parkingLevelUsed + " בחניה מספר " + parkingSlotUsed);
+
+			// check if alarm is working
+			checkAlarm(Integer.parseInt(parkingLevelUsed), Integer.parseInt(parkingSlotUsed));
 
 			break;
 
@@ -349,7 +376,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 
 			// update UI header text
 			UpdateUIHeader("התשלום בוצע בהצלחה - תודה ויום טוב");
-			
+
 			// and reset virtual buttons and disable coins field and button
 			virtualButtonsPanel.getAmountOfCoinsField().setText("");
 			virtualButtonsPanel.getAmountOfCoinsField().setEditable(false);
@@ -367,7 +394,6 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 				virtualButtonsPanel.getParkingCardEntered().setEnabled(true);
 				virtualButtonsPanel.getCarInPaymentModeComboBox().setEnabled(true);
 				virtualButtonsPanel.getVehiclesInPaymentModeModel().removeElement(payingCarID);
-			
 
 				virtualButtonsPanel.getCarIDInExitModeComboBox().setEnabled(true);
 				virtualButtonsPanel.getCarInFrontOfExitBarier().setEnabled(true);
@@ -391,7 +417,7 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 			virtualButtonsPanel.getParkingCardEntered().setEnabled(true);
 			virtualButtonsPanel.getCarInPaymentModeComboBox().setEnabled(true);
 			virtualButtonsPanel.getVehiclesInPaymentModeModel().removeElement(payingCarID);
-			
+
 			virtualButtonsPanel.getCarIDInExitModeComboBox().setEnabled(true);
 			virtualButtonsPanel.getCarInFrontOfExitBarier().setEnabled(true);
 			virtualButtonsPanel.getB7().setEnabled(true);
@@ -425,23 +451,39 @@ public class EgarageUI extends MainFrame implements ButtonEventListener, AlarmEv
 		uiHeaderPanel.getL1().setText(newText);
 	}
 
-	@Override
 	public void raseAlarm(int Level, int Slot) {
-		// not used here
+
+		int tmpCarIdInLevelAndSlot = EgarageDB.getCarIdInLevelAndSlot(Slot, Level);
+		int tmpCarTypeInParkingList = EgarageDB.getCarTypeInParkingList(Slot, Level);
+		int tmpCarTypeInUserList = EgarageDB.getCarTypeInUserList(tmpCarIdInLevelAndSlot);
+
+		if ((tmpCarTypeInParkingList == 3 && tmpCarTypeInUserList != 3)
+				|| (tmpCarTypeInParkingList == 2 && tmpCarTypeInUserList == 1)) {
+
+			uiHeaderPanel.getL1().setText("רכב לא מאושר נכנס לחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופעל");
+			
+			ac.start();
+
+			isAlarmOn = true;
+			alarmColumn = Slot;
+			alarmRow = Level;
+		}
+
 	}
 
-	@Override
 	public void checkAlarm(int Level, int Slot) {
-		// not used here
-	}
 
-	// when alarm is activated in registered pannels this method is fired and is
-	// used to pass a texyt for UI header
-	@Override
-	public void reportAlarm(String AlarmMessage) {
-		// update UI header text
-		UpdateUIHeader(AlarmMessage);
+		if (alarmColumn == Slot && alarmRow == Level && isAlarmOn) {
 
+			uiHeaderPanel.getL1().setText("רכב לא מאושר יצא מהחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופסק");
+			
+			ac.stop();
+			
+			alarmColumn = 0;
+			alarmRow = 0;
+			isAlarmOn = false;
+
+		}
 	}
 
 }

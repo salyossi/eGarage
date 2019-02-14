@@ -16,7 +16,7 @@ public class EgarageDB {
 		}
 	}
 
-	public static boolean UpdateCarEnteredParkingSlot(String Level, String Slot) {
+	public static boolean UpdateCarEnteredParkingSlot(String Slot, String Level) {
 
 		String query;
 
@@ -29,7 +29,7 @@ public class EgarageDB {
 		}
 	}
 
-	public static boolean UpdateCarEnteredParkingSlotUsageList(int Level, int Slot, int CarId) {
+	public static boolean UpdateCarEnteredParkingSlotUsageList(int Slot, int Level, int CarId) {
 
 		String query;
 
@@ -42,7 +42,7 @@ public class EgarageDB {
 		}
 	}
 
-	public static boolean UpdateCarExitFromParkingSlot(String Level, String Slot) {
+	public static boolean UpdateCarExitFromParkingSlot(String Slot, String Level) {
 
 		String query;
 
@@ -55,7 +55,7 @@ public class EgarageDB {
 		}
 	}
 
-	public static boolean UpdateCarExitFromParkingSlotUsageList(int Level, int Slot) {
+	public static boolean UpdateCarExitFromParkingSlotUsageList(int Slot, int Level) {
 
 		String query;
 
@@ -151,7 +151,7 @@ public class EgarageDB {
 		}
 	}
 	
-	public static int getCarIdInLevelAndSlot(int Level, int Slot) {
+	public static int getCarIdInLevelAndSlot(int Slot, int Level) {
 		String query;
 		try {
 			query = "SELECT CarID FROM egarageusage WHERE Slot = " + Slot + " AND Level = " + Level;
@@ -162,7 +162,7 @@ public class EgarageDB {
 		}
 	}
 
-	public static int getCarTypeInParkingList(int Level, int Slot) {
+	public static int getCarTypeInParkingList(int Slot, int Level) {
 		String query;
 		try {
 			query = "SELECT Type FROM parkinglist WHERE Level = " + Level + " and Slot = " + Slot;

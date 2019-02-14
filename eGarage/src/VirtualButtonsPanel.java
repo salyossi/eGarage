@@ -168,9 +168,9 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 			}
 		});
-		getPP11().add(getEnterParkingLevelTextField());
-		getPP11().add(getL14());
 		getPP11().add(getEnterParkingSlotTextField());
+		getPP11().add(getL14());
+		getPP11().add(getEnterParkingLevelTextField());
 		getPP11().add(getL13());
 		getPP11().add(getVehiclesEnteredGarageComboBox());
 		getPP11().add(getL12());
@@ -234,11 +234,10 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 			}
 		});
-		getPP12().add(getExitParkingLevelTextField());
-		getPP12().add(getL16());
 		getPP12().add(getExitParkingSlotTextField());
+		getPP12().add(getL16());		
+		getPP12().add(getExitParkingLevelTextField());
 		getPP12().add(getL15());
-
 		setCarExitParking(new JButton("רכב יצא מחניה"));
 		getCarExitParking().setEnabled(false);
 		getCarExitParking().addActionListener(this);
@@ -746,8 +745,8 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			try {
 				String tmpVehiclesEnteredGarageComboBox = getVehiclesEnteredGarageComboBox().getSelectedItem().toString();
 
-				String tmpEnterParkingSlotTextField = getEnterParkingSlotTextField().getText();
 				String tmpEnterParkingLevelTextField = getEnterParkingLevelTextField().getText();
+				String tmpEnterParkingSlotTextField = getEnterParkingSlotTextField().getText();
 
 				getCarExitParking().setEnabled(false);
 				getEnterParkingLevelTextField().setText("");
@@ -775,7 +774,8 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 				// Add to hash table the car ID that enter a parking
 				String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpEnterParkingSlotTextField), Integer.parseInt(tmpEnterParkingLevelTextField)));
 				eventArgsHash.put("ParkingListCarType", tmpParkingListCarType);
-				eventArgsHash.put("ParkingLevelUsed", tmpEnterParkingSlotTextField);
+				eventArgsHash.put("ParkingLevelUsed", tmpEnterParkingLevelTextField);
+				eventArgsHash.put("parkingSlotUsed", tmpEnterParkingSlotTextField);
 				
 				// Update combo box of cars to enter a parking slot with the car just entered a
 				// parking slot
@@ -791,10 +791,10 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 
 		case "רכב יצא מחניה":
 
-			String tmpEnterParkingLevelTextField3 = getExitParkingLevelTextField().getText();
-			String tmpEnterParkingLevelTextField4 = getExitParkingSlotTextField().getText();
+			String tmpExitParkingLevelTextField = getExitParkingLevelTextField().getText();
+			String tmpExitParkingSlotTextField = getExitParkingSlotTextField().getText();
 			
-			int tmpCaeExitFromParking = EgarageDB.getCarIdInLevelAndSlot(Integer.parseInt(tmpEnterParkingLevelTextField4), Integer.parseInt(tmpEnterParkingLevelTextField3));
+			int tmpCaeExitFromParking = EgarageDB.getCarIdInLevelAndSlot(Integer.parseInt(tmpExitParkingSlotTextField), Integer.parseInt(tmpExitParkingLevelTextField));
 
 			if (tmpCaeExitFromParking == 0) {
 				return;
@@ -808,15 +808,16 @@ public class VirtualButtonsPanel extends Exception implements ActionListener {
 			eventArgsHash.put("CarExitFromParking", Integer.toString(tmpCaeExitFromParking));
 
 			// Update the parking list in database
-			EgarageDB.UpdateCarExitFromParkingSlot(tmpEnterParkingLevelTextField4, tmpEnterParkingLevelTextField3);
+			EgarageDB.UpdateCarExitFromParkingSlot(tmpExitParkingSlotTextField, tmpExitParkingLevelTextField);
 			// Update usage list in database
-			EgarageDB.UpdateCarExitFromParkingSlotUsageList(Integer.parseInt(tmpEnterParkingLevelTextField4), Integer.parseInt(tmpEnterParkingLevelTextField3));
+			EgarageDB.UpdateCarExitFromParkingSlotUsageList(Integer.parseInt(tmpExitParkingSlotTextField), Integer.parseInt(tmpExitParkingLevelTextField));
 
 			
 			// Add to hash table the car ID that exit from a parking
-			String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpEnterParkingLevelTextField4), Integer.parseInt(tmpEnterParkingLevelTextField3)));
+			String tmpParkingListCarType = Integer.toString(EgarageDB.getCarTypeInParkingList(Integer.parseInt(tmpExitParkingSlotTextField), Integer.parseInt(tmpExitParkingLevelTextField)));
 			eventArgsHash.put("ParkingListCarType", tmpParkingListCarType);
-			eventArgsHash.put("ParkingLevelUsed", tmpEnterParkingLevelTextField4);
+			eventArgsHash.put("ParkingLevelUsed", tmpExitParkingLevelTextField);
+			eventArgsHash.put("parkingSlotUsed", tmpExitParkingSlotTextField);
 			
 			break;
 

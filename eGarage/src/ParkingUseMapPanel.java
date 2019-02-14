@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.table.*;
 
-public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener {
+public class ParkingUseMapPanel extends TimerTask {
 
 	private JPanel p, pp1;
 	private JLabel l1;
@@ -17,8 +17,7 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 	private Timer timer;
 	private int alarmColumn = 0;
 	private int alarmRow = 0;
-
-	private AlarmEventListener myAlarmEventListener;
+	private boolean isAlarmOn;
 
 	public ParkingUseMapPanel(String l1Text) {
 
@@ -85,7 +84,7 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 		// Create a renderer for displaying cells in certain colors.
 		// this represents LEDS in the Garage
 		TableColorCellRenderer renderer = new TableColorCellRenderer();
-		renderer.setAlarmEventListener(this);
+		// renderer.setAlarmEventListener(this);
 		getParkingUseMapTable().setDefaultRenderer(Object.class, renderer);
 
 		// set headers to be bold
@@ -169,50 +168,8 @@ public class ParkingUseMapPanel extends TimerTask implements AlarmEventListener 
 	}
 
 	@Override
-	public void raseAlarm(int Level, int Slot) {
-
-		alarmColumn = Slot;
-		alarmRow = Level;
-
-		timer = new Timer();
-		timer.schedule(this, 0, 1000);
-
-		if (myAlarmEventListener != null)
-			myAlarmEventListener
-					.reportAlarm("רכב לא מאושר נכנס לחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופעל");
-		;
-
-	}
-
-	@Override
-	public void checkAlarm(int Level, int Slot) {
-		if (alarmColumn == Slot && alarmRow == Level) {
-			if (timer != null) {
-				timer.cancel();
-				if (myAlarmEventListener != null)
-					myAlarmEventListener.reportAlarm(
-							"רכב לא מאושר יצא מהחניה בקומה " + Level + " בחניה מספר " + Slot + " הזמזם הופסק");
-				alarmColumn = 0;
-				alarmRow = 0;
-
-			}
-
-		}
-	}
-
-	@Override
 	public void run() {
 		Toolkit.getDefaultToolkit().beep();
-	}
-
-	@Override
-	public void reportAlarm(String AlarmMessage) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setAlarmEventListener(AlarmEventListener listener) {
-		this.myAlarmEventListener = listener;
 	}
 
 }
